@@ -16,7 +16,7 @@ class UsuarioAnonimoController extends Controller
 public function crearAction()
 {
     $nuevoUsuario = new Usuario();
-    $nuevoUsuario->setNombre('federico');
+    $nuevoUsuario->setNombre('Franco');
     $nuevoUsuario->setApellido('croci');
     $nuevoUsuario->setMail('fede@rico.com');
 	$nuevoUsuario->setPassword('qwerty');
