@@ -1,0 +1,8 @@
+asociateya:
+    resource: "@asociateyaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+usuario_crear:
+    path:      /Usuario
+    defaults:  { _controller: asociateyaBundle:UsuarioAnonimo:crear }
+
