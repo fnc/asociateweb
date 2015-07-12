@@ -108,10 +108,12 @@ ol li
   border: 10px solid #DDD;}
 
 #logo
-{ width: 880px;
-  position: relative;
-  height: 140px;
-  background: transparent;}
+{
+	width: 880px;
+	position: relative;
+	height: 140px;
+	background-color: #323534;
+}
 
 #logo #logo_text 
 {
@@ -125,8 +127,8 @@ ol li
 #logo #billetin
 {
 	position: absolute;
-	top: 24px;
-	left: 24px;
+	top: 27px;
+	left: 35px;
 	width: 100px;
 	height: 100px;
 }
@@ -348,8 +350,6 @@ table tr th, table tr td
   text-align: left;}
   
 table tr td
-{
-	background: #FFFFFF;
-	color: #000000;
-	border-top: 1px solid #FFF;
-}
+{ background: #E5E5DB;
+  color: #47433F;
+  border-top: 1px solid #FFF;}
