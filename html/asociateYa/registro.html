@@ -8,7 +8,8 @@
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="style/css/style.css" />
-  <link rel="stylesheet" type="text/css" href="style/css/login.css" />
+  <!-- <meta charset="utf-8"> -->
+  <link rel="stylesheet" href="style/css/normalize.css">
 </head>
 
 <body>
@@ -47,18 +48,69 @@
         <p>&nbsp;</p>
         <p>&nbsp;</p>
       </div>
-      <div id="content">
+      <div class="content" id="reg_content">
         <!-- insert the page content here -->
-        <div id="login">
-          <h1>Registro</h1>
-  			<form>
-    			<input type="email" placeholder="E-mail" />
-    			<input type="password" placeholder="Password" />
-    			<input type="submit" value="Registrarse" />
-                
-          </form>  
-  			
-		</div>
+       <form action="index.html" method="post">
+      
+        <h1>Registro</h1>
+        
+        <fieldset>
+          <legend><span class="number">1</span>Informaci&oacute;n B&aacute;sica<br><br>
+          <label for="name">Nombre:</label>
+          <input type="text" class="cuadro_texto" id="name" name="user_name">
+          
+          <label for="mail">E-mail:</label>
+          <input type="email" id="mail" class="cuadro_texto" name="user_email">
+          
+          <label for="password">Password:</label>
+          <input type="password" id="password" class="cuadro_texto" name="user_password">
+          
+          <label>Sexo:</label>
+          <input type="radio" id="under_13" value="under_13" name="user_age">
+          <label for="under_13" class="light">Masculino</label><br>
+          <input type="radio" id="over_13" value="over_13" name="user_age">
+          <label for="over_13" class="light">Femenino</label></legend></fieldset>
+        
+        <fieldset>
+          <legend><span class="number">2</span>Tu perfil<br><br>
+          <label for="bio">Biograf&iacute;a:</label>
+          <textarea id="bio" class="cuadro_texto" name="user_bio"></textarea>
+        </legend></fieldset>
+        <fieldset>
+        <label for="job">Area Laboral:</label>
+        <select id="job" name="user_job">
+          <optgroup label="Desarrollo Web">
+            <option value="frontend_developer">Desarrollador Front-End</option>
+            <option value="php_developor">Desarrollador PHP</option>
+            <option value="python_developer">Desarrollador Python</option>
+            <option value="rails_developer">Desarrollador Rails</option>
+            <option value="web_designer">Diseñador Web</option>
+            <option value="WordPress_developer">Desarrollador WordPress</option>
+          </optgroup>
+          <optgroup label="Mobile">
+            <option value="Android_developer">Desarrollador Androild</option>
+            <option value="iOS_developer">Desarrollador iOS</option>
+            <option value="mobile_designer">Diseñador movile</option>
+          </optgroup>
+          <optgroup label="Negocios">
+            <option value="business_owner">Negocio propio</option>
+            <option value="freelancer">Freelancer</option>
+          </optgroup>
+          <optgroup label="Otros">
+            <option value="secretary">Secretaría</option>
+            <option value="maintenance">Mantenimiento</option>
+          </optgroup>
+        </select>
+        
+          <label>Intereses:</label>
+          <input type="checkbox" id="development" value="interest_development" name="user_interest"><label class="light" for="development">Desarrollo</label><br>
+            <input type="checkbox" id="design" value="interest_design" name="user_interest"><label class="light" for="design">Diseño</label><br>
+          <input type="checkbox" id="business" value="interest_business" name="user_interest"><label class="light" for="business">Negocios</label>
+        
+        </fieldset>
+        <button type="submit">Registrarme</button>
+      </form>
+        
 
 	</div>
     </div>
