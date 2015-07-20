@@ -1,3 +1,10 @@
+desarrollo_federico:
+    resource: "@asociateyaBundle/Resources/config/federicoRouting.yml"
+    prefix:   /
+
 asociateya_homepage:
     path:     /hello/{name}
     defaults: { _controller: asociateyaBundle:Default:index }	
+
+
+

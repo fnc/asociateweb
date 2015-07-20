@@ -1,0 +1,4 @@
+wip_usuario_crear:
+    path:      /federico/Usuario/
+    defaults:  { _controller: asociateyaBundle:UsuarioAnonimo:crear }
+
