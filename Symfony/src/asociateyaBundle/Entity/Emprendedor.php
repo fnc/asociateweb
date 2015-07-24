@@ -17,6 +17,7 @@ class Emprendedor
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\OneToMany(targetEntity="DatosDeEmprendedor", mappedBy="emprendedor")
      */
     protected $id;
 
