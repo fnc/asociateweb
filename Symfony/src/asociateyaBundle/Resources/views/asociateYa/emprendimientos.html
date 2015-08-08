@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Emprendimientos - Asociate Ya!</title>
+  <link rel="shortcut icon" type="image/x-icon" href="style/Imagenes/iconito32.png" />
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="style/css/style.css" />
+  <link href="style/css/emprendimientos.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+    <div id="logo">
+        <div id="logo_izq">
+          <div id="imagen_logo"><img src="style/Imagenes/billetin.png" width="70" height="70"></div>
+          <div id="texto_logo"><img src="style/Imagenes/AsociateYa-logo.png" width="250" height="50">
+            <p>Crowdfounding Argentina</p>
+          </div>
+        </div>
+        <div id="logo_der">
+          <div id="boton_login">
+          	<a href="log_in.html" class="boton_ingresar">Ingresa</a>
+          </div>
+          <div id="boton_registro">
+          	<a href="registro.html" class="boton_registrar">Registrate</a>
+          </div>
+        </div>
+    </div>
+      <div id="menubar">
+        <ul id="menu">
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="index.html">Hogar</a></li>
+          <li class="selected"><a href="emprendimientos.html">Emprendimientos</a></li>
+          <li><a href="pagina_1.html">Pagina 1</a></li>
+          <li><a href="perfil.html">Mi Perfil</a></li>
+          <li><a href="AcercaDe.html">Acerca De</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="banner">51      </div>
+      <div class="sidebar" id="sidebar_container">
+      
+      	<!-- BUSCAR EMPRENDIMIENTOS -->
+	    <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Buscar</h3>
+            <form method="post" action="#" id="search_form">
+              <p>
+                <input class="search" type="text" name="search_field" value="" />
+                <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/Imagenes/search.png" alt="Search" title="Search" />
+              </p>
+            </form>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        
+        <!-- FILTRAR EMPRENDIMIENTOS -->
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+          	<h3>Filtrar</h3>
+            <form action="index.html" method="post">
+          		<label class="titulo">Áreas:</label><br>
+          		<input type="checkbox" id="animales" value="area_animales" name="area_emprendimiento" checked><label class="light" for="animales">Animales</label><br>
+                <input type="checkbox" id="arte" value="area_arte" name="area_emprendimiento" checked><label class="light" for="arte">Arte</label><br>
+                <input type="checkbox" id="deportes" value="area_deportes" name="area_emprendimiento" checked><label class="light" for="deportes">Deportes</label><br>
+                <input type="checkbox" id="caridad" value="area_caridad" name="area_emprendimiento" checked><label class="light" for="caridad">Caridad</label><br>
+                <input type="checkbox" id="comunidad" value="area_comunidad" name="area_emprendimiento" checked><label class="light" for="comunidad">Comunidad</label><br>
+                <input type="checkbox" id="competiciones" value="area_competiciones" name="area_emprendimiento" checked><label class="light" for="competiciones">Competiciones</label><br>
+                <input type="checkbox" id="educacion" value="area_educacion" name="area_emprendimiento" checked><label class="light" for="educacion">Educación</label><br>
+                <input type="checkbox" id="emergencias" value="area_emergencias" name="area_emprendimiento" checked><label class="light" for="emergencias">Emergencias</label><br>
+                <input type="checkbox" id="eventos" value="area_eventos" name="area_emprendimiento" checked><label class="light" for="eventos">Eventos</label><br>
+                <input type="checkbox" id="fe" value="area_fe" name="area_emprendimiento" checked><label class="light" for="fe">Fe</label><br>
+                <input type="checkbox" id="familia" value="area_familia" name="area_emprendimiento" checked><label class="light" for="familia">Familia</label><br>
+                <input type="checkbox" id="juegos" value="area_juegos" name="area_emprendimiento" checked><label class="light" for="juegos">Juegos</label><br>
+                <input type="checkbox" id="medicina" value="area_medicina" name="area_emprendimiento" checked><label class="light" for="medicina">Medicina</label><br>
+                <input type="checkbox" id="musica" value="area_musica" name="area_emprendimiento" checked><label class="light" for="musica">Música</label><br>
+                <input type="checkbox" id="negocios" value="area_negocios" name="area_emprendimiento" checked><label class="light" for="negocios">Negocios</label><br>
+                <input type="checkbox" id="noticias" value="area_noticias" name="area_emprendimiento" checked><label class="light" for="noticias">Noticias Nacionales</label><br>
+                <input type="checkbox" id="tecnologia" value="area_tecnologia" name="area_emprendimiento" checked><label class="light" for="tecnologia">Tecnologia</label><br>
+                <input type="checkbox" id="viajes" value="area_viajes" name="area_emprendimiento" checked><label class="light" for="viajes">Viajes</label><br>
+                <input type="checkbox" id="voluntariado" value="area_voluntariado" name="area_emprendimiento" checked><label class="light" for="voluntariado">Voluntariado</label><br><br>
+
+                <label class="titulo">Fecha de creación:</label><br>
+          		<input type="radio" id="fecha_ayer" value="fecha_ayer" name="fecha_creacion">
+          			<label for="fecha_ayer" class="light">Ayer</label><br>
+          		<input type="radio" id="menor_3_dias" value="fecha_menor_3_dias" name="fecha_creacion">
+          			<label for="menor_3_dias" class="light">Menor a 3 días</label><br>
+                <input type="radio" id="menor_semana" value="fecha_menor_semana" name="fecha_creacion">
+          			<label for="menor_semana" class="light">Menor a 1 semana</label><br>
+                <input type="radio" id="menor_15_dias" value="fecha_menor_15_dias" name="fecha_creacion">
+          			<label for="menor_15_dias" class="light">Menor a 15 días</label><br>
+                <input type="radio" id="menor_mes" value="fecha_menor_mes" name="fecha_creacion">
+          			<label for="menor_mes" class="light">Menor a 1 mes</label><br>
+                <input type="radio" id="menor_3_meses" value="fecha_menor_3_meses" name="fecha_creacion">
+          			<label for="menor_3_meses" class="light">Menor a 3 meses</label><br>
+                <input type="radio" id="menor_anio" value="fecha_menor_anio" name="fecha_creacion">
+          			<label for="menor_anio" class="light">Menor a 1 año</label><br>
+                <input type="radio" id="fecha_todos" value="fecha_todos" name="fecha_creacion" checked="checked">
+          			<label for="fecha_todos" class="light">Todos</label><br><br>
+
+				<label class="titulo">Ordenar por:</label><br>
+          		<input type="radio" id="popularidad" value="orden_popularidad" name="ordenamiento">
+          			<label for="popularidad" class="light">Popularidad</label><br>
+          		<input type="radio" id="publicacion" value="orden_publicacion" name="ordenamiento">
+          			<label for="publicacion" class="light">Fecha de publicación</label><br>
+                <input type="radio" id="finalizacion" value="orden_finalizacion" name="ordenamiento">
+          			<label for="finalizacion" class="light">Fecha de finalización</label><br>
+                <input type="radio" id="monto" value="orden_monto" name="ordenamiento">
+          			<label for="monto" class="light">Monto de financiación</label><br>
+                <input type="radio" id="azar" value="orden_azar" name="ordenamiento" checked="checked">
+          			<label for="azar" class="light">Azar</label><br>
+
+        		<br><button type="submit" id="boton_submit">Aplicar</button>
+      		</form>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <!-- OTRO SIDE BOX
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Ordenar</h3>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        -->
+      </div>
+
+      
+      <div class="content" id="emp_content">
+        <h1>Emprendimientos</h1>
+        <!-- EMPIEZA EL PORTAFOLIO -->
+        <div id="portfolio_container">
+            <ul>
+            	<div class="elemento_portfolio"><li><a href="pagina_1.html" class="link">
+                	<div class="imagen_elemento">
+                    <img src="style/Imagenes/portfolio/imagen1.png" width="130" height="130"></div>
+                  <div class="texto_elemento">
+                   	<div class="titulo_texto">Este es el t&iacute;tulo del emprendimiento</div>
+                    <div class="descripcion_texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, turpis sed venenatis sodales, justo mi luctus velit, ornare imperdiet felis urna ac nunc. Donec in dapibus ante. Aliquam dapibus ultricies dolor.</div>	
+                    <div class="creador_elemento">Creado por Hernán Budic el 06/08/2015</div>
+                  </div>
+                </a></li></div>
+                
+                <div class="elemento_portfolio"><li><li><a href="pagina_1.html" class="link">
+                	<div class="imagen_elemento">
+                    <img src="style/Imagenes/portfolio/imagen2.png" width="130" height="130"></div>
+                  <div class="texto_elemento">
+                   	<div class="titulo_texto">Este es un segundo emprendimiento con un título bien largo pero que no significa nada jejeje!</div>
+                    <div class="descripcion_texto">Esta es la descripci&oacute;n corta del emprendimiento.</div>
+                    <div class="creador_elemento">Creado por Hernán Budic el 05/08/2015</div>
+                  </div>
+                </a></li></div>
+                
+                <div class="elemento_portfolio"><li><li><a href="pagina_1.html" class="link">
+                	<div class="imagen_elemento">
+                    <img src="style/Imagenes/portfolio/imagen3.png" width="130" height="130"></div>
+                  <div class="texto_elemento">
+                   	<div class="titulo_texto">La tercera es la vencida</div>
+                    <div class="descripcion_texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, turpis sed venenatis sodales, justo mi luctus velit, ornare imperdiet felis urna ac nunc. Donec in dapibus ante. Aliquam dapibus ultricies dolor.</div>
+                    <div class="creador_elemento">Creado por Pepito Juarez el 03/08/2015</div>
+                  </div>
+                </a></li></div>
+            </ul>
+            <!--REFER TO THE js/drifolio.js-->
+        </div><!-- TERMINA EL PORTAFOLIO -->
+      </div>
+    </div>
+    <div id="footer">
+      <p><a href="index.html">Home</a> | <a href="emprendimientos.html">Emprendimientos</a> | <a href="pagina_1.html">Pagina 1</a> | <a href="perfil.html">Mi Perfil</a> | <a href="AcercaDe.html">Acerca De</a></p>
+      <p>Proyecto final UTN - AsociateYa</p>
+    </div>
+  </div>
+</body>
+</html>

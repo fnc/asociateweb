@@ -3,8 +3,9 @@ desarrollo_federico:
     prefix:   /
 
 asociateya_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: asociateyaBundle:Default:index }	
+    path:     /
+    defaults: { _controller: asociateyaBundle:Default:index }
+
 
 
 
