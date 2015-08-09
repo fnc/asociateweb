@@ -5,7 +5,11 @@ desarrollo_federico:
 asociateya_homepage:
     path:     /
     defaults: { _controller: asociateyaBundle:Default:index }
-
-
-
-
+    
+asociateya_formularioRegistrarse:
+    path:     /unirse
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:formularioRegistro }
+    
+asociateya_registrar:
+    path:     /registrar
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:registrarUsuario }

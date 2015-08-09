@@ -1,0 +1,31 @@
+Algunos archivos dle proyecto estan en el ingoner asi que cuando lo bajo en una maquina nueva voy a la carpeta del proyecto (el nuestro se llama "Symfony", esta en var/www) y ejecuto sudo composer update y me crea todo
+
+despues sudo php app/console server:run para que se ejecute el servidor de este proyecto
+
+
+base de datos:
+
+$mysql --pasword = asociateya
+
+
+los datos de la db losp ongo en parameters.yml
+
+$ php app/console doctrine:database:drop --force
+$ php app/console doctrine:database:create
+
+
+Entidades:
+
+php app/console doctrine:generate:entity
+getters y setters:
+php app/console doctrine:generate:entities AppBundle/Entity/Product
+
+actualizar db
+php app/console doctrine:schema:update --force
+
+
+
+
+Para instalar los assets(instala en symfony/web/bundles  los resources/public de cada bundle )
+
+php app/console assets:install --symlink

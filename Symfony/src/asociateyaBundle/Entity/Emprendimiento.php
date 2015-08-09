@@ -280,4 +280,3 @@ class Emprendimiento
         return $this->accionesRestantes;
     }
 }
-

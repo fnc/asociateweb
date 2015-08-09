@@ -280,4 +280,3 @@ class DatosDeUsuario
         return $this->cuit;
     }
 }
-

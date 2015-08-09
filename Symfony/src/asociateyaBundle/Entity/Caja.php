@@ -125,4 +125,3 @@ class Caja
         return $this->fechaCobro;
     }
 }
-
