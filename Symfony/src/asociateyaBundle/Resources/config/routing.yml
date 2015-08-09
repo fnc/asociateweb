@@ -7,9 +7,9 @@ asociateya_homepage:
     defaults: { _controller: asociateyaBundle:Default:index }
     
 asociateya_formularioRegistrarse:
-    path:     /unirse
+    path:     /registrar
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:formularioRegistro }
     
 asociateya_registrar:
-    path:     /registrar
+    path:     /registrar/crear
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:registrarUsuario }

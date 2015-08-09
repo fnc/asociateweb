@@ -6,6 +6,9 @@ use asociateyaBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use asociateyaBundle\Form\Type\RegistracionType;
+use asociateyaBundle\Form\Model\Registracion;
+
 // ...
 
 
@@ -14,7 +17,12 @@ class UsuarioAnonimoController extends Controller
 	
 public function formularioRegistroAction()
 {
-     return $this->render('asociateyaBundle:asociateYa:registro.html.twig');// array('name' => $name));
+        $registracion = new Registracion();
+        $form = $this->createForm(new RegistracionType(), $registracion, array(
+            'action' => $this->generateUrl('asociateya_registrar'),
+        ));
+    
+     return $this->render('asociateyaBundle:asociateYa:registro.html.twig',array('form' => $form->createView()));
     
 }
 
