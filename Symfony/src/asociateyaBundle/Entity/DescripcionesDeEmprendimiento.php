@@ -125,4 +125,3 @@ class DescripcionesDeEmprendimiento
         return $this->rutaRecurso;
     }
 }
-

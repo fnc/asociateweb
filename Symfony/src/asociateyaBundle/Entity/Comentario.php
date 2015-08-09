@@ -94,4 +94,3 @@ class Comentario
         return $this->texto;
     }
 }
-

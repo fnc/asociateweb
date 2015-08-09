@@ -3,8 +3,13 @@ desarrollo_federico:
     prefix:   /
 
 asociateya_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: asociateyaBundle:Default:index }	
-
-
-
+    path:     /
+    defaults: { _controller: asociateyaBundle:Default:index }
+    
+asociateya_formularioRegistrarse:
+    path:     /registrar
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:formularioRegistro }
+    
+asociateya_registrar:
+    path:     /registrar/crear
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:registrarUsuario }

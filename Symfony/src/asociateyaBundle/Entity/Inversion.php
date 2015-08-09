@@ -125,4 +125,3 @@ class Inversion
         return $this->monto;
     }
 }
-

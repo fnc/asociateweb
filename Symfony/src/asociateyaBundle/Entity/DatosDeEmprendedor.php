@@ -94,4 +94,3 @@ class DatosDeEmprendedor
         return $this->fechaConjuntoDatos;
     }
 }
-
