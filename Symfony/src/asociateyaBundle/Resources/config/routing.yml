@@ -13,3 +13,7 @@ asociateya_formularioRegistrarse:
 asociateya_registrar:
     path:     /registrar/crear
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:registrarUsuario }
+
+asociateya_registrar_exito:
+    path:     /registrar/exito
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:exitoRegistro }

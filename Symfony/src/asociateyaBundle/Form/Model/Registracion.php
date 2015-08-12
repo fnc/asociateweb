@@ -12,7 +12,7 @@ class Registracion
      * @Assert\Type(type="asociateyaBundle\Entity\Usuario")
      * @Assert\Valid()
      */
-    protected $user;
+    protected $usuario;
 
     /**
      * @Assert\NotBlank()
@@ -20,14 +20,14 @@ class Registracion
      */
     protected $termsAccepted;
 
-    public function setUser(Usuario $user)
+    public function setUsuario(Usuario $usuario)
     {
-        $this->user = $user;
+        $this->usuario = $usuario;
     }
 
-    public function getUser()
+    public function getUsuario()
     {
-        return $this->user;
+        return $this->usuario;
     }
 
     public function getTermsAccepted()

@@ -43,6 +43,15 @@
 	margin-left: 5px;
 	position: relative;
 }
+
+#portfolio_container a:hover {
+	color: #999;
+}
+
+#portfolio_container img:hover {
+	opacity: .7;
+}
+
 .creador_elemento {
 	margin-top: 5px;
 	margin-right: 5px;
@@ -52,6 +61,7 @@
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	font-size: 12px;
+	width: 236px;
 }
 
 .descripcion_texto {
@@ -71,6 +81,7 @@
 	width: 130px;
 }
 
+
 #portfolio_container ul {
 	list-style-type: none;
 	padding:0; margin:0;
@@ -85,17 +96,43 @@
 	margin-top: 30px;
 }
 
-.link
+.link_texto_emprendimiento
 {
    color:#333;
    text-decoration: none; 
    background-color: none;
 }
 
-.link a:link {
+.link_texto_emprendimiento a:link {
    color:inherit;
 }
 
-.link a:active {
+.link_texto_emprendimiento a:active {
     color: none;
+}
+
+/*MIS EMPRENDIMIENTOS*/
+
+.img_emp {
+	float: right;
+	width: 222px;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+.texto_emp {
+	width: 620px;
+	margin: 0px;
+	float: left;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+}
+
+.emp_participo {
+	overflow: hidden;
+	float: left;
+	width: 880px;
+	padding: 0px;
 }

@@ -33,8 +33,10 @@ h1, h2, h3
   color: #000;}
 
 h2
-{ font-size: 160%;
-  color: #009FBC;}
+{
+	font-size: 135%;
+	color: #000000;
+}
 
 h3
 { font-size: 140%;
@@ -299,9 +301,18 @@ ul#menu li a:hover
 
 /*BARRAS DERECHA*/
 
+.img_container img:hover {
+	opacity: .7;
+	-webkit-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+}
+
 #sidebar_container
-{ float: right;
-  width: 224px;}
+{
+	float: right;
+	width: 224px;
+	height: auto;
+}
 
 .sidebar_top
 { width: 222px;
@@ -349,6 +360,8 @@ ul#menu li a:hover
 .sidebar ul
 { margin: 0;} 
 
+
+/*BOTONES*/
 #boton_submit {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;

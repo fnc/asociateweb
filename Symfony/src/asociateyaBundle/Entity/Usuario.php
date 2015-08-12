@@ -27,7 +27,7 @@ class Usuario
     protected $datosDeUsuario;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $fechaCreacion;
     
@@ -52,7 +52,9 @@ class Usuario
     public function __construct()
     {
         $this->datosDeUsuario = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fechaCreacion = new \DateTime(); 
     }
+    
 
     /**
      * Get id
@@ -76,6 +78,14 @@ class Usuario
         $this->fechaCreacion = $fechaCreacion;
 
         return $this;
+    }
+    
+    /**
+    * @ORM\PrePersist
+    */
+    public function onPrePersistSetfechaCracion()
+    {
+        $this->fechaCreacion = new \DateTime();
     }
 
     /**

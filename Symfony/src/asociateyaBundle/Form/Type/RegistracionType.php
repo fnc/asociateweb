@@ -9,7 +9,7 @@ class RegistracionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', new UsuarioType());
+        $builder->add('usuario', new UsuarioType());
         $builder->add(
             'Acepto_los_terminos_de_uso_de_AsociateYa',
             'checkbox',
