@@ -1,16 +1,26 @@
-// src/AppBundle/Controller/usuarioanonimoController.php
-
+<?php
+// src/asociateyaBundle/Controller/UsuarioAnonimoController.php
+namespace asociateyaBundle\Controller;
 // ...
-use AppBundle\Entity\Usuario;
+use asociateyaBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 // ...
-public function createAction()
+
+
+class UsuarioAnonimoController extends Controller
+{
+
+
+public function crearAction()
 {
     $nuevoUsuario = new Usuario();
-    $nuevoUsuario->setNombre('A Foo Bar');
-    //$nuevoUsuario->setPrice('19.99');
-    //$nuevoUsuario->setDescription('Lorem ipsum dolor');
+    $nuevoUsuario->setNombre('federico');
+    $nuevoUsuario->setApellido('croci');
+    $nuevoUsuario->setMail('fede@rico.com');
+	$nuevoUsuario->setPassword('qwerty');
+$nuevoUsuario->setDni('3516465');
 
     $em = $this->getDoctrine()->getManager();
 
@@ -18,4 +28,5 @@ public function createAction()
     $em->flush();
 
     return new Response('Se creo un nuevo usuario id '.$nuevoUsuario->getId());
+}
 }
