@@ -2,12 +2,14 @@
 <html>
 
 <head>
-  <title>Pagina 1 - Asociate Ya!</title>
+  <title>Emprendimientos - Asociate Ya!</title>
   <link rel="shortcut icon" type="image/x-icon" href="../style/Imagenes/iconito32.png" />
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="../style/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../style/css/view.css" media="all">
+<script type="text/javascript" src="../lib/js/view.js"></script>
 </head>
 
 <body>
@@ -28,8 +30,8 @@
           	<a href="registro.html" class="boton_registrar">Registrate</a>
           </div>
         </div>
-      </div>
-      <div id="menubar">
+    </div>
+	<div id="menubar">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
           <li><a href="mis_emprendimientos.html">Mis Emprendimientos</a></li>
@@ -42,14 +44,102 @@
     <div id="content_header"></div>
     <div id="site_content">
       <div id="banner"></div>
-      <div class="content">
-        <!-- insert the page content here -->
-        <h1>ACA SE CREAN LOS EMPRENDIMIENTOS! :D</h1>
-        <p>--PROXIMAMENTE--</p>
+      <div class="sidebar" id="sidebar_container">
+        
+        <!-- FILTRAR EMPRENDIMIENTOS -->
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+          	<h3>Selecciona</h3>
+            <fieldset form="formulario_proyecto">
+          		<label class="titulo">Áreas:</label><br>
+          		<input type="checkbox" id="animales" value="area_animales" name="area_emprendimiento"><label class="light" for="animales">Animales</label><br>
+                <input type="checkbox" id="arte" value="area_arte" name="area_emprendimiento"><label class="light" for="arte">Arte</label><br>
+                <input type="checkbox" id="deportes" value="area_deportes" name="area_emprendimiento"><label class="light" for="deportes">Deportes</label><br>
+                <input type="checkbox" id="caridad" value="area_caridad" name="area_emprendimiento"><label class="light" for="caridad">Caridad</label><br>
+                <input type="checkbox" id="comunidad" value="area_comunidad" name="area_emprendimiento"><label class="light" for="comunidad">Comunidad</label><br>
+                <input type="checkbox" id="competiciones" value="area_competiciones" name="area_emprendimiento"><label class="light" for="competiciones">Competiciones</label><br>
+                <input type="checkbox" id="educacion" value="area_educacion" name="area_emprendimiento"><label class="light" for="educacion">Educación</label><br>
+                <input type="checkbox" id="emergencias" value="area_emergencias" name="area_emprendimiento"><label class="light" for="emergencias">Emergencias</label><br>
+                <input type="checkbox" id="eventos" value="area_eventos" name="area_emprendimiento"><label class="light" for="eventos">Eventos</label><br>
+                <input type="checkbox" id="fe" value="area_fe" name="area_emprendimiento"><label class="light" for="fe">Fe</label><br>
+                <input type="checkbox" id="familia" value="area_familia" name="area_emprendimiento"><label class="light" for="familia">Familia</label><br>
+                <input type="checkbox" id="juegos" value="area_juegos" name="area_emprendimiento"><label class="light" for="juegos">Juegos</label><br>
+                <input type="checkbox" id="medicina" value="area_medicina" name="area_emprendimiento"><label class="light" for="medicina">Medicina</label><br>
+                <input type="checkbox" id="musica" value="area_musica" name="area_emprendimiento"><label class="light" for="musica">Música</label><br>
+                <input type="checkbox" id="negocios" value="area_negocios" name="area_emprendimiento"><label class="light" for="negocios">Negocios</label><br>
+                <input type="checkbox" id="noticias" value="area_noticias" name="area_emprendimiento"><label class="light" for="noticias">Noticias Nacionales</label><br>
+                <input type="checkbox" id="tecnologia" value="area_tecnologia" name="area_emprendimiento"><label class="light" for="tecnologia">Tecnologia</label><br>
+                <input type="checkbox" id="viajes" value="area_viajes" name="area_emprendimiento"><label class="light" for="viajes">Viajes</label><br>
+                <input type="checkbox" id="voluntariado" value="area_voluntariado" name="area_emprendimiento"><label class="light" for="voluntariado">Voluntariado</label><br>
+      		</fieldset>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <!-- OTRO SIDE BOX
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Ordenar</h3>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        -->
+      </div>
+
+      
+      <div class="content" id="emp_content">
+        <h1>Crea un proyecto</h1>
+        <form id="formulario_proyecto" class="appnitro" method="post" action="">
+					<div class="form_description">
+			<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
+		</div>						
+			<ul >
+			
+					<li id="li_1" >
+		<label class="description" for="element_1">Título </label>
+		<div>
+			<input id="element_1" name="element_1" class="element text large" type="text" maxlength="80" value=""/> 
+		</div><p class="guidelines" id="guide_1"><small>Ingrese aquí el título del emprendimiento. Máximo 80 caracteres.</small></p> 
+		</li>		<li id="li_2" >
+		<label class="description" for="element_2">Descripción corta </label>
+		<div>
+			<textarea id="element_2" name="element_2" class="element textarea small" maxlength="230"></textarea> 
+		</div><p class="guidelines" id="guide_2"><small>Debe ser una pequeña y concisa descripción de su proyecto. Será lo que los usuarios verán primero al buscarlo. Máximo 230 caracteres.</small></p> 
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Descripción larga </label>
+		<div>
+			<textarea id="element_3" name="element_3" class="element textarea large"></textarea> 
+		</div><p class="guidelines" id="guide_3"><small>Descripción larga de su proyecto.</small></p> 
+		</li>		<li id="li_4" >
+		<label class="description" for="element_4">Monto requerido </label>
+		<span class="symbol">$</span>
+		<span>
+			<input id="element_4_1" name="element_4_1" class="element text currency" size="10" value="" type="text" /> .		
+			<label for="element_4_1">Dollares</label>
+		</span>
+		<span>
+			<input id="element_4_2" name="element_4_2" class="element text" size="2" maxlength="2" value="" type="text" />
+			<label for="element_4_2">Centavos</label>
+		</span>
+		<p class="guidelines" id="guide_4"><small>Ingrese cuanto dinero necesita para poder llevar a cabo su proyecto. El valor está en dólares.</small></p> 
+		</li>        <li id="li_5" >
+		<label class="description" for="element_5">Subir archivo </label>
+		<div>
+			<input id="element_5" name="element_5" class="element text" size="2" maxlength="2" value="" type="file" />
+		</div><p class="guidelines" id="guide_5"><small>Adjunte archivos en formato PDF para explicar mas fondo su proyecto.</small></p> 
+		</li>
+		<li class="buttons">
+		    <input type="hidden" name="form_id" value="1045194" />
+            <!--Viejo id="saveForm"-->
+			</br></br><input id="boton_submit" class="button_text" type="submit" name="submit" value="Aplicar" />
+			</li>
+			</ul>
+		</form>	
       </div>
     </div>
     <div id="footer">
-      <p><a href="../index.html">Home</a> | <a href="mis_emprendimientos.html">Mis Emprendimientos</a> | <a href="buscar_emprendimientos.html">Buscar Emprendimientos</a> | <a href="perfil.html">Mi Perfil</a> | <a href="AcercaDe.html">Acerca De</a></p>
+      <p><a href="../index.html">Home</a> | <a href="mis_emprendimientos.html">Mis Emprendimientos</a> | <a href="../emprendimientos.html">Buscar Emprendimientos</a> | <a href="perfil.html">Mi Perfil</a> | <a href="AcercaDe.html">Acerca De</a></p>
       <p>Proyecto final UTN - AsociateYa</p>
     </div>
   </div>
