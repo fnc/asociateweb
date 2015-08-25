@@ -1,0 +1,4 @@
+# app/config/services.yml
+services:
+    asociateya_user_provider:
+        class: asociateyaBundle\Security\User\AsociateyaUserProvider
