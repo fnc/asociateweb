@@ -6,13 +6,16 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use asociateyaBundle\Entity\Usuario;
 
 class AsociateyaUserProvider implements UserProviderInterface
 {
     public function loadUserByUsername($username)
     {
         // make a call to your webservice here
-        $userData = ...
+        $userData = $this->getDoctrine()
+        ->getRepository('asociateyaBundle:Usuario')
+        ->find($id);
         // pretend it returns an array on success, false if there is no user
 
         if ($userData) {
