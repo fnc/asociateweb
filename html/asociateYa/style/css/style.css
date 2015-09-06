@@ -602,3 +602,10 @@ ul#menu li a:hover
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+
+iframe {
+	display: block;
+	margin: 0 auto;	
+}.archivos_subidos {
+	margin-left: 40px;
+}
