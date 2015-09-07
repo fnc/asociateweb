@@ -15,11 +15,11 @@ class AsociateyaUserProvider implements UserProviderInterface
         // make a call to your webservice here
         $userData = $this->getDoctrine()
         ->getRepository('asociateyaBundle:Usuario')
-        ->find($id);
+        ->findOneByNombreUsuario($username);
         // pretend it returns an array on success, false if there is no user
 
         if ($userData) {
-            $password = '...';
+            $password = $userData->getContrasena();
 
             // ...
 

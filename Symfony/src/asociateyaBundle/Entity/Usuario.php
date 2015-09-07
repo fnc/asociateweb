@@ -6,13 +6,14 @@ namespace asociateyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;//para usar arrays
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="asociateyaBundle\Entity\UserRepository")
  * @ORM\Table(name="usuarios")
  */
 
-class Usuario
+class Usuario implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -20,7 +21,7 @@ class Usuario
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
- 
+
     /**
      * @ORM\OneToMany(targetEntity="DatosDeUsuario", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
      */
@@ -31,19 +32,24 @@ class Usuario
      */
     protected $fechaCreacion;
     
-        /**
+    /**
      * @var string
      *
      * @ORM\Column(name="nombreUsuario", type="string", length=255)
      */
-    private $nombreUsuario;
-    
-            /**
+        private $nombreUsuario;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="contrasena", type="string", length=255)
      */
-    private $contrasena;
+            private $contrasena;
+
+     /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+     private $isActive;
 
 
     /**
@@ -52,9 +58,64 @@ class Usuario
     public function __construct()
     {
         $this->datosDeUsuario = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->fechaCreacion = new \DateTime(); 
+        $this->fechaCreacion = new \DateTime();
+        $this->isActive = true;
     }
     
+    #interfaz UserInterface
+    public function getUsername()
+    {
+        return $this->nombreUsuario;
+    }
+
+    #interfaz UserInterface
+    public function getPassword()
+    {
+        return $this->contrasena;
+    }
+    
+    #interfaz UserInterface
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    #interfaz UserInterface
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+    
+    #interfaz UserInterface
+    public function eraseCredentials()
+    {
+    }
+    
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->nombreUsuario,
+            $this->contrasena,
+            // see section on salt below
+            // $this->salt,
+            ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->nombreUsuario,
+            $this->contrasena,
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized);
+    }
 
     /**
      * Get id
@@ -131,8 +192,9 @@ class Usuario
      */
     public function setContrasena($contrasena)
     {
-        $this->contrasena = $contrasena;
 
+        $this->contrasena = $contrasena;
+        
         return $this;
     }
 
@@ -178,5 +240,29 @@ class Usuario
     public function getDatosDeUsuario()
     {
         return $this->datosDeUsuario;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Usuario
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

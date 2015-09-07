@@ -1,7 +1,9 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        asociateyaBundle\Security\User\AsociateyaUser: sha512
+        #asociateyaBundle\Entity\Usuario: plaintext
+        asociateyaBundle\Entity\Usuario:
+            algorithm: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -13,8 +15,13 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-        asociateya:
-            id: asociateya_user_provider
+        asociateya_provider:
+            entity:
+                class: asociateyaBundle:Usuario
+                property: nombreUsuario
+                #va el nombre del atributo, no de la propiedad
+                # if you're using multiple entity managers
+                # manager_name: customer
 
     firewalls:
         dev:
@@ -24,6 +31,18 @@ security:
 #        login:
 #            pattern:  ^/demo/secured/login$
 #            security: false
+        registrar:
+            pattern:  ^/registrar$
+            security: false
+        registrarCrear:
+            pattern:  ^/registrar/crear$
+            security: false
+        registrarExito:
+            pattern:  ^/registrar/exito$
+            security: false
+        ingresar:
+            pattern:  ^/ingresar$
+            security: false
 #
 #        secured_area:
 #            pattern:    ^/demo/secured/
@@ -37,7 +56,10 @@ security:
             #http_basic:
             #    realm: "Secured Demo Area"
         default:
-            anonymous: ~
+            pattern:    ^/
+            http_basic: ~
+            provider: asociateya_provider
+            #anonymous: ~
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
