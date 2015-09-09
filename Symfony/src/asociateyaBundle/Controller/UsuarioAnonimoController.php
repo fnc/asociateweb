@@ -64,20 +64,46 @@ class UsuarioAnonimoController extends Controller
         
     }
 
-    public function crearAction()
+    public function ingresarAction(Request $request)
     {
-        $nuevoUsuario = new Usuario();
-        $nuevoUsuario->setNombre('Franco');
-        $nuevoUsuario->setApellido('croci');
-        $nuevoUsuario->setMail('fede@rico.com');
-        $nuevoUsuario->setPassword('qwerty');
-        $nuevoUsuario->setDni('3516465');
-        $nuevoUsuario->setCuit('123123123');
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($nuevoUsuario);
-        $em->flush();
+       $authenticationUtils = $this->get('security.authentication_utils');
 
-        return new Response('Se creo un nuevo usuario id '.$nuevoUsuario->getId());
-    }
+    // get the login error if there is one
+       $error = $authenticationUtils->getLastAuthenticationError();
+
+    // last username entered by the user
+       $lastUsername = $authenticationUtils->getLastUsername();
+
+       return $this->render(
+        'asociateyaBundle:asociateYa:log_in.html.twig',
+        array(
+            // last username entered by the user
+            'last_username' => $lastUsername,
+            'error'         => $error,
+            )
+        );
+   }
+
+   public function exitoIngresarAction()
+   {
+        // this controller will not be executed,
+        // as the route is handled by the Security system
+   }
+
+   public function crearAction()
+   {
+    $nuevoUsuario = new Usuario();
+    $nuevoUsuario->setNombre('Franco');
+    $nuevoUsuario->setApellido('croci');
+    $nuevoUsuario->setMail('fede@rico.com');
+    $nuevoUsuario->setPassword('qwerty');
+    $nuevoUsuario->setDni('3516465');
+    $nuevoUsuario->setCuit('123123123');
+    $em = $this->getDoctrine()->getManager();
+    $em->persist($nuevoUsuario);
+    $em->flush();
+
+    return new Response('Se creo un nuevo usuario id '.$nuevoUsuario->getId());
+}
 }
 ?>

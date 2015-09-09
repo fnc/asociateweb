@@ -17,3 +17,11 @@ asociateya_registrar:
 asociateya_registrar_exito:
     path:     /registrar/exito
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:exitoRegistro }
+
+asociateya_ingresar:
+    path:     /ingresar
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:ingresar }
+
+asociateya_ingresar_exito:
+    path:     /ingresar_exito
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:exitoIngresar }

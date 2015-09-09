@@ -58,10 +58,13 @@ security:
         default:
             pattern:    ^/
             http_basic: ~
+            form_login:
+                login_path: /ingresar
+                check_path: /ingresar_exito
             provider: asociateya_provider
             #anonymous: ~
 
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/ingresar, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         
    
