@@ -5,11 +5,11 @@ desarrollo_federico:
 asociateya_homepage:
     path:     /
     defaults: { _controller: asociateyaBundle:Default:index }
-    
+
 asociateya_formularioRegistrarse:
     path:     /registrar
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:formularioRegistro }
-    
+
 asociateya_registrar:
     path:     /registrar/crear
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:registrarUsuario }
@@ -25,3 +25,7 @@ asociateya_ingresar:
 asociateya_ingresar_exito:
     path:     /ingresar_exito
     #este path no tiene controller, lo maneja el sistema de seguridad
+
+asociateya_salir:
+    path: /salir
+    #este path lo maneja el sistema de seguridad

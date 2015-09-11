@@ -10,6 +10,9 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
+        #agregado para definir puertos
+        http_port: 8000
+        https_port: 1443
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
