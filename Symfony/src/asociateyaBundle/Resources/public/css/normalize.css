@@ -19,9 +19,9 @@ h1 {
 
 input[type="text"],
 input[type="password"],
+input[type="username"],
 input[type="date"],
 input[type="datetime"],
-input[type="email"],
 input[type="number"],
 input[type="search"],
 input[type="tel"],
@@ -50,9 +50,10 @@ input[type="text"] {
 input[type="password"] {
     width: 450px;
 }
-input[type="email"] {
+input[type="username"] {
     width: 450px;
 }
+
 .cuadro_texto {
     width: 450px;
 }

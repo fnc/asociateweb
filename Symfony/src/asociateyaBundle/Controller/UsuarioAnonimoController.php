@@ -84,11 +84,6 @@ class UsuarioAnonimoController extends Controller
         );
    }
 
-   public function exitoIngresarAction()
-   {
-        // this controller will not be executed,
-        // as the route is handled by the Security system
-   }
 
    public function crearAction()
    {

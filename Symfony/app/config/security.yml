@@ -57,12 +57,12 @@ security:
             #    realm: "Secured Demo Area"
         default:
             pattern:    ^/
+            #anonymous: ~
             http_basic: ~
             form_login:
-                login_path: /ingresar
-                check_path: /ingresar_exito
+                login_path: asociateya_ingresar
+                check_path: asociateya_ingresar_exito
             provider: asociateya_provider
-            #anonymous: ~
 
     access_control:
         - { path: ^/ingresar, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

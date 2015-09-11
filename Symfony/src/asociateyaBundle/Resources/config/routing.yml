@@ -24,4 +24,4 @@ asociateya_ingresar:
 
 asociateya_ingresar_exito:
     path:     /ingresar_exito
-    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:exitoIngresar }
+    #este path no tiene controller, lo maneja el sistema de seguridad
