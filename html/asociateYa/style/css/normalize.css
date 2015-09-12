@@ -26,6 +26,7 @@ input[type="number"],
 input[type="search"],
 input[type="tel"],
 input[type="time"],
+input[type="username"],
 input[type="url"],
 textarea,
 select {
@@ -51,6 +52,9 @@ input[type="password"] {
     width: 450px;
 }
 input[type="email"] {
+    width: 450px;
+}
+input[type="username"] {
     width: 450px;
 }
 .cuadro_texto {

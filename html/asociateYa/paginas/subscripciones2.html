@@ -2,13 +2,14 @@
 <html>
 
 <head>
-  <title>Ingresa - Asociate Ya!</title>
+  <title>Subscribirse - Asociate Ya!</title>
   <link rel="shortcut icon" type="image/x-icon" href="../style/Imagenes/iconito32.png" />
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
+  <meta name="viewport" content="initial-scale=1">
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="../style/css/style.css" />
-  <link href="../style/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../style/css/forms.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -42,26 +43,37 @@
     </div>
     <div id="content_header"></div>
     <div id="site_content">
-      <div id="banner">
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-      </div>
+      <div id="banner"></div>
       <div class="content">
         <!-- insert the page content here -->
-        <div id="login">
-  			<form action="../index.html" method="post">
-            <h1>Log in</h1>
-    		<input type="username" placeholder="E-mail" />
-    		<input type="password" placeholder="Password" />
-    		<!-- <input type="submit" value="Ingresar" /> -->
-            <button type="submit">Ingresar</button>
-          </form>  
-  			
-		</div>
+        <h1>Apoya a &lt;NOMBRE DE PROYECTO&gt;</h1>
 
-	</div>
+    <div class="demo-container">
+    <h2>1) Ingrese tipo de apoyo y monto</h2>
+    <h2>2) Ingrese forma de pago</h2>
+        <div class="card-wrapper"></div>
+
+        <div class="form-container active">
+            <form action="" id="form1">
+              <input placeholder="Número de tarjeta" type="text" name="number">
+              <input placeholder="Nombre completo" type="text" name="name">
+              <input placeholder="Expiración (MM/YY)" type="text" name="expiry">
+              <input placeholder="CVC" type="text" name="cvc">
+            </form>
+        </div>
+        
     </div>
-    
+
+    <script src="../lib/js/card.js"></script>
+    <script>
+        new Card({
+            form: document.querySelector('form'),
+            container: '.card-wrapper'
+        });
+    </script>
+   	</div>
+      
+    </div>
     <div id="footer">
       <p><a href="../index.html">Home</a> | <a href="mis_emprendimientos.html">Mis Emprendimientos</a> | <a href="buscar_emprendimientos.html">Buscar Emprendimientos</a> | <a href="perfil.html">Mi Perfil</a> | <a href="AcercaDe.html">Acerca De</a></p>
       <p>Proyecto final UTN - AsociateYa</p>

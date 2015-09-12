@@ -9,10 +9,37 @@
   <meta name="viewport" content="initial-scale=1">
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="../style/css/style.css" />
-  <link href="../style/css/forms.css" rel="stylesheet" type="text/css">
+  <link href="../style/css/perfil.css" rel="stylesheet" type="text/css">
+  <link href="../style/css/formulario_asociacion.css" rel="stylesheet" type="text/css">
+  <!--
+  <script type="text/javascript">
+  function showValue(num){
+           var result = document.getElementById('result');     
+           result.innerHTML = num;
+  }
+  </script>
+  
+  -->
+  <script type='text/javascript' > 
+  var precioAccion = 250;
+  var nombreProyecto = "Abraxas";
+  var progresoBarra = 70;
+  var nombreCreador = "Hernán Budic";
+  var imagenProyecto = "imagen2.png";
+  </script>
+  
+  <script type="text/javascript">
+	function muestraPrecio() { 
+		var first = document.getElementById("textbox1").value;
+		var resultadoNumerico = parseFloat(first) * precioAccion || 0
+		var answer = "$" + resultadoNumerico;
+		var textbox2 = document.getElementById('textbox2');
+		textbox2.value=answer;
+ 	}
+   </script> 
 </head>
 
-<body>
+<body onload='init()'>
   <div id="main">
     <div id="header">
     <div id="logo">
@@ -44,34 +71,59 @@
     <div id="content_header"></div>
     <div id="site_content">
       <div id="banner"></div>
-      <div class="content">
-        <!-- insert the page content here -->
-        <h1>Apoya a &lt;NOMBRE DE PROYECTO&gt;</h1>
-
-    <div class="demo-container">
-    <h2>1) Ingrese tipo de apoyo y monto</h2>
-    <h2>2) Ingrese forma de pago</h2>
-        <div class="card-wrapper"></div>
-
-        <div class="form-container active">
-            <form action="" id="form1">
-              <input placeholder="Número de tarjeta" type="text" name="number">
-              <input placeholder="Nombre completo" type="text" name="name">
-              <input placeholder="Expiración (MM/YY)" type="text" name="expiry">
-              <input placeholder="CVC" type="text" name="cvc">
-            </form>
+	  <div id="sidebar_container">
+        <div class="sidebar" id="sideBarPerfil">
+          <div class="sidebar_top"></div>
+          <div id="sidebar_emprendimiento" class="sidebar_item">
+          	<div id="ID_imagenProyecto" class="image_holder">
+            	<img src="../style/Imagenes/portfolio/imagenEjemplo.png" width="180" height="180">
+            </div>
+          	<h2>Creado por:</h2>
+            <h1 id="ID_nombreCreador"><a href="perfil.html">&lt;Nombre Creador&gt;</a></h1>
+          </div>
+          <div class="sidebar_base"></div>
         </div>
-        
-    </div>
+        <div class="sidebar" id="sideBarPerfil">
+          <div class="sidebar_top"></div>
+          <div id="sidebar_emprendimiento" class="sidebar_item">
+          	<h3>Total recaudado</h3>
+          	<div id="ID_barraProgreso" class="progress"></div>
+            <br>
+            <h3>Precio de la acción</h3>
+            <h4 id="ID_precioAccion">&lt;precio&gt;</h4>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+	  </div>
+      <div class="content" id="pag2_content">
+        <!-- insert the page content here -->
+        <h1 id="ID_nombreProyecto">Asociate a &lt;Nombre del Proyecto&gt;</h1>
+		<form action="../index.html" method="post">
+         <h2>1) &iquest;Cu&aacute;nto desea inventir en este proyecto?</h2>
+         	<label for="textbox1">Ingrese la cantidad de acciones a comprar:</label>
+	 	  <input id="textbox1" type="text" onchange="muestraPrecio()"/>
+    		<br><br>
+            <label for="textbox2">El total invertido será de:</label>
+            <input id="textbox2" type="text" value="$0" readonly/>
+           	<br><br><br>
+           
+           	<h4 id="ID_precioAccion"></h4>
 
-    <script src="../lib/js/card.js"></script>
-    <script>
-        new Card({
-            form: document.querySelector('form'),
-            container: '.card-wrapper'
-        });
-    </script>
-   	</div>
+    		<!-- <input type="submit" value="Ingresar" /> -->
+        
+    	<h2>2) &iquest;C&oacute;mo quiere efectuar su pago?</h2>
+        
+        Aca iria un boto de mercado pago
+        
+ 
+        
+        	<br><br><br><input type="checkbox" name="checkbox" value="check" />
+        	Acepto los t&eacute;rminos y condiciones
+            
+            <br><br>
+          <input type="submit" name="email_submit" value="Aceptar" onclick="if(!this.form.checkbox.checked){alert('Debes aceptar los términos y condiciones para poder proseguir.');return false}"  />
+		</form>
+      </div>
       
     </div>
     <div id="footer">
@@ -79,5 +131,14 @@
       <p>Proyecto final UTN - AsociateYa</p>
     </div>
   </div>
+
+  <script type='text/javascript' > 
+  	document.getElementById("ID_precioAccion").innerHTML = "$" +  precioAccion;
+	document.getElementById("ID_nombreProyecto").innerHTML = "Asociate a " +  nombreProyecto;
+	document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + progresoBarra + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progresoBarra + '%">' + progresoBarra + '%</div>'
+	document.getElementById("ID_nombreCreador").innerHTML = '<a href="perfil.html">' + nombreCreador + '</a>';
+	document.getElementById("ID_imagenProyecto").innerHTML = '<img src="../style/Imagenes/portfolio/' + imagenProyecto + '" width="180" height="180">';
+  </script>
+  
 </body>
 </html>
