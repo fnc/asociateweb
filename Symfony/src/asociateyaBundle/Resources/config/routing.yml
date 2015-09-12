@@ -1,3 +1,7 @@
+asociateya_emprendedor:
+    resource: "@asociateyaBundle/Resources/config/routing/emprendedor.yml"
+    prefix:   /emprendedor
+
 desarrollo_federico:
     resource: "@asociateyaBundle/Resources/config/federicoRouting.yml"
     prefix:   /

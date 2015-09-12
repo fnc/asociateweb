@@ -28,6 +28,32 @@ class UsuarioAnonimoController extends Controller
         return $this->render('asociateyaBundle:asociateYa:registro.html.twig',array('form' => $form->createView()));
         
     }
+
+    public function modificacionUsuarioAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $usuario = new Usuario();
+        $form = $this->createForm(new RegistracionType(), new Registracion());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+        // perform some action...
+            $registracion = $form->getData();
+            $nuevoUsuario = $registracion->getUsuario();
+            
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($nuevoUsuario, $nuevoUsuario->getContrasena());
+            $nuevoUsuario->setContrasena($encoded);
+            $em->persist($nuevoUsuario);
+            $em->flush();
+
+            return $this->redirectToRoute('asociateya_registrar_exito');
+        }
+
+        return $this->render('asociateyaBundle:asociateYa:registro.html.twig',array('form' => $form->createView()));
+        
+    }
 	
     public function formularioRegistroAction()
     {
