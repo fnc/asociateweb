@@ -9,6 +9,7 @@
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="../style/css/style.css" />
   <link href="../style/css/perfil.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="../lib/js/datos_emprendimiento.js"></script>
 </head>
 
 <body>
@@ -47,10 +48,10 @@
         <div class="sidebar" id="sideBarPerfil">
           <div class="sidebar_top"></div>
           <div id="sidebar_emprendimiento" class="sidebar_item">
-          	<div class="image_holder"><img src="../style/Imagenes/portfolio/imagen1.png" width="180" height="180">
+          	<div id="ID_imagenProyecto" class="image_holder"><img src="../style/Imagenes/portfolio/imagenEjemplo.png" width="180" height="180">
             </div>
           	<h2>Creado por:</h2>
-            <h1><a href="perfil.html">Hernán Budic</a></h1>
+            <h1 id="ID_nombreCreador"><a href="perfil.html">&lt;Nombre Creador&gt;</a></h1>
           </div>
           <div class="sidebar_base"></div>
         </div>
@@ -58,14 +59,10 @@
           <div class="sidebar_top"></div>
           <div id="sidebar_emprendimiento" class="sidebar_item">
           	<h3>Total recaudado</h3>
-          	<div class="progress">
-    			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
-      60%
-    			</div>
-  			</div>
+          	<div id="ID_barraProgreso" class="progress"></div>
             <br>
             <h3>Precio de la acción</h3>
-            <h4>$230</h4>
+            <h4 id="ID_precioAccion">&lt;precio&gt;</h4>
           </div>
           <div class="sidebar_base"></div>
         </div>
@@ -75,7 +72,7 @@
 	  </div>
       <div class="content" id="pag2_content">
         <!-- insert the page content here -->
-        <h1>Este es el título del emprendimiento</h1>
+        <h1 id="ID_nombreProyecto">&lt;Nombre del Proyecto&gt;</h1>
         <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, turpis sed venenatis sodales, justo mi luctus velit, ornare imperdiet felis urna ac nunc. Donec in dapibus ante. Aliquam dapibus ultricies dolor.</h2>
         <p>Ac&aacute; va la descripción larga del emprendimiento....</p>
         <p>In quis condimentum dolor, in luctus nibh. Cras hendrerit tellus ante, eu auctor neque varius vel. Praesent pharetra euismod tellus et pretium. Nullam id tellus quis diam luctus fermentum. Mauris commodo ullamcorper fringilla. Nunc pharetra ut erat sit amet ultricies.</p>
@@ -99,5 +96,12 @@
       <p>Proyecto final UTN - AsociateYa</p>
     </div>
   </div>
+  <script type="text/javascript">
+	document.getElementById("ID_precioAccion").innerHTML = "$" +  precioAccion;
+	document.getElementById("ID_nombreProyecto").innerHTML = nombreProyecto;
+	document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + progresoBarra + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progresoBarra + '%">' + progresoBarra + '%</div>'
+	document.getElementById("ID_nombreCreador").innerHTML = '<a href="perfil.html">' + nombreCreador + '</a>';
+	document.getElementById("ID_imagenProyecto").innerHTML = '<img src="../style/Imagenes/portfolio/' + imagenProyecto + '" width="180" height="180">';
+  </script>
 </body>
 </html>
