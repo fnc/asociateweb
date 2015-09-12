@@ -9,12 +9,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 use asociateyaBundle\Form\Type\RegistracionType;
 use asociateyaBundle\Form\Model\Registracion;
+use asociateyaBundle\Form\Type\ModificacionUsuarioType;
+use asociateyaBundle\Form\Model\ModificacionUsuario;
 
 // ...
 
 
 class UsuarioAnonimoController extends Controller
 {
+
+    public function formularioModificacionUsuarioAction()
+    {
+        $modificacionUsuario = new ModificacionUsuario();
+        $form = $this->createForm(new ModificacionUsuarioType(), $modificacionUsuario, array(
+            'action' => $this->generateUrl('asociateya_registrar'),
+            ));
+        
+        return $this->render('asociateyaBundle:asociateYa:registro.html.twig',array('form' => $form->createView()));
+        
+    }
 	
     public function formularioRegistroAction()
     {

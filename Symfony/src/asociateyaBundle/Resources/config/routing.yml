@@ -6,6 +6,10 @@ asociateya_homepage:
     path:     /
     defaults: { _controller: asociateyaBundle:Default:index }
 
+asociateya_formularioModificacionUsuario:
+    path:     /modificarUsuario
+    defaults: { _controller: asociateyaBundle:UsuarioAnonimo:formularioModificacionUsuario }
+
 asociateya_formularioRegistrarse:
     path:     /registrar
     defaults: { _controller: asociateyaBundle:UsuarioAnonimo:formularioRegistro }
