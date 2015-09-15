@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <title>Hogar - Asociate Ya!</title>
+  <title>{% block title %}{% endblock %}- Asociate Ya!</title>
+  {% block stylesheets %}{% endblock %}
   <link rel="shortcut icon" type="image/x-icon" href={{ asset('bundles/asociateya/Imagenes/iconito32.png')}} />
   <link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
   <meta name="description" content="website description" />
@@ -14,23 +15,27 @@
   <div id="main">
     <div id="header">
       <div id="logo">
-        <div id="logo_izq"><a href="index.html">
+        <div id="logo_izq"><a href={{ path('asociateya_homepage')}}>
           <div id="imagen_logo"><img src={{ asset('bundles/asociateya/Imagenes/billetin.png')}} width="70" height="70"></div>
           <div id="texto_logo"><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="250" height="50">
             <p>Crowdfounding Argentina</p>
           </div>
         </a></div>
         <div id="logo_der">
-          {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+          {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <div id="boton_perfil">
             <a href="paginas/log_in.html" class="boton_ingresar">{{ app.user.username }}</a>
           </div>
+          <div id="boton_salir">
+            <a href={{ path('asociateya_salir')}} class="boton_registrar">Salir</a>
+          </div>
+
           {% else %}
           <div id="boton_login">
-          	<a href="paginas/log_in.html" class="boton_ingresar">Ingresa</a>
+          	<a href={{ path('asociateya_ingresar')}} class="boton_ingresar">Ingresa</a>
           </div>
           <div id="boton_registro">
-          	<a href="paginas/registro.html" class="boton_registrar">Registrate</a>
+          	<a href={{ path('asociateya_formularioRegistrarse')}} class="boton_registrar">Registrate</a>
           </div>
           {% endif %}
         </div>
@@ -48,6 +53,11 @@
     <div id="content_header"></div>
     <div id="site_content">
       <div id="banner"></div>
+
+      <div id="sidebar_container" class="img_container">
+      {% block sidebar %}{% endblock %}
+      </div>
+
       <div class="content" id="home_content">
         <!-- insert the page content here -->
         {% block body %}{% endblock %}
