@@ -18,13 +18,12 @@ class Emprendedor
 *  @ORM\Id
 *  @ORM\Column(type="integer", name="emprendedor_id")
 *  @ORM\GeneratedValue(strategy="AUTO")
-* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="idEmprendedor")
 */
-   protected $id;
+   private $id;
 
     public function __construct($name=null)
     {
-        $this->id = new ArrayCollection();
+        $this->idEmprendimientos = new ArrayCollection();
 
   
     }
@@ -33,22 +32,26 @@ class Emprendedor
 	* @ORM\OneToOne(targetEntity="Usuario", inversedBy="id")
 	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
 	*/
-	     protected $idUsuario;
+	     private $idUsuario;
 
+	/**
+	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
+	*/
+		 private $idEmprendimientos;
     /**
      * @ORM\Column(type="date")
      */
-    protected $fechaAprobacion;
+    private $fechaAprobacion;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $estado;
+    private $estado;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $reputacion;
+    private $reputacion;
 
 
     /**
@@ -155,5 +158,39 @@ class Emprendedor
     public function getIdUsuario()
     {
         return $this->idUsuario;
+    }
+
+    /**
+     * Add idEmprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     *
+     * @return Emprendedor
+     */
+    public function addIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento)
+    {
+        $this->idEmprendimientos[] = $idEmprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove idEmprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     */
+    public function removeIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento)
+    {
+        $this->idEmprendimientos->removeElement($idEmprendimiento);
+    }
+
+    /**
+     * Get idEmprendimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdEmprendimientos()
+    {
+        return $this->idEmprendimientos;
     }
 }

@@ -18,20 +18,20 @@ class Inversion {
 *  @ORM\Column(type="integer", name="inversion_id")
 *  @ORM\GeneratedValue(strategy="AUTO")
 */
-    protected $id;
+    private $id;
  
 
 	/**
 	* @ORM\ManyToOne(targetEntity="Usuario", inversedBy="id")
 	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
 	*/
-	     protected $idUsuario;
+	     private $idUsuario;
 
 	/**
 	* @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="id")
 	* @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id",         onDelete="CASCADE")
 	*/
-	     protected $idEmprendimiento;
+	     private $idEmprendimiento;
 
 
     
@@ -41,7 +41,7 @@ class Inversion {
      *
      * @ORM\Column(name="monto", type="decimal")
      */
-    protected $monto;
+    private $monto;
 
     /**
      * Get id

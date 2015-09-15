@@ -21,30 +21,47 @@ class Emprendimiento
  * @ORM\Column(name="emprendimiento_id", type="integer")
  * @ORM\Id
  * @ORM\GeneratedValue(strategy="AUTO")
- * @ORM\OneToMany(targetEntity="Inversion", mappedBy="idEmprendimiento")
- * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idEmprendimiento")
- * @ORM\ManyToMany(targetEntity="Categoria", inversedBy="id")
- * @ORM\JoinTable(name="emprendimientoXcategoria")
  **/
 
-protected $id;
+private $id;
 
 public function __construct($name=null)
 {
-    $this->id = new ArrayCollection();
-
-
+	$this->idInversiones = new ArrayCollection();
+    $this->idComentarios = new ArrayCollection();
+    $this->idCategorias = new ArrayCollection();
 }
+
+/**
+* @ORM\OneToMany(targetEntity="Inversion", mappedBy="idEmprendimiento")
+*/
+private $idInversiones;
+
+/**
+ * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idEmprendimiento")
+*/
+
+private $idComentarios;
+ /**
+ * ORM\ManyToMany(targetEntity="Categoria", inversedBy="idEmprendimientos")
+ * ORM\JoinTable(name="idEmprendimientos_idCategorias")
+* @ORM\ManyToOne(targetEntity="Categoria", inversedBy="idEmprendimientos")
+* @ORM\JoinColumn(name="categoria_id", referencedColumnName="categoria_id",         onDelete="CASCADE")
+
+ */
+ private $idCategorias;
+
+
 /**
 * @ORM\ManyToOne(targetEntity="Emprendedor", inversedBy="id")
 * @ORM\JoinColumn(name="emprendedor_id", referencedColumnName="emprendedor_id",         onDelete="CASCADE")
 */
-     protected $idEmprendedor;
+     private $idEmprendedor;
 /**
 * @ORM\ManyToOne(targetEntity="Caja", inversedBy="id")
 * @ORM\JoinColumn(name="caja_id", referencedColumnName="caja_id",         onDelete="CASCADE")
 */
-     protected $idCaja;
+     private $idCaja;
 
 
 
@@ -132,21 +149,21 @@ private $ranking;
 /**
  * @ORM\Column(type="datetime")
  */
-protected $fechaCreacion;
+private $fechaCreacion;
 /**
  * @ORM\Column(type="datetime")
  */
-protected $fechaAprobacion;
+private $fechaAprobacion;
 
 /**
  * @ORM\Column(type="datetime")
  */
-protected $fechaCancelacion;
+private $fechaCancelacion;
 
 /**
  * @ORM\Column(type="datetime")
  */
-protected $fechaFinalizacion;
+private $fechaFinalizacion;
 
 /**
  * Get id
@@ -421,4 +438,312 @@ public function getIdCaja()
 {
     return $this->idCaja;
 }
+
+    /**
+     * Set rutaImagen
+     *
+     * @param string $rutaImagen
+     *
+     * @return Emprendimiento
+     */
+    public function setRutaImagen($rutaImagen)
+    {
+        $this->rutaImagen = $rutaImagen;
+
+        return $this;
+    }
+
+    /**
+     * Get rutaImagen
+     *
+     * @return string
+     */
+    public function getRutaImagen()
+    {
+        return $this->rutaImagen;
+    }
+
+    /**
+     * Set descripcionCorta
+     *
+     * @param string $descripcionCorta
+     *
+     * @return Emprendimiento
+     */
+    public function setDescripcionCorta($descripcionCorta)
+    {
+        $this->descripcionCorta = $descripcionCorta;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionCorta
+     *
+     * @return string
+     */
+    public function getDescripcionCorta()
+    {
+        return $this->descripcionCorta;
+    }
+
+    /**
+     * Set descripcionLarga
+     *
+     * @param string $descripcionLarga
+     *
+     * @return Emprendimiento
+     */
+    public function setDescripcionLarga($descripcionLarga)
+    {
+        $this->descripcionLarga = $descripcionLarga;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionLarga
+     *
+     * @return string
+     */
+    public function getDescripcionLarga()
+    {
+        return $this->descripcionLarga;
+    }
+
+    /**
+     * Set ranking
+     *
+     * @param string $ranking
+     *
+     * @return Emprendimiento
+     */
+    public function setRanking($ranking)
+    {
+        $this->ranking = $ranking;
+
+        return $this;
+    }
+
+    /**
+     * Get ranking
+     *
+     * @return string
+     */
+    public function getRanking()
+    {
+        return $this->ranking;
+    }
+
+    /**
+     * Set fechaCreacion
+     *
+     * @param \DateTime $fechaCreacion
+     *
+     * @return Emprendimiento
+     */
+    public function setFechaCreacion($fechaCreacion)
+    {
+        $this->fechaCreacion = $fechaCreacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaCreacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaCreacion()
+    {
+        return $this->fechaCreacion;
+    }
+
+    /**
+     * Set fechaAprobacion
+     *
+     * @param \DateTime $fechaAprobacion
+     *
+     * @return Emprendimiento
+     */
+    public function setFechaAprobacion($fechaAprobacion)
+    {
+        $this->fechaAprobacion = $fechaAprobacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaAprobacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaAprobacion()
+    {
+        return $this->fechaAprobacion;
+    }
+
+    /**
+     * Set fechaCancelacion
+     *
+     * @param \DateTime $fechaCancelacion
+     *
+     * @return Emprendimiento
+     */
+    public function setFechaCancelacion($fechaCancelacion)
+    {
+        $this->fechaCancelacion = $fechaCancelacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaCancelacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaCancelacion()
+    {
+        return $this->fechaCancelacion;
+    }
+
+    /**
+     * Set fechaFinalizacion
+     *
+     * @param \DateTime $fechaFinalizacion
+     *
+     * @return Emprendimiento
+     */
+    public function setFechaFinalizacion($fechaFinalizacion)
+    {
+        $this->fechaFinalizacion = $fechaFinalizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacion()
+    {
+        return $this->fechaFinalizacion;
+    }
+
+    /**
+     * Add idInversione
+     *
+     * @param \asociateyaBundle\Entity\Inversion $idInversione
+     *
+     * @return Emprendimiento
+     */
+    public function addIdInversione(\asociateyaBundle\Entity\Inversion $idInversione)
+    {
+        $this->idInversiones[] = $idInversione;
+
+        return $this;
+    }
+
+    /**
+     * Remove idInversione
+     *
+     * @param \asociateyaBundle\Entity\Inversion $idInversione
+     */
+    public function removeIdInversione(\asociateyaBundle\Entity\Inversion $idInversione)
+    {
+        $this->idInversiones->removeElement($idInversione);
+    }
+
+    /**
+     * Get idInversiones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdInversiones()
+    {
+        return $this->idInversiones;
+    }
+
+    /**
+     * Add idComentario
+     *
+     * @param \asociateyaBundle\Entity\Comentario $idComentario
+     *
+     * @return Emprendimiento
+     */
+    public function addIdComentario(\asociateyaBundle\Entity\Comentario $idComentario)
+    {
+        $this->idComentarios[] = $idComentario;
+
+        return $this;
+    }
+
+    /**
+     * Remove idComentario
+     *
+     * @param \asociateyaBundle\Entity\Comentario $idComentario
+     */
+    public function removeIdComentario(\asociateyaBundle\Entity\Comentario $idComentario)
+    {
+        $this->idComentarios->removeElement($idComentario);
+    }
+
+    /**
+     * Get idComentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdComentarios()
+    {
+        return $this->idComentarios;
+    }
+
+    /**
+     * Add idCategoria
+     *
+     * @param \asociateyaBundle\Entity\Categoria $idCategoria
+     *
+     * @return Emprendimiento
+     */
+    public function addIdCategoria(\asociateyaBundle\Entity\Categoria $idCategoria)
+    {
+        $this->idCategorias[] = $idCategoria;
+
+        return $this;
+    }
+
+    /**
+     * Remove idCategoria
+     *
+     * @param \asociateyaBundle\Entity\Categoria $idCategoria
+     */
+    public function removeIdCategoria(\asociateyaBundle\Entity\Categoria $idCategoria)
+    {
+        $this->idCategorias->removeElement($idCategoria);
+    }
+
+    /**
+     * Get idCategorias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdCategorias()
+    {
+        return $this->idCategorias;
+    }
+
+    /**
+     * Set idCategorias
+     *
+     * @param \asociateyaBundle\Entity\Categoria $idCategorias
+     *
+     * @return Emprendimiento
+     */
+    public function setIdCategorias(\asociateyaBundle\Entity\Categoria $idCategorias = null)
+    {
+        $this->idCategorias = $idCategorias;
+
+        return $this;
+    }
 }

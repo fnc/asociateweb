@@ -20,22 +20,22 @@ class Comentario
 *  @ORM\Column(type="integer", name="comentario_id")
 *  @ORM\GeneratedValue(strategy="AUTO")
 */
-    protected $id;
+    private $id;
     /**
      *
      * @ORM\Column(name="idComentarioAnterior", type="integer")
      */
-    protected $idComentarioAnterior;
+    private $idComentarioAnterior;
 /**
 * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="id")
 * @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
 */
-   protected $idUsuario;
+   private $idUsuarios;
 /**
 * @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="id")
 * @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id",         onDelete="CASCADE")
 */
-	protected $idEmprendimiento;
+	private $idEmprendimientos;
 
 
     /**
@@ -43,7 +43,7 @@ class Comentario
      *
      * @ORM\Column(name="texto", type="string", length=255)
      */
-    protected $texto;
+    private $texto;
 
 
     /**
@@ -150,5 +150,53 @@ class Comentario
     public function getIdEmprendimiento()
     {
         return $this->idEmprendimiento;
+    }
+
+    /**
+     * Set idUsuarios
+     *
+     * @param \asociateyaBundle\Entity\Usuario $idUsuarios
+     *
+     * @return Comentario
+     */
+    public function setIdUsuarios(\asociateyaBundle\Entity\Usuario $idUsuarios = null)
+    {
+        $this->idUsuarios = $idUsuarios;
+
+        return $this;
+    }
+
+    /**
+     * Get idUsuarios
+     *
+     * @return \asociateyaBundle\Entity\Usuario
+     */
+    public function getIdUsuarios()
+    {
+        return $this->idUsuarios;
+    }
+
+    /**
+     * Set idEmprendimientos
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimientos
+     *
+     * @return Comentario
+     */
+    public function setIdEmprendimientos(\asociateyaBundle\Entity\Emprendimiento $idEmprendimientos = null)
+    {
+        $this->idEmprendimientos = $idEmprendimientos;
+
+        return $this;
+    }
+
+    /**
+     * Get idEmprendimientos
+     *
+     * @return \asociateyaBundle\Entity\Emprendimiento
+     */
+    public function getIdEmprendimientos()
+    {
+        return $this->idEmprendimientos;
     }
 }

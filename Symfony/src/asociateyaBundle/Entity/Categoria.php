@@ -18,7 +18,7 @@ class Categoria
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="categoria_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -40,12 +40,14 @@ class Categoria
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Emprendimiento", mappedBy="id")
+     * ORM\ManyToMany(targetEntity="Emprendimiento", mappedBy="idCategorias")
+     * @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
+	
      **/
-    private $idEmprendimiento;
+    private $idEmprendimientos;
 public function __construct($name=null)
     {
-        $this->idEmprendimiento = new ArrayCollection();
+        $this->idEmprendimientos = new ArrayCollection();
 
   
     }
@@ -139,5 +141,49 @@ public function __construct($name=null)
     public function getIdEmprendimiento()
     {
         return $this->idEmprendimiento;
+    }
+
+    /**
+     * Add emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     *
+     * @return Categoria
+     */
+    public function addEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento)
+    {
+        $this->emprendimientos[] = $emprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     */
+    public function removeEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento)
+    {
+        $this->emprendimientos->removeElement($emprendimiento);
+    }
+
+    /**
+     * Get emprendimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmprendimientos()
+    {
+        return $this->emprendimientos;
+    }
+
+    /**
+     * Get idEmprendimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdEmprendimientos()
+    {
+        return $this->idEmprendimientos;
     }
 }
