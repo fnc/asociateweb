@@ -3,6 +3,9 @@
 namespace asociateyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;//para usar arrays
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * Emprendimiento
@@ -15,11 +18,35 @@ class Emprendimiento
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="emprendimiento_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+     * @ORM\OneToMany(targetEntity="Inversion", mappedBy="idEmprendimiento")
+     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idEmprendimiento")
+     * @ORM\ManyToMany(targetEntity="Categoria", inversedBy="id")
+     * @ORM\JoinTable(name="emprendimientoXcategoria")
+     **/
+
+   protected $id;
+
+    public function __construct($name=null)
+    {
+        $this->id = new ArrayCollection();
+
+  
+    }
+	/**
+	* @ORM\ManyToOne(targetEntity="Emprendedor", inversedBy="id")
+	* @ORM\JoinColumn(name="emprendedor_id", referencedColumnName="emprendedor_id",         onDelete="CASCADE")
+	*/
+	     protected $idEmprendedor;
+	/**
+	* @ORM\ManyToOne(targetEntity="Caja", inversedBy="id")
+	* @ORM\JoinColumn(name="caja_id", referencedColumnName="caja_id",         onDelete="CASCADE")
+	*/
+	     protected $idCaja;
+
+
 
     /**
      * @var integer
@@ -41,7 +68,13 @@ class Emprendimiento
      * @ORM\Column(name="tipoDeMeta", type="string", length=255)
      */
     private $tipoDeMeta;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=80)
+     */
+    private $nombre;
     /**
      * @var string
      *
@@ -278,5 +311,77 @@ class Emprendimiento
     public function getAccionesRestantes()
     {
         return $this->accionesRestantes;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Emprendimiento
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set idEmprendedor
+     *
+     * @param \asociateyaBundle\Entity\Emprenddor $idEmprendedor
+     *
+     * @return Emprendimiento
+     */
+    public function setIdEmprendedor(\asociateyaBundle\Entity\Emprenddor $idEmprendedor = null)
+    {
+        $this->idEmprendedor = $idEmprendedor;
+
+        return $this;
+    }
+
+    /**
+     * Get idEmprendedor
+     *
+     * @return \asociateyaBundle\Entity\Emprenddor
+     */
+    public function getIdEmprendedor()
+    {
+        return $this->idEmprendedor;
+    }
+
+    /**
+     * Set idCaja
+     *
+     * @param \asociateyaBundle\Entity\Caja $idCaja
+     *
+     * @return Emprendimiento
+     */
+    public function setIdCaja(\asociateyaBundle\Entity\Caja $idCaja = null)
+    {
+        $this->idCaja = $idCaja;
+
+        return $this;
+    }
+
+    /**
+     * Get idCaja
+     *
+     * @return \asociateyaBundle\Entity\Caja
+     */
+    public function getIdCaja()
+    {
+        return $this->idCaja;
     }
 }

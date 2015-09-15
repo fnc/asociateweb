@@ -9,113 +9,93 @@ use Doctrine\Common\Collections\ArrayCollection;//para usar arrays
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="asociateyaBundle\Entity\UserRepository")
- * @ORM\Table(name="usuarios")
- */
+  @ORM\Entity
+  @ORM\Table(name="usuarios")
+*/
+class Usuario {
 
-class Usuario implements UserInterface, \Serializable
-{
+/**
+*  @ORM\Id
+*  @ORM\Column(type="integer", name="usuario_id")
+*  @ORM\GeneratedValue(strategy="AUTO")
+* @ORM\OneToMany(targetEntity="Inversion", mappedBy="idUsuario")
+* @ORM\OneToMany(targetEntity="Comentario", mappedBy="idUsuario")
+* @ORM\OneToOne(targetEntity="Emprendedor", mappedBy="idUsuario")
+*/
+   protected $id;
+
+    public function __construct($name=null)
+    {
+        $this->id = new ArrayCollection();
+
+  
+    }
+
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
      */
-    protected $id;
+    private $nombre;
 
     /**
-     * @ORM\OneToMany(targetEntity="DatosDeUsuario", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+     *
+     * @ORM\Column(name="apellido", type="string", length=255)
      */
-    protected $datosDeUsuario;
+    private $apellido;
 
+    /**
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     *
+     * @ORM\Column(name="dni", type="string", length=255)
+     */
+    private $dni;
+
+    /**
+     *
+     * @ORM\Column(name="direccion", type="string", length=255)
+     */
+    private $direccion;
+
+    /**
+     *
+     * @ORM\Column(name="cuit", type="string", length=255)
+     */
+    private $cuit;
+
+	/**
+     * 
+     * @ORM\Column(type="integer",name="comentario_id")  
+       */
+    protected $idComentario;
+	
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $fechaCreacion;
+		protected $fechaCreacion;
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nombreUsuario", type="string", length=255)
-     */
-        private $nombreUsuario;
-
-    /**
-     * @var string
      *
      * @ORM\Column(name="contrasena", type="string", length=255)
      */
-            private $contrasena;
+            protected $contrasena;
 
+    /**
+     *
+     * @ORM\Column(name="rol", type="string", length=255)
+     */
+            protected $rol;
+
+			
      /**
      * @ORM\Column(name="is_active", type="boolean")
      */
-     private $isActive;
+		private $isActive;
 
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->datosDeUsuario = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->fechaCreacion = new \DateTime();
-        $this->isActive = true;
-    }
-    
-    #interfaz UserInterface
-    public function getUsername()
-    {
-        return $this->nombreUsuario;
-    }
-
-    #interfaz UserInterface
-    public function getPassword()
-    {
-        return $this->contrasena;
-    }
-    
-    #interfaz UserInterface
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    #interfaz UserInterface
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-    
-    #interfaz UserInterface
-    public function eraseCredentials()
-    {
-    }
-    
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->nombreUsuario,
-            $this->contrasena,
-            // see section on salt below
-            // $this->salt,
-            ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->nombreUsuario,
-            $this->contrasena,
-            // see section on salt below
-            // $this->salt
-            ) = unserialize($serialized);
-    }
 
     /**
      * Get id
@@ -125,6 +105,174 @@ class Usuario implements UserInterface, \Serializable
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Usuario
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellido
+     *
+     * @param string $apellido
+     *
+     * @return Usuario
+     */
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    /**
+     * Get apellido
+     *
+     * @return string
+     */
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Usuario
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set dni
+     *
+     * @param string $dni
+     *
+     * @return Usuario
+     */
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
+
+    /**
+     * Get dni
+     *
+     * @return string
+     */
+    public function getDni()
+    {
+        return $this->dni;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return Usuario
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set cuit
+     *
+     * @param string $cuit
+     *
+     * @return Usuario
+     */
+    public function setCuit($cuit)
+    {
+        $this->cuit = $cuit;
+
+        return $this;
+    }
+
+    /**
+     * Get cuit
+     *
+     * @return string
+     */
+    public function getCuit()
+    {
+        return $this->cuit;
+    }
+
+    /**
+     * Set idComentario
+     *
+     * @param integer $idComentario
+     *
+     * @return Usuario
+     */
+    public function setIdComentario($idComentario)
+    {
+        $this->idComentario = $idComentario;
+
+        return $this;
+    }
+
+    /**
+     * Get idComentario
+     *
+     * @return integer
+     */
+    public function getIdComentario()
+    {
+        return $this->idComentario;
     }
 
     /**
@@ -140,14 +288,6 @@ class Usuario implements UserInterface, \Serializable
 
         return $this;
     }
-    
-    /**
-    * @ORM\PrePersist
-    */
-    public function onPrePersistSetfechaCracion()
-    {
-        $this->fechaCreacion = new \DateTime();
-    }
 
     /**
      * Get fechaCreacion
@@ -160,30 +300,6 @@ class Usuario implements UserInterface, \Serializable
     }
 
     /**
-     * Set nombreUsuario
-     *
-     * @param string $nombreUsuario
-     *
-     * @return Usuario
-     */
-    public function setNombreUsuario($nombreUsuario)
-    {
-        $this->nombreUsuario = $nombreUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Get nombreUsuario
-     *
-     * @return string
-     */
-    public function getNombreUsuario()
-    {
-        return $this->nombreUsuario;
-    }
-
-    /**
      * Set contrasena
      *
      * @param string $contrasena
@@ -192,9 +308,8 @@ class Usuario implements UserInterface, \Serializable
      */
     public function setContrasena($contrasena)
     {
-
         $this->contrasena = $contrasena;
-        
+
         return $this;
     }
 
@@ -209,37 +324,27 @@ class Usuario implements UserInterface, \Serializable
     }
 
     /**
-     * Add datosDeUsuario
+     * Set rol
      *
-     * @param \asociateyaBundle\Entity\DatosDeUsuario $datosDeUsuario
+     * @param string $rol
      *
      * @return Usuario
      */
-    public function addDatosDeUsuario(\asociateyaBundle\Entity\DatosDeUsuario $datosDeUsuario)
+    public function setRol($rol)
     {
-        $this->datosDeUsuario[] = $datosDeUsuario;
+        $this->rol = $rol;
 
         return $this;
     }
 
     /**
-     * Remove datosDeUsuario
+     * Get rol
      *
-     * @param \asociateyaBundle\Entity\DatosDeUsuario $datosDeUsuario
+     * @return string
      */
-    public function removeDatosDeUsuario(\asociateyaBundle\Entity\DatosDeUsuario $datosDeUsuario)
+    public function getRol()
     {
-        $this->datosDeUsuario->removeElement($datosDeUsuario);
-    }
-
-    /**
-     * Get datosDeUsuario
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDatosDeUsuario()
-    {
-        return $this->datosDeUsuario;
+        return $this->rol;
     }
 
     /**

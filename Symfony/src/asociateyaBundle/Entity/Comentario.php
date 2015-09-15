@@ -3,37 +3,47 @@
 namespace asociateyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;//para usar arrays
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Comentario
- *
- * @ORM\Table()
- * @ORM\Entity
- */
+*
+* @ORM\Entity
+* @ORM\Table()
+*/
 class Comentario
 {
+    
+	 
+/**
+*  @ORM\Id
+*  @ORM\Column(type="integer", name="comentario_id")
+*  @ORM\GeneratedValue(strategy="AUTO")
+*/
+    protected $id;
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var integer
      *
      * @ORM\Column(name="idComentarioAnterior", type="integer")
      */
-    private $idComentarioAnterior;
+    protected $idComentarioAnterior;
+/**
+* @ORM\ManyToOne(targetEntity="Usuario", inversedBy="id")
+* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
+*/
+   protected $idUsuario;
+/**
+* @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="id")
+* @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id",         onDelete="CASCADE")
+*/
+	protected $idEmprendimiento;
+
 
     /**
      * @var string
      *
      * @ORM\Column(name="texto", type="string", length=255)
      */
-    private $texto;
+    protected $texto;
 
 
     /**
@@ -92,5 +102,53 @@ class Comentario
     public function getTexto()
     {
         return $this->texto;
+    }
+
+    /**
+     * Set idUsuario
+     *
+     * @param \asociateyaBundle\Entity\Usuario $idUsuario
+     *
+     * @return Comentario
+     */
+    public function setIdUsuario(\asociateyaBundle\Entity\Usuario $idUsuario = null)
+    {
+        $this->idUsuario = $idUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get idUsuario
+     *
+     * @return \asociateyaBundle\Entity\Usuario
+     */
+    public function getIdUsuario()
+    {
+        return $this->idUsuario;
+    }
+
+    /**
+     * Set idEmprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     *
+     * @return Comentario
+     */
+    public function setIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento = null)
+    {
+        $this->idEmprendimiento = $idEmprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get idEmprendimiento
+     *
+     * @return \asociateyaBundle\Entity\Emprendimiento
+     */
+    public function getIdEmprendimiento()
+    {
+        return $this->idEmprendimiento;
     }
 }
