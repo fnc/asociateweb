@@ -23,76 +23,63 @@ class Usuario implements UserInterface, \Serializable
     */
     private $id;
 
-    public function __construct($name=null)
-    {
-        $this->idInversiones = new ArrayCollection();
-        $this->idComentarios = new ArrayCollection();
-        //$this->fechaCreacion = new \DateTime();
-        $this->isActive = true;
-    }
+    /**
+    * @ORM\OneToMany(targetEntity="Inversion", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+    */
+    private $inversiones;
 
     /**
-    * @ORM\OneToMany(targetEntity="Inversion", mappedBy="id")
+    * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
     */
-    private $idInversiones;
+    private $comentarios;
 
     /**
-    * @ORM\OneToMany(targetEntity="Comentario", mappedBy="id")
+    * @ORM\OneToOne(targetEntity="Emprendedor", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
     */
-    private $idComentarios;
-
-    /**
-    * @ORM\OneToOne(targetEntity="Emprendedor", mappedBy="id")
-    */
-    private $idEmprendedor;
+    private $emprendedor;
 
     /**
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="nombre", type="string", length=255,nullable=true)
      */
     private $nombre;
 
     /**
      *
-     * @ORM\Column(name="apellido", type="string", length=255)
+     * @ORM\Column(name="apellido", type="string", length=255,nullable=true)
      */
     private $apellido;
 
     /**
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255,nullable=true)
      */
     private $email;
 
     /**
      *
-     * @ORM\Column(name="dni", type="string", length=255)
+     * @ORM\Column(name="dni", type="string", length=255,nullable=true)
      */
     private $dni;
 
     /**
      *
-     * @ORM\Column(name="direccion", type="string", length=255)
+     * @ORM\Column(name="direccion", type="string", length=255,nullable=true)
      */
     private $direccion;
 
     /**
      *
-     * @ORM\Column(name="cuit", type="string", length=255)
+     * @ORM\Column(name="cuit", type="string", length=255,nullable=true)
      */
     private $cuit;
 
     /**
      *
-     * @ORM\Column(name="saldo", type="string", length=255)
+     * @ORM\Column(name="saldo", type="string", length=255,nullable=true)
      */
     private $saldo;
 
-    /**
-     * 
-     * @ORM\Column(type="integer",name="comentario_id")  
-       */
-    private $idComentario;
 
     /**
      * @ORM\Column(type="datetime")
@@ -115,7 +102,7 @@ class Usuario implements UserInterface, \Serializable
 
     /**
      *
-     * @ORM\Column(name="rol", type="string", length=255)
+     * @ORM\Column(name="rol", type="string", length=255,nullable=true)
      */
     private $rol;
 
@@ -124,6 +111,15 @@ class Usuario implements UserInterface, \Serializable
      * @ORM\Column(name="isActive", type="boolean")
      */
      private $isActive;
+
+
+    public function __construct($name=null)
+    {
+        $this->inversiones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fechaCreacion = new \DateTime();
+        $this->isActive = true;
+    }
 
 
     /**
@@ -632,4 +628,3 @@ class Usuario implements UserInterface, \Serializable
         return $this->idEmprendedor;
     }
 }
-?>

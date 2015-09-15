@@ -28,16 +28,17 @@ class Emprendedor
   
     }
 
-/**
+    /**
 	* @ORM\OneToOne(targetEntity="Usuario", inversedBy="id")
-	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
+	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id", onDelete="CASCADE")
 	*/
-	     private $idUsuario;
+	private $idUsuario;
 
 	/**
 	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
 	*/
-		 private $idEmprendimientos;
+	private $idEmprendimientos;
+    
     /**
      * @ORM\Column(type="date")
      */
