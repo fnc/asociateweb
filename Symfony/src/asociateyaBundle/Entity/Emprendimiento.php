@@ -3,385 +3,422 @@
 namespace asociateyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;//para usar arrays
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
- * Emprendimiento
- *
- * @ORM\Table()
- * @ORM\Entity
- */
+* Emprendimiento
+*
+* @ORM\Table()
+* @ORM\Entity
+*/
 class Emprendimiento
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="emprendimiento_id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\OneToMany(targetEntity="Inversion", mappedBy="idEmprendimiento")
-     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idEmprendimiento")
-     * @ORM\ManyToMany(targetEntity="Categoria", inversedBy="id")
-     * @ORM\JoinTable(name="emprendimientoXcategoria")
-     **/
+/**
+ * @var integer
+ *
+ * @ORM\Column(name="emprendimiento_id", type="integer")
+ * @ORM\Id
+ * @ORM\GeneratedValue(strategy="AUTO")
+ * @ORM\OneToMany(targetEntity="Inversion", mappedBy="idEmprendimiento")
+ * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idEmprendimiento")
+ * @ORM\ManyToMany(targetEntity="Categoria", inversedBy="id")
+ * @ORM\JoinTable(name="emprendimientoXcategoria")
+ **/
 
-   protected $id;
+protected $id;
 
-    public function __construct($name=null)
-    {
-        $this->id = new ArrayCollection();
-
-  
-    }
-	/**
-	* @ORM\ManyToOne(targetEntity="Emprendedor", inversedBy="id")
-	* @ORM\JoinColumn(name="emprendedor_id", referencedColumnName="emprendedor_id",         onDelete="CASCADE")
-	*/
-	     protected $idEmprendedor;
-	/**
-	* @ORM\ManyToOne(targetEntity="Caja", inversedBy="id")
-	* @ORM\JoinColumn(name="caja_id", referencedColumnName="caja_id",         onDelete="CASCADE")
-	*/
-	     protected $idCaja;
+public function __construct($name=null)
+{
+    $this->id = new ArrayCollection();
 
 
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idCategoria", type="integer")
-     */
-    private $idCategoria;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="monto", type="decimal")
-     */
-    private $monto;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tipoDeMeta", type="string", length=255)
-     */
-    private $tipoDeMeta;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=80)
-     */
-    private $nombre;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcion", type="string", length=255)
-     */
-    private $descripcion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="estado", type="string", length=255)
-     */
-    private $estado;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="precioAccion", type="decimal")
-     */
-    private $precioAccion;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="totalAcciones", type="integer")
-     */
-    private $totalAcciones;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="accionesRestantes", type="integer")
-     */
-    private $accionesRestantes;
+}
+/**
+* @ORM\ManyToOne(targetEntity="Emprendedor", inversedBy="id")
+* @ORM\JoinColumn(name="emprendedor_id", referencedColumnName="emprendedor_id",         onDelete="CASCADE")
+*/
+     protected $idEmprendedor;
+/**
+* @ORM\ManyToOne(targetEntity="Caja", inversedBy="id")
+* @ORM\JoinColumn(name="caja_id", referencedColumnName="caja_id",         onDelete="CASCADE")
+*/
+     protected $idCaja;
 
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
-    /**
-     * Set idCategoria
-     *
-     * @param integer $idCategoria
-     *
-     * @return Emprendimiento
-     */
-    public function setIdCategoria($idCategoria)
-    {
-        $this->idCategoria = $idCategoria;
+/**
+ * @var integer
+ *
+ * @ORM\Column(name="idCategoria", type="integer")
+ */
+private $idCategoria;
 
-        return $this;
-    }
+/**
+ * @var string
+ *
+ * @ORM\Column(name="monto", type="decimal")
+ */
+private $monto;
 
-    /**
-     * Get idCategoria
-     *
-     * @return integer
-     */
-    public function getIdCategoria()
-    {
-        return $this->idCategoria;
-    }
+/**
+ * @var string
+ *
+ * @ORM\Column(name="tipoDeMeta", type="string", length=255)
+ */
+private $tipoDeMeta;
 
-    /**
-     * Set monto
-     *
-     * @param string $monto
-     *
-     * @return Emprendimiento
-     */
-    public function setMonto($monto)
-    {
-        $this->monto = $monto;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="nombre", type="string", length=80)
+ */
+private $nombre;
 
-        return $this;
-    }
+/**
+ * @var string
+ *
+ * @ORM\Column(name="rutaImagen", type="string", length=255)
+ */
+private $rutaImagen;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="descripcionCorta", type="string", length=80)
+ */
+private $descripcionCorta;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="descripcionLarga", type="string", length=255)
+ */
+private $descripcionLarga;
 
-    /**
-     * Get monto
-     *
-     * @return string
-     */
-    public function getMonto()
-    {
-        return $this->monto;
-    }
+/**
+ * @var string
+ *
+ * @ORM\Column(name="estado", type="string", length=255)
+ */
+private $estado;
 
-    /**
-     * Set tipoDeMeta
-     *
-     * @param string $tipoDeMeta
-     *
-     * @return Emprendimiento
-     */
-    public function setTipoDeMeta($tipoDeMeta)
-    {
-        $this->tipoDeMeta = $tipoDeMeta;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="precioAccion", type="decimal")
+ */
+private $precioAccion;
 
-        return $this;
-    }
+/**
+ * @var integer
+ *
+ * @ORM\Column(name="totalAcciones", type="integer")
+ */
+private $totalAcciones;
 
-    /**
-     * Get tipoDeMeta
-     *
-     * @return string
-     */
-    public function getTipoDeMeta()
-    {
-        return $this->tipoDeMeta;
-    }
+/**
+ * @var integer
+ *
+ * @ORM\Column(name="accionesRestantes", type="integer")
+ */
+private $accionesRestantes;
 
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     *
-     * @return Emprendimiento
-     */
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
+/**
+ * @var string
+ *
+ * @ORM\Column(name="ranking", type="decimal")
+ */
+private $ranking;
+/**
+ * @ORM\Column(type="datetime")
+ */
+protected $fechaCreacion;
+/**
+ * @ORM\Column(type="datetime")
+ */
+protected $fechaAprobacion;
 
-        return $this;
-    }
+/**
+ * @ORM\Column(type="datetime")
+ */
+protected $fechaCancelacion;
 
-    /**
-     * Get descripcion
-     *
-     * @return string
-     */
-    public function getDescripcion()
-    {
-        return $this->descripcion;
-    }
+/**
+ * @ORM\Column(type="datetime")
+ */
+protected $fechaFinalizacion;
 
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     *
-     * @return Emprendimiento
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
+/**
+ * Get id
+ *
+ * @return integer
+ */
+public function getId()
+{
+    return $this->id;
+}
 
-        return $this;
-    }
+/**
+ * Set idCategoria
+ *
+ * @param integer $idCategoria
+ *
+ * @return Emprendimiento
+ */
+public function setIdCategoria($idCategoria)
+{
+    $this->idCategoria = $idCategoria;
 
-    /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
+    return $this;
+}
 
-    /**
-     * Set precioAccion
-     *
-     * @param string $precioAccion
-     *
-     * @return Emprendimiento
-     */
-    public function setPrecioAccion($precioAccion)
-    {
-        $this->precioAccion = $precioAccion;
+/**
+ * Get idCategoria
+ *
+ * @return integer
+ */
+public function getIdCategoria()
+{
+    return $this->idCategoria;
+}
 
-        return $this;
-    }
+/**
+ * Set monto
+ *
+ * @param string $monto
+ *
+ * @return Emprendimiento
+ */
+public function setMonto($monto)
+{
+    $this->monto = $monto;
 
-    /**
-     * Get precioAccion
-     *
-     * @return string
-     */
-    public function getPrecioAccion()
-    {
-        return $this->precioAccion;
-    }
+    return $this;
+}
 
-    /**
-     * Set totalAcciones
-     *
-     * @param integer $totalAcciones
-     *
-     * @return Emprendimiento
-     */
-    public function setTotalAcciones($totalAcciones)
-    {
-        $this->totalAcciones = $totalAcciones;
+/**
+ * Get monto
+ *
+ * @return string
+ */
+public function getMonto()
+{
+    return $this->monto;
+}
 
-        return $this;
-    }
+/**
+ * Set tipoDeMeta
+ *
+ * @param string $tipoDeMeta
+ *
+ * @return Emprendimiento
+ */
+public function setTipoDeMeta($tipoDeMeta)
+{
+    $this->tipoDeMeta = $tipoDeMeta;
 
-    /**
-     * Get totalAcciones
-     *
-     * @return integer
-     */
-    public function getTotalAcciones()
-    {
-        return $this->totalAcciones;
-    }
+    return $this;
+}
 
-    /**
-     * Set accionesRestantes
-     *
-     * @param integer $accionesRestantes
-     *
-     * @return Emprendimiento
-     */
-    public function setAccionesRestantes($accionesRestantes)
-    {
-        $this->accionesRestantes = $accionesRestantes;
+/**
+ * Get tipoDeMeta
+ *
+ * @return string
+ */
+public function getTipoDeMeta()
+{
+    return $this->tipoDeMeta;
+}
 
-        return $this;
-    }
+/**
+ * Set descripcion
+ *
+ * @param string $descripcion
+ *
+ * @return Emprendimiento
+ */
+public function setDescripcion($descripcion)
+{
+    $this->descripcion = $descripcion;
 
-    /**
-     * Get accionesRestantes
-     *
-     * @return integer
-     */
-    public function getAccionesRestantes()
-    {
-        return $this->accionesRestantes;
-    }
+    return $this;
+}
 
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Emprendimiento
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
+/**
+ * Get descripcion
+ *
+ * @return string
+ */
+public function getDescripcion()
+{
+    return $this->descripcion;
+}
 
-        return $this;
-    }
+/**
+ * Set estado
+ *
+ * @param string $estado
+ *
+ * @return Emprendimiento
+ */
+public function setEstado($estado)
+{
+    $this->estado = $estado;
 
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
+    return $this;
+}
 
-    /**
-     * Set idEmprendedor
-     *
-     * @param \asociateyaBundle\Entity\Emprenddor $idEmprendedor
-     *
-     * @return Emprendimiento
-     */
-    public function setIdEmprendedor(\asociateyaBundle\Entity\Emprenddor $idEmprendedor = null)
-    {
-        $this->idEmprendedor = $idEmprendedor;
+/**
+ * Get estado
+ *
+ * @return string
+ */
+public function getEstado()
+{
+    return $this->estado;
+}
 
-        return $this;
-    }
+/**
+ * Set precioAccion
+ *
+ * @param string $precioAccion
+ *
+ * @return Emprendimiento
+ */
+public function setPrecioAccion($precioAccion)
+{
+    $this->precioAccion = $precioAccion;
 
-    /**
-     * Get idEmprendedor
-     *
-     * @return \asociateyaBundle\Entity\Emprenddor
-     */
-    public function getIdEmprendedor()
-    {
-        return $this->idEmprendedor;
-    }
+    return $this;
+}
 
-    /**
-     * Set idCaja
-     *
-     * @param \asociateyaBundle\Entity\Caja $idCaja
-     *
-     * @return Emprendimiento
-     */
-    public function setIdCaja(\asociateyaBundle\Entity\Caja $idCaja = null)
-    {
-        $this->idCaja = $idCaja;
+/**
+ * Get precioAccion
+ *
+ * @return string
+ */
+public function getPrecioAccion()
+{
+    return $this->precioAccion;
+}
 
-        return $this;
-    }
+/**
+ * Set totalAcciones
+ *
+ * @param integer $totalAcciones
+ *
+ * @return Emprendimiento
+ */
+public function setTotalAcciones($totalAcciones)
+{
+    $this->totalAcciones = $totalAcciones;
 
-    /**
-     * Get idCaja
-     *
-     * @return \asociateyaBundle\Entity\Caja
-     */
-    public function getIdCaja()
-    {
-        return $this->idCaja;
-    }
+    return $this;
+}
+
+/**
+ * Get totalAcciones
+ *
+ * @return integer
+ */
+public function getTotalAcciones()
+{
+    return $this->totalAcciones;
+}
+
+/**
+ * Set accionesRestantes
+ *
+ * @param integer $accionesRestantes
+ *
+ * @return Emprendimiento
+ */
+public function setAccionesRestantes($accionesRestantes)
+{
+    $this->accionesRestantes = $accionesRestantes;
+
+    return $this;
+}
+
+/**
+ * Get accionesRestantes
+ *
+ * @return integer
+ */
+public function getAccionesRestantes()
+{
+    return $this->accionesRestantes;
+}
+
+/**
+ * Set nombre
+ *
+ * @param string $nombre
+ *
+ * @return Emprendimiento
+ */
+public function setNombre($nombre)
+{
+    $this->nombre = $nombre;
+
+    return $this;
+}
+
+/**
+ * Get nombre
+ *
+ * @return string
+ */
+public function getNombre()
+{
+    return $this->nombre;
+}
+
+/**
+ * Set idEmprendedor
+ *
+ * @param \asociateyaBundle\Entity\Emprenddor $idEmprendedor
+ *
+ * @return Emprendimiento
+ */
+public function setIdEmprendedor(\asociateyaBundle\Entity\Emprenddor $idEmprendedor = null)
+{
+    $this->idEmprendedor = $idEmprendedor;
+
+    return $this;
+}
+
+/**
+ * Get idEmprendedor
+ *
+ * @return \asociateyaBundle\Entity\Emprenddor
+ */
+public function getIdEmprendedor()
+{
+    return $this->idEmprendedor;
+}
+
+/**
+ * Set idCaja
+ *
+ * @param \asociateyaBundle\Entity\Caja $idCaja
+ *
+ * @return Emprendimiento
+ */
+public function setIdCaja(\asociateyaBundle\Entity\Caja $idCaja = null)
+{
+    $this->idCaja = $idCaja;
+
+    return $this;
+}
+
+/**
+ * Get idCaja
+ *
+ * @return \asociateyaBundle\Entity\Caja
+ */
+public function getIdCaja()
+{
+    return $this->idCaja;
+}
 }
