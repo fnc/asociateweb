@@ -13,14 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
 class Caja
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+*  @ORM\Id
+*  @ORM\Column(type="integer", name="caja_id")
+*  @ORM\GeneratedValue(strategy="AUTO")
+* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="idEmprendimiento")
+*/
+   protected $id;
 
+    public function __construct($name=null)
+    {
+        $this->id = new ArrayCollection();
+
+  
+    }
     /**
      * @var integer
      *

@@ -13,13 +13,27 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Emprendedor
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\OneToMany(targetEntity="DatosDeEmprendedor", mappedBy="emprendedor")
-     */
-    protected $id;
+    
+/**
+*  @ORM\Id
+*  @ORM\Column(type="integer", name="emprendedor_id")
+*  @ORM\GeneratedValue(strategy="AUTO")
+* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="idEmprendedor")
+*/
+   protected $id;
+
+    public function __construct($name=null)
+    {
+        $this->id = new ArrayCollection();
+
+  
+    }
+
+/**
+	* @ORM\OneToOne(targetEntity="Usuario", inversedBy="id")
+	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
+	*/
+	     protected $idUsuario;
 
     /**
      * @ORM\Column(type="date")
@@ -117,5 +131,29 @@ class Emprendedor
     public function getReputacion()
     {
         return $this->reputacion;
+    }
+
+    /**
+     * Set idUsuario
+     *
+     * @param \asociateyaBundle\Entity\Usuario $idUsuario
+     *
+     * @return Emprendedor
+     */
+    public function setIdUsuario(\asociateyaBundle\Entity\Usuario $idUsuario = null)
+    {
+        $this->idUsuario = $idUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get idUsuario
+     *
+     * @return \asociateyaBundle\Entity\Usuario
+     */
+    public function getIdUsuario()
+    {
+        return $this->idUsuario;
     }
 }

@@ -3,6 +3,9 @@
 namespace asociateyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;//para usar arrays
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * Categoria
@@ -36,6 +39,16 @@ class Categoria
     private $descripcion;
 
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Emprendimiento", mappedBy="id")
+     **/
+    private $idEmprendimiento;
+public function __construct($name=null)
+    {
+        $this->idEmprendimiento = new ArrayCollection();
+
+  
+    }
     /**
      * Get id
      *
@@ -92,5 +105,39 @@ class Categoria
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Add idEmprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     *
+     * @return Categoria
+     */
+    public function addIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento)
+    {
+        $this->idEmprendimiento[] = $idEmprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove idEmprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     */
+    public function removeIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento)
+    {
+        $this->idEmprendimiento->removeElement($idEmprendimiento);
+    }
+
+    /**
+     * Get idEmprendimiento
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdEmprendimiento()
+    {
+        return $this->idEmprendimiento;
     }
 }
