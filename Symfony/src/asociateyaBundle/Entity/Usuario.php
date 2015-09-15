@@ -9,8 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
-@ORM\Entity
-@ORM\Table(name="Usuario")
+*@ORM\Entity
+*@ORM\Table(name="Usuario")
 */
 class Usuario implements UserInterface, \Serializable {
 
@@ -26,7 +26,7 @@ protected $id;
 
 public function __construct($name=null)
 {
-	$this->id = new ArrayCollection();
+	//$this->id = new ArrayCollection();
     $this->fechaCreacion = new DateTime();
     $this->isActive = true;
 }
@@ -82,6 +82,14 @@ protected $idComentario;
  * @ORM\Column(type="datetime")
  */
 protected $fechaCreacion;
+
+
+/**
+* @var string
+*
+* @ORM\Column(name="nombreUsuario", type="string", length=255)
+*/
+private $nombreUsuario;
 
 /**
  *
@@ -295,6 +303,14 @@ public function setFechaCreacion($fechaCreacion)
 }
 
 /**
+* @ORM\PrePersist
+*/
+public function onPrePersistSetfechaCracion()
+{
+    $this->fechaCreacion = new \DateTime();
+}
+
+/**
  * Get fechaCreacion
  *
  * @return \DateTime
@@ -375,6 +391,21 @@ public function getIsActive()
 {
 	return $this->isActive;
 }
+
+
+#interfaz UserInterface
+public function getUsername()
+{
+    return $this->nombreUsuario;
+}
+
+#interfaz UserInterface
+public function getPassword()
+{
+    return $this->contrasena;
+}
+
+
 #interfaz UserInterface
 public function getSalt()
 {
@@ -417,28 +448,30 @@ public function unserialize($serialized)
         // $this->salt
         ) = unserialize($serialized);
 }
-     * Add idInversion
-     *
-     * @param \asociateyaBundle\Entity\Inversion $idInversion
-     *
-     * @return Usuario
-     */
-    public function addIdInversion(\asociateyaBundle\Entity\Inversion $idInversion)
-    {
-        $this->idInversion[] = $idInversion;
 
-        return $this;
-    }
+/**
+* Add idInversion
+*
+* @param \asociateyaBundle\Entity\Inversion $idInversion
+*
+* @return Usuario
+*/
+public function addIdInversion(\asociateyaBundle\Entity\Inversion $idInversion)
+{
+    $this->idInversion[] = $idInversion;
 
-    /**
-     * Remove idInversion
-     *
-     * @param \asociateyaBundle\Entity\Inversion $idInversion
-     */
-    public function removeIdInversion(\asociateyaBundle\Entity\Inversion $idInversion)
-    {
-        $this->idInversion->removeElement($idInversion);
-    }
+    return $this;
+}
+
+/**
+* Remove idInversion
+*
+* @param \asociateyaBundle\Entity\Inversion $idInversion
+*/
+public function removeIdInversion(\asociateyaBundle\Entity\Inversion $idInversion)
+{
+   $this->idInversion->removeElement($idInversion);
+}
 
 
 
