@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="emprendedores")
+ * @ORM\Table(name="Emprendedor")
  */
 
 class Emprendedor
@@ -23,21 +23,19 @@ class Emprendedor
 
     public function __construct($name=null)
     {
-        $this->idEmprendimientos = new ArrayCollection();
-
-  
+        $this->emprendimientos = new \ArrayCollection();  
     }
 
     /**
-	* @ORM\OneToOne(targetEntity="Usuario", inversedBy="id")
+	* @ORM\OneToOne(targetEntity="Usuario", inversedBy="emprendedor")
 	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id", onDelete="CASCADE")
 	*/
-	private $idUsuario;
+	private $usuario;
 
 	/**
-	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
+	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="emprendedor")
 	*/
-	private $idEmprendimientos;
+	private $emprendimientos;
     
     /**
      * @ORM\Column(type="date")
@@ -193,5 +191,63 @@ class Emprendedor
     public function getIdEmprendimientos()
     {
         return $this->idEmprendimientos;
+    }
+
+    /**
+     * Add emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     *
+     * @return Emprendedor
+     */
+    public function addEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento)
+    {
+        $this->emprendimientos[] = $emprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     */
+    public function removeEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento)
+    {
+        $this->emprendimientos->removeElement($emprendimiento);
+    }
+
+    /**
+     * Get emprendimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmprendimientos()
+    {
+        return $this->emprendimientos;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \asociateyaBundle\Entity\Usuario $usuario
+     *
+     * @return Emprendedor
+     */
+    public function setUsuario(\asociateyaBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \asociateyaBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

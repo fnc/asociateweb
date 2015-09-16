@@ -24,17 +24,17 @@ class Usuario implements UserInterface, \Serializable
     private $id;
 
     /**
-    * @ORM\OneToMany(targetEntity="Inversion", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+    * @ORM\OneToMany(targetEntity="Inversion", mappedBy="usuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
     */
     private $inversiones;
 
     /**
-    * @ORM\OneToMany(targetEntity="Comentario", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+    * @ORM\OneToMany(targetEntity="Comentario", mappedBy="usuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
     */
     private $comentarios;
 
     /**
-    * @ORM\OneToOne(targetEntity="Emprendedor", mappedBy="idUsuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
+    * @ORM\OneToOne(targetEntity="Emprendedor", mappedBy="usuario", cascade={"persist", "remove", "merge"}, orphanRemoval=true)
     */
     private $emprendedor;
 
@@ -626,5 +626,97 @@ class Usuario implements UserInterface, \Serializable
     public function getIdEmprendedor()
     {
         return $this->idEmprendedor;
+    }
+
+    /**
+     * Add inversione
+     *
+     * @param \asociateyaBundle\Entity\Inversion $inversione
+     *
+     * @return Usuario
+     */
+    public function addInversione(\asociateyaBundle\Entity\Inversion $inversione)
+    {
+        $this->inversiones[] = $inversione;
+
+        return $this;
+    }
+
+    /**
+     * Remove inversione
+     *
+     * @param \asociateyaBundle\Entity\Inversion $inversione
+     */
+    public function removeInversione(\asociateyaBundle\Entity\Inversion $inversione)
+    {
+        $this->inversiones->removeElement($inversione);
+    }
+
+    /**
+     * Get inversiones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInversiones()
+    {
+        return $this->inversiones;
+    }
+
+    /**
+     * Add comentario
+     *
+     * @param \asociateyaBundle\Entity\Comentario $comentario
+     *
+     * @return Usuario
+     */
+    public function addComentario(\asociateyaBundle\Entity\Comentario $comentario)
+    {
+        $this->comentarios[] = $comentario;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentario
+     *
+     * @param \asociateyaBundle\Entity\Comentario $comentario
+     */
+    public function removeComentario(\asociateyaBundle\Entity\Comentario $comentario)
+    {
+        $this->comentarios->removeElement($comentario);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * Set emprendedor
+     *
+     * @param \asociateyaBundle\Entity\Emprendedor $emprendedor
+     *
+     * @return Usuario
+     */
+    public function setEmprendedor(\asociateyaBundle\Entity\Emprendedor $emprendedor = null)
+    {
+        $this->emprendedor = $emprendedor;
+
+        return $this;
+    }
+
+    /**
+     * Get emprendedor
+     *
+     * @return \asociateyaBundle\Entity\Emprendedor
+     */
+    public function getEmprendedor()
+    {
+        return $this->emprendedor;
     }
 }

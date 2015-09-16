@@ -40,17 +40,17 @@ class Categoria
 
 
     /**
-     * ORM\ManyToMany(targetEntity="Emprendimiento", mappedBy="idCategorias")
-     * @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
-	
+     * @ORM\ManyToMany(targetEntity="Emprendimiento", mappedBy="categorias")
+     * ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
      **/
-    private $idEmprendimientos;
-public function __construct($name=null)
-    {
-        $this->idEmprendimientos = new ArrayCollection();
+    private $emprendimientos;
 
-  
+    public function __construct($name=null)
+    {
+        $this->emprendimientos = new \ArrayCollection();
+ 
     }
+    
     /**
      * Get id
      *

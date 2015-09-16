@@ -1,0 +1,57 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Perfil de {{ entity.nombre }} {{ entity.apellido }} {% endblock %}
+{% block stylesheets %}
+  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sidebar_top"></div>
+    <div class="sidebar_item">
+        <h1 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h1>
+        <h2 id="ID_ocupacionCreador">Dise&ntilde;ador Web</h2>
+        <p>Contacto:</p>
+        <p id="ID_mailCreador">{{ entity.email }}</p>
+    </div>
+    <div class="sidebar_base"></div>
+    </div>
+    <div id="sideBarBotonPM">
+    <a href="#" class="botonPM">Envíale un<br>mensaje privado</a>
+{% endblock %}
+
+{% block body -%}
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('usuario') }}">
+                Back to the list
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
+                Edit
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+
+
+    <h1 id="ID_nombreCreador1">{{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
+    Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}
+    <h1 id="ID_nombreCreador2">Emprendimientos de Pepito Juarez</h1>
+    <div id="portfolio_container">
+        <ul>
+            <div class="elemento_portfolio"><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
+                <div class="imagen_elemento">
+                    <img src="../style/Imagenes/portfolio/imagen3.png" width="130" height="130"></div>
+                    <div class="texto_elemento">
+                        <div class="titulo_texto">Abraxas</div>
+                        <div class="descripcion_texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, turpis sed venenatis sodales, justo mi luctus velit, ornare imperdiet felis urna ac nunc. Donec in dapibus ante. Aliquam dapibus ultricies dolor.</div>
+                        <div class="creador_elemento">Creado por Hernan Budic el 03/08/2015</div>
+                    </div>
+                </a></li></div>
+            </ul>
+        </div>
+
+{% endblock %}

@@ -24,7 +24,7 @@
         <div id="logo_der">
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <div id="boton_perfil">
-            <a href="paginas/log_in.html" class="boton_ingresar">{{ app.user.username }}</a>
+            <a href={{ path('asociateya_ingresar')}} class="boton_ingresar">{{ app.user.username }}</a>
           </div>
           <div id="boton_salir">
             <a href={{ path('asociateya_salir')}} class="boton_registrar">Salir</a>

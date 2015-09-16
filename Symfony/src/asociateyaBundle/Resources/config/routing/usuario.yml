@@ -1,0 +1,34 @@
+usuario:
+    path:     /
+    defaults: { _controller: "asociateyaBundle:Usuario:index" }
+
+usuario_show:
+    path:     /{id}/perfil
+    defaults: { _controller: "asociateyaBundle:Usuario:show" }
+
+# usuario_new:
+#     path:     /new
+#     defaults: { _controller: "asociateyaBundle:Usuario:new" }
+
+# usuario_create:
+#     path:     /create
+#     defaults: { _controller: "asociateyaBundle:Usuario:create" }
+#     methods:  POST
+
+usuario_edit:
+    path:     /{id}/editar
+    defaults: { _controller: "asociateyaBundle:Usuario:edit" }
+
+usuario_update:
+    path:     /{id}/actualizar
+    defaults: { _controller: "asociateyaBundle:Usuario:update" }
+    methods:  [POST, PUT]
+
+# usuario_delete:
+#     path:     /{id}/baja
+#     defaults: { _controller: "asociateyaBundle:Usuario:delete" }
+#     methods:  [POST, DELETE]
+
+usuario_delete:
+    path:     /{id}/baja
+    defaults: { _controller: "asociateyaBundle:Usuario:delete" }

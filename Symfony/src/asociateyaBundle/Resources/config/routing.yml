@@ -1,3 +1,7 @@
+asociateya_usuario:
+    resource: "@asociateyaBundle/Resources/config/routing/usuario.yml"
+    prefix:   /usuario
+
 asociateya_emprendedor:
     resource: "@asociateyaBundle/Resources/config/routing/emprendedor.yml"
     prefix:   /emprendedor

@@ -13,24 +13,23 @@ use Doctrine\ORM\Mapping as ORM;
 class Caja
 {
     /**
-*  @ORM\Id
-*  @ORM\Column(type="integer", name="caja_id")
-*  @ORM\GeneratedValue(strategy="AUTO")
-*/
+    *  @ORM\Id
+    *  @ORM\Column(type="integer", name="caja_id")
+    *  @ORM\GeneratedValue(strategy="AUTO")
+    */
    private $id;
 
     public function __construct($name=null)
     {
-        $this->idEmprendimientos = new ArrayCollection();
-
+        $this->emprendimientos = new \ArrayCollection();
   
     }
 	
 	/**
-	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="id")
+	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="caja")
 	*/
 	
-	private $idEmprendimientos;
+	private $emprendimientos;
 	
 
     /**
@@ -131,36 +130,36 @@ class Caja
     }
 
     /**
-     * Add idEmprendimiento
+     * Add emprendimiento
      *
-     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
      *
      * @return Caja
      */
-    public function addIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento)
+    public function addEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento)
     {
-        $this->idEmprendimientos[] = $idEmprendimiento;
+        $this->emprendimientos[] = $emprendimiento;
 
         return $this;
     }
 
     /**
-     * Remove idEmprendimiento
+     * Remove emprendimiento
      *
-     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
      */
-    public function removeIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento)
+    public function removeEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento)
     {
-        $this->idEmprendimientos->removeElement($idEmprendimiento);
+        $this->emprendimientos->removeElement($emprendimiento);
     }
 
     /**
-     * Get idEmprendimientos
+     * Get emprendimientos
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getIdEmprendimientos()
+    public function getEmprendimientos()
     {
-        return $this->idEmprendimientos;
+        return $this->emprendimientos;
     }
 }

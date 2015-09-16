@@ -22,16 +22,16 @@ class Inversion {
  
 
 	/**
-	* @ORM\ManyToOne(targetEntity="Usuario", inversedBy="id")
+	* @ORM\ManyToOne(targetEntity="Usuario", inversedBy="inversiones")
 	* @ORM\JoinColumn(name="usuario_id", referencedColumnName="usuario_id",         onDelete="CASCADE")
 	*/
-	     private $idUsuario;
+	private $usuario;
 
 	/**
-	* @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="id")
+	* @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="inversiones")
 	* @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id",         onDelete="CASCADE")
 	*/
-	     private $idEmprendimiento;
+	private $emprendimiento;
 
 
     
@@ -123,5 +123,53 @@ class Inversion {
     public function getIdUsuario()
     {
         return $this->idUsuario;
+    }
+
+    /**
+     * Set emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     *
+     * @return Inversion
+     */
+    public function setEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento = null)
+    {
+        $this->emprendimiento = $emprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get emprendimiento
+     *
+     * @return \asociateyaBundle\Entity\Emprendimiento
+     */
+    public function getEmprendimiento()
+    {
+        return $this->emprendimiento;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \asociateyaBundle\Entity\Usuario $usuario
+     *
+     * @return Inversion
+     */
+    public function setUsuario(\asociateyaBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \asociateyaBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

@@ -33,10 +33,10 @@ class Comentario
     private $usuario;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="id")
-    * @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id",         onDelete="CASCADE")
+    * @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="comentarios")
+    * @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id", onDelete="CASCADE")
     */
-    private $idEmprendimiento;
+    private $emprendimiento;
 
 
     /**
@@ -151,5 +151,53 @@ class Comentario
     public function getIdEmprendimiento()
     {
         return $this->idEmprendimiento;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \asociateyaBundle\Entity\Usuario $usuario
+     *
+     * @return Comentario
+     */
+    public function setUsuario(\asociateyaBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \asociateyaBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     *
+     * @return Comentario
+     */
+    public function setEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento = null)
+    {
+        $this->emprendimiento = $emprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get emprendimiento
+     *
+     * @return \asociateyaBundle\Entity\Emprendimiento
+     */
+    public function getEmprendimiento()
+    {
+        return $this->emprendimiento;
     }
 }
