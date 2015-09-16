@@ -1,0 +1,35 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Mis Emprendimientos{% endblock %}
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block body -%}
+
+
+<div class="texto_emp">
+    <h1>Emprendimientos que he creado</h1>
+    <div id="portfolio_container">
+        <ul>
+            {% for entity in entities %}
+
+            <div class="elemento_portfolio"><li><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
+                <div class="imagen_elemento">
+                    <img src={{ entity.rutaImagen }} width="130" height="130"></div>
+                    <div class="texto_elemento">
+                        <div class="titulo_texto">{{ entity.nombre }}</div>
+                        <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
+                        <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('Y-m-d') }}{% endif %}</div>
+                    </div>
+                </a></li>
+            </div>
+            {% endfor %}
+        </ul>
+    </div><!-- TERMINA EL PORTAFOLIO -->
+</div>
+<div class="img_emp img_container">
+    <a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a> </div>
+{% endblock %}

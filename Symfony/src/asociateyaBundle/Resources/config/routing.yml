@@ -1,3 +1,11 @@
+asociateya_categoria:
+    resource: "@asociateyaBundle/Resources/config/routing/categoria.yml"
+    prefix:   /categoria
+
+asociateya_emprendimiento:
+    resource: "@asociateyaBundle/Resources/config/routing/emprendimiento.yml"
+    prefix:   /emprendimiento
+
 asociateya_usuario:
     resource: "@asociateyaBundle/Resources/config/routing/usuario.yml"
     prefix:   /usuario

@@ -54,28 +54,19 @@ class Emprendimiento
      * ORM\ManyToOne(targetEntity="Categoria", inversedBy="idEmprendimientos")
      * ORM\JoinColumn(name="categoria_id", referencedColumnName="categoria_id",         onDelete="CASCADE")
      */
-     private $categorias;
+    private $categorias;
 
     /**
     * @ORM\ManyToOne(targetEntity="Emprendedor", inversedBy="emprendimientos")
     * @ORM\JoinColumn(name="emprendedor_id", referencedColumnName="emprendedor_id", onDelete="CASCADE")
     */
-     private $emprendedor;
+    private $emprendedor;
 
     /**
     * @ORM\ManyToOne(targetEntity="Caja", inversedBy="emprendimientos")
     * @ORM\JoinColumn(name="caja_id", referencedColumnName="caja_id",         onDelete="CASCADE")
     */
-     private $caja;
-
-
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idCategoria", type="integer")
-     */
-    private $idCategoria;
+    private $caja;
 
     /**
      * @var string
@@ -156,17 +147,17 @@ class Emprendimiento
      */
     private $fechaCreacion;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $fechaAprobacion;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $fechaCancelacion;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $fechaFinalizacion;
 

@@ -1,0 +1,42 @@
+emprendimiento:
+    path:     /
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:index" }
+
+emprendimiento_listado:
+    path:     /listado
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:listado" }
+
+emprendimiento_show:
+    path:     /{id}/mostrar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:show" }
+
+emprendimiento_new:
+    path:     /nuevo
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:new" }
+
+emprendimiento_create:
+    path:     /crear
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:create" }
+    methods:  POST
+
+emprendimiento_aprobar:
+    path:     /{id}/aprobar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:aprobar" }
+
+emprendimiento_pendientes:
+    path:     /pendientes
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:pendientes" }
+
+emprendimiento_edit:
+    path:     /{id}/editar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:edit" }
+
+emprendimiento_update:
+    path:     /{id}/actualizar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:update" }
+    methods:  [POST, PUT]
+
+emprendimiento_delete:
+    path:     /{id}/eliminar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:delete" }
+    methods:  [POST, DELETE]

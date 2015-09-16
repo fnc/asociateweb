@@ -1,0 +1,88 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Emprendimiento</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Monto</th>
+                <td>{{ entity.monto }}</td>
+            </tr>
+            <tr>
+                <th>Tipodemeta</th>
+                <td>{{ entity.tipoDeMeta }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Rutaimagen</th>
+                <td>{{ entity.rutaImagen }}</td>
+            </tr>
+            <tr>
+                <th>Descripcioncorta</th>
+                <td>{{ entity.descripcionCorta }}</td>
+            </tr>
+            <tr>
+                <th>Descripcionlarga</th>
+                <td>{{ entity.descripcionLarga }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ entity.estado }}</td>
+            </tr>
+            <tr>
+                <th>Precioaccion</th>
+                <td>{{ entity.precioAccion }}</td>
+            </tr>
+            <tr>
+                <th>Totalacciones</th>
+                <td>{{ entity.totalAcciones }}</td>
+            </tr>
+            <tr>
+                <th>Accionesrestantes</th>
+                <td>{{ entity.accionesRestantes }}</td>
+            </tr>
+            <tr>
+                <th>Ranking</th>
+                <td>{{ entity.ranking }}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{{ entity.fechaCreacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechaaprobacion</th>
+                <td>{{ entity.fechaAprobacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechacancelacion</th>
+                <td>{{ entity.fechaCancelacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechafinalizacion</th>
+                <td>{{ entity.fechaFinalizacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('emprendimiento') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('emprendimiento_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

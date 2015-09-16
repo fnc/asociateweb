@@ -1,0 +1,18 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Nuevo emprendimiento{% endblock %}
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+{% block body -%}
+<h1>Crea un proyecto</h1>
+
+<div class="form_description">
+	<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
+</div>						
+
+
+{{ form(form) }}
+
+{% endblock %}
