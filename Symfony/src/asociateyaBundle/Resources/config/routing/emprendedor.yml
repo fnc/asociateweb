@@ -1,30 +1,43 @@
-emprendedor:
-    path:     /
-    defaults: { _controller: "asociateyaBundle:Emprendedor:index" }
+# emprendedor:
+#     path:     /
+#     defaults: { _controller: "asociateyaBundle:Emprendedor:index" }
 
-emprendedor_show:
-    path:     /{id}/show
-    defaults: { _controller: "asociateyaBundle:Emprendedor:show" }
+# emprendedor_show:
+#     path:     /{id}/show
+#     defaults: { _controller: "asociateyaBundle:Emprendedor:show" }
 
 emprendedor_new:
-    path:     /new
+    path:     /aplicar
     defaults: { _controller: "asociateyaBundle:Emprendedor:new" }
 
-emprendedor_create:
-    path:     /create
-    defaults: { _controller: "asociateyaBundle:Emprendedor:create" }
-    methods:  POST
+emprendedor_newExito:
+    path:     /aplicar/exito
+    defaults: { _controller: "asociateyaBundle:Emprendedor:newExito" }
 
-emprendedor_edit:
-    path:     /{id}/edit
-    defaults: { _controller: "asociateyaBundle:Emprendedor:edit" }
+emprendedor_pendientes:
+    path:     /pendientes
+    defaults: { _controller: "asociateyaBundle:Emprendedor:pendientes" }
 
-emprendedor_update:
-    path:     /{id}/update
-    defaults: { _controller: "asociateyaBundle:Emprendedor:update" }
-    methods:  [POST, PUT]
+emprendedor_aprobar:
+    path:     /{id}/aprobar
+    defaults: { _controller: "asociateyaBundle:Emprendedor:aprobar" }
 
-emprendedor_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "asociateyaBundle:Emprendedor:delete" }
-    methods:  [POST, DELETE]
+
+# emprendedor_create:
+#     path:     /create
+#     defaults: { _controller: "asociateyaBundle:Emprendedor:create" }
+#     methods:  POST
+
+# emprendedor_edit:
+#     path:     /{id}/edit
+#     defaults: { _controller: "asociateyaBundle:Emprendedor:edit" }
+
+# emprendedor_update:
+#     path:     /{id}/update
+#     defaults: { _controller: "asociateyaBundle:Emprendedor:update" }
+#     methods:  [POST, PUT]
+
+# emprendedor_delete:
+#     path:     /{id}/delete
+#     defaults: { _controller: "asociateyaBundle:Emprendedor:delete" }
+#     methods:  [POST, DELETE]

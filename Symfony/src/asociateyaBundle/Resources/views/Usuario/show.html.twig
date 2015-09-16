@@ -4,41 +4,51 @@
 {% block stylesheets %}
   <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
   <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block sidebar %}
-    <div class="sidebar_top"></div>
-    <div class="sidebar_item">
-        <h1 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h1>
-        <h2 id="ID_ocupacionCreador">Dise&ntilde;ador Web</h2>
-        <p>Contacto:</p>
-        <p id="ID_mailCreador">{{ entity.email }}</p>
+    <div class="sidebar" id="sidebar_container">
+        <div class="sidebar" id="sideBarPerfil">
+            <div class="sidebar_top"></div>
+            <div class="sidebar_item">
+                <h1 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h1>
+                <h2 id="ID_ocupacionCreador">Dise&ntilde;ador Web</h2>
+                <p>Contacto:</p>
+                <p id="ID_mailCreador">{{ entity.email }}</p>
+            </div>
+            <div class="sidebar_base"></div>
+        </div>
+        {% if app.user.getId != entity.getId  %}
+        <div id="sideBarBotonPM">
+            <a href="#" class="botonPM">Envíale un<br>mensaje privado</a>
+        </div>
+        {% endif %}
     </div>
-    <div class="sidebar_base"></div>
-    </div>
-    <div id="sideBarBotonPM">
-    <a href="#" class="botonPM">Envíale un<br>mensaje privado</a>
 {% endblock %}
 
 {% block body -%}
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('usuario') }}">
-                Back to the list
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
-                Edit
-            </a>
-        </li>
-        <li>{{ form(delete_form) }}</li>
-    </ul>
-
 
     <h1 id="ID_nombreCreador1">{{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
     Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}
+
+    {% if app.user.getId == entity.getId  %}
+    <!-- Informacion solo para el usuario autenticado-->
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
+                Editar
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('usuario_delete', { 'id': entity.id }) }}">
+                Baja
+            </a>
+        </li>
+    </ul>
+    {% endif %}
+
     <h1 id="ID_nombreCreador2">Emprendimientos de Pepito Juarez</h1>
     <div id="portfolio_container">
         <ul>

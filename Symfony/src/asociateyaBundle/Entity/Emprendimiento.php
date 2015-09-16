@@ -27,9 +27,9 @@ class Emprendimiento
 
     public function __construct($name=null)
     {
-    	$this->idInversiones = new \ArrayCollection();
-        $this->idComentarios = new \ArrayCollection();
-        $this->idCategorias = new  \ArrayCollection();
+    	$this->idInversiones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idComentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idCategorias = new  \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -16,6 +16,29 @@ class EmprendedorController extends Controller
 {
 
     /**
+     * Aprueba a un emprendedor
+     * estado = 1
+     *
+     */
+    public function aprobarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('asociateyaBundle:Emprendedor')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Emprendedor entity.');
+        }
+
+        $entity->setEstado(1);
+        $entity->setFechaAprobacion(new \DateTime());
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('emprendedor_pendientes'));
+    }
+
+    /**
      * Lists all Emprendedor entities.
      *
      */
@@ -29,6 +52,23 @@ class EmprendedorController extends Controller
             'entities' => $entities,
         ));
     }
+
+    /**
+     * Lista los emprendedores pendientes de aprobacion
+     * estado = 0
+     *
+     */
+    public function pendientesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('asociateyaBundle:Emprendedor')->findByEstado(0);
+
+        return $this->render('asociateyaBundle:Emprendedor:pendientes.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
     /**
      * Creates a new Emprendedor entity.
      *
@@ -36,21 +76,26 @@ class EmprendedorController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Emprendedor();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+       // $form = $this->createCreateForm($entity);
+        //$form->handleRequest($request);
+        $entity->setUsuario($this->getUser());
+        $entity->setEstado(0);
+        $entity->setReputacion(0);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('emprendedor_show', array('id' => $entity->getId())));
-        }
 
-        return $this->render('asociateyaBundle:Emprendedor:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+
+            return $this->redirect($this->generateUrl('emprendedor_show', array('id' => $entity->getId())));
+        //}
+
+        //return $this->render('asociateyaBundle:Emprendedor:new.html.twig', array(
+        //    'entity' => $entity,
+        //    'form'   => $form->createView(),
+        //));
     }
 
     /**
@@ -78,13 +123,38 @@ class EmprendedorController extends Controller
      */
     public function newAction()
     {
-        $entity = new Emprendedor();
-        $form   = $this->createCreateForm($entity);
 
-        return $this->render('asociateyaBundle:Emprendedor:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $entity = new Emprendedor();
+        // $form = $this->createCreateForm($entity);
+        //$form->handleRequest($request);
+        $entity->setUsuario($this->getUser());
+        $entity->setEstado(0);
+        $entity->setReputacion(0);
+
+        //if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+
+
+            return $this->redirect($this->generateUrl('emprendedor_newExito', array('id' => $entity->getId())));
+        // $entity = new Emprendedor();
+        // $form   = $this->createCreateForm($entity);
+
+        // return $this->render('asociateyaBundle:Emprendedor:new.html.twig', array(
+        //     'entity' => $entity,
+        //     'form'   => $form->createView(),
+        // ));
+    }
+
+     /**
+     * muestra mensaje de aplicacion pendiente.
+     *
+     */
+    public function newExitoAction()
+    {
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Se ha aplicado para ser emprendedor exitosamente"));
     }
 
     /**

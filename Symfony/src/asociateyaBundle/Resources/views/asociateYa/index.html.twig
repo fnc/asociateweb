@@ -1,8 +1,10 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
 {% block sidebar -%}
-<div id="imagenBusca"><a href="paginas/buscar_emprendimientos.html"><img src={{ asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a></div>
-<div id="imagenCrea"><a href="paginas/crear_emprendimiento.html"><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a></div>
+<div id="sidebar_container" class="img_container">
+	<div id="imagenBusca"><a href="paginas/buscar_emprendimientos.html"><img src={{ asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a></div>
+	<div id="imagenCrea"><a href="paginas/crear_emprendimiento.html"><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a></div>
+</div>
 {% endblock -%}
 
 {% block body -%}

@@ -1,5 +1,11 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
+{% block stylesheets %}
+  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block body -%}
 
 {{ form(form) }}

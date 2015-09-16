@@ -24,7 +24,7 @@
         <div id="logo_der">
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <div id="boton_perfil">
-            <a href={{ path('asociateya_ingresar')}} class="boton_ingresar">{{ app.user.username }}</a>
+            <a href={{ path('usuario_show',{'id':app.user.getId}) }} class="boton_ingresar">{{ app.user.username }}</a>
           </div>
           <div id="boton_salir">
             <a href={{ path('asociateya_salir')}} class="boton_registrar">Salir</a>
@@ -43,10 +43,15 @@
       <div id="menubar">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <li><a href="paginas/mis_emprendimientos.html">Mis Emprendimientos</a></li>
           <li><a href="paginas/buscar_emprendimientos.html">Buscar Emprendimientos</a></li>
-          <li><a href="paginas/perfil.html">Mi Perfil</a></li>
-          <li><a href="paginas/AcercaDe.html">Acerca De</a></li>
+          <li><a href={{ path('usuario_show',{'id':app.user.getId}) }}>Mi Perfil</a></li>
+          <li><a href={{ path('emprendedor_pendientes') }}>Pendientes</a></li>
+          <li><a href={{ path('asociateya_acerca_de')}}>Acerca De</a></li>
+          {% else %}
+          <li><a href="paginas/buscar_emprendimientos.html">Buscar Emprendimientos</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -54,9 +59,9 @@
     <div id="site_content">
       <div id="banner"></div>
 
-      <div id="sidebar_container" class="img_container">
-      {% block sidebar %}{% endblock %}
-      </div>
+      
+      {% block sidebar %}<!--<div id="sidebar_container" class="img_container"></div>-->{% endblock %}
+      
 
       <div class="content" id="home_content">
         <!-- insert the page content here -->

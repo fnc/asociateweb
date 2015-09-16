@@ -1,16 +1,18 @@
-{% extends '::base.html.twig' %}
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Editar perfil de {{ entity.nombre }} {{ entity.apellido }} {% endblock %}
+{% block stylesheets %}
+  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
 
 {% block body -%}
-    <h1>Usuario edit</h1>
+    <h1>Edicion de perfil de {{ entity.username }} </h1>
 
     {{ form(edit_form) }}
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('usuario') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
+
 </ul>
 {% endblock %}

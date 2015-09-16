@@ -23,7 +23,7 @@ class Emprendedor
 
     public function __construct($name=null)
     {
-        $this->emprendimientos = new \ArrayCollection();  
+        $this->emprendimientos = new \Doctrine\Common\Collections\ArrayCollection();  
     }
 
     /**
@@ -38,7 +38,7 @@ class Emprendedor
 	private $emprendimientos;
     
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date",nullable=true)
      */
     private $fechaAprobacion;
 

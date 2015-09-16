@@ -94,12 +94,8 @@ class UsuarioAnonimoController extends Controller
     
     public function exitoRegistroAction()
     {
-        $registracion = new Registracion();
-        $form = $this->createForm(new RegistracionType(), $registracion, array(
-            'action' => $this->generateUrl('asociateya_registrar'),
-            ));
-        
-        return $this->render('asociateyaBundle:asociateYa:exito.html.twig',array('form' => $form->createView()));
+       
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Se ha registrado exitosamente!"));
         
     }
 

@@ -1,7 +1,0 @@
-wip_usuario_crear:
-    path:      /federico/Usuario/
-    defaults:  { _controller: asociateyaBundle:UsuarioAnonimo:crear }
-
-asociateya_ejemplo:
-    path:     /hello/{name}
-    defaults: { _controller: asociateyaBundle:Default:index }

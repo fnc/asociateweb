@@ -6,13 +6,15 @@ asociateya_emprendedor:
     resource: "@asociateyaBundle/Resources/config/routing/emprendedor.yml"
     prefix:   /emprendedor
 
-desarrollo_federico:
-    resource: "@asociateyaBundle/Resources/config/federicoRouting.yml"
-    prefix:   /
-
 asociateya_homepage:
     path:     /
     defaults: { _controller: asociateyaBundle:Default:index }
+
+asociateya_acerca_de:
+    path: /AcercaDe
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    asociateyaBundle::ay_acercade.html.twig
 
 asociateya_formularioModificacionUsuario:
     path:     /modificarUsuario

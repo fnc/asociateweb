@@ -47,7 +47,7 @@ class Categoria
 
     public function __construct($name=null)
     {
-        $this->emprendimientos = new \ArrayCollection();
+        $this->emprendimientos = new \Doctrine\Common\Collections\ArrayCollection();
  
     }
     

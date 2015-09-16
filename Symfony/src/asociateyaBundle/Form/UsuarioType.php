@@ -21,13 +21,13 @@ class UsuarioType extends AbstractType
             ->add('dni')
             ->add('direccion')
             ->add('cuit')
-            ->add('saldo')
-            ->add('fechaCreacion')
-            ->add('nombreUsuario')
-            ->add('contrasena')
-            ->add('rol')
-            ->add('isActive')
-            ->add('emprendedor')
+            //->add('saldo')
+            //->add('fechaCreacion')
+            //->add('nombreUsuario')
+            //->add('contrasena')
+            //->add('rol')
+            //->add('isActive')
+            //->add('emprendedor')
         ;
     }
     

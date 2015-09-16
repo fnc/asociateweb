@@ -14,11 +14,11 @@ class EmprendedorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('fechaAprobacion')
-            ->add('estado')
-            ->add('reputacion')
-        ;
+        //$builder
+            //->add('fechaAprobacion')
+            //->add('estado')
+            //->add('reputacion')
+        //;
     }
     
     /**
