@@ -88,7 +88,7 @@ class EmprendimientoController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Aplicar'));
+        $form->add('submit', 'submit', array('label' => 'Aplicar','attr' => array('class' => 'boton_submit')));
 
         return $form;
     }

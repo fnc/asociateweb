@@ -2,7 +2,6 @@
 
 {% block title %}Mis Emprendimientos{% endblock %}
 {% block stylesheets %}
-<link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -10,26 +9,55 @@
 {% block body -%}
 
 
-<div class="texto_emp">
-    <h1>Emprendimientos que he creado</h1>
-    <div id="portfolio_container">
-        <ul>
-            {% for entity in entities %}
+<div class="content emp_participo">
+        <div class="texto_emp">
+            <h1>Emprendimientos en los que participo</h1>
+            <div id="portfolio_container">
+            <ul>
+            
+                <div class="elemento_portfolio"><li><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
+                    <div class="imagen_elemento">
+                    <img src="../style/Imagenes/portfolio/imagen4.png" width="130" height="130"></div>
+                  <div class="texto_elemento">
+                    <div class="titulo_texto">Proyecto Final</div>
+                    <div class="descripcion_texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, turpis sed venenatis sodales, justo mi luctus velit, ornare imperdiet felis urna ac nunc. Donec in dapibus ante. Aliquam dapibus ultricies dolor.</div>
+                    <div class="creador_elemento">Creado por Federico Croci el 26/07/2015</div>
+                  </div>
+                </a></li></div>
+                
 
-            <div class="elemento_portfolio"><li><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
+            </ul>
+        </div><!-- TERMINA EL PORTAFOLIO -->
+        </div>
+        <div class="img_emp img_container">
+        <a href="buscar_emprendimientos.html"><img src={{asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a> </div>
+</div>
+
+
+<div class="content emp_participo">
+        <div class="texto_emp">
+          <h1>Emprendimientos que he creado</h1>
+        <div id="portfolio_container">
+            <ul>
+                {% for entity in entities %}
+
+                <div class="elemento_portfolio"><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
                 <div class="imagen_elemento">
-                    <img src={{ entity.rutaImagen }} width="130" height="130"></div>
+                    <img src={{ asset(entity.rutaImagen) }} width="130" height="130"></div>
                     <div class="texto_elemento">
                         <div class="titulo_texto">{{ entity.nombre }}</div>
                         <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
                         <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('Y-m-d') }}{% endif %}</div>
                     </div>
                 </a></li>
-            </div>
-            {% endfor %}
-        </ul>
-    </div><!-- TERMINA EL PORTAFOLIO -->
+                </div>
+                {% endfor %}
+            </ul>
+        </div><!-- TERMINA EL PORTAFOLIO -->
+      </div>
+      <div class="img_emp img_container">
+    <a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a> </div>  
 </div>
-<div class="img_emp img_container">
-    <a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a> </div>
+
 {% endblock %}
+
