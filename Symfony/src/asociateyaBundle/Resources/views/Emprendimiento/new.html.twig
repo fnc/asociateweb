@@ -5,14 +5,95 @@
 <link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
 <script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/view.js')}}></script>
 {% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+
+
 {% block body -%}
 <h1>Crea un proyecto</h1>
 
-<div class="form_description">
-	<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
-</div>						
+<form id="formulario_proyecto" class="appnitro" method="post" action="{{ path('emprendimiento_create') }}" {{ form_enctype(form) }}>
 
-{{ form(form, { 'attr': {'class': 'appnitro'} }) }}
+	<div class="form_description">
+		<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
+	</div>	
+
+
+	<div class="sidebar" id="sidebar_container">
+		<div class="sidebar">   	
+			<div class="sidebar_top"></div>
+			<div class="sidebar_item">
+				<h3>Selecciona</h3>
+				{{ form_errors(form.categorias) }}
+				<fieldset form={{form.vars.name}}>
+					<label class="titulo">Áreas:</label><br>
+
+					{% for child in form.categorias %}
+
+						{{ form_widget(child,{ 'attr': {'class': 'description'} }) }}
+						{{ form_label(child) }}
+						<br>
+
+					{% endfor %}
+
+				</fieldset>
+			</div>
+			<div class="sidebar_base"></div>
+		</div>
+	</div>
+	{{ form_row(form._token) }}
+	<ul>
+	    <li id="li_1" > 
+		    <label class="description" for="{{form.nombre.vars.id}}">Título </label>
+		    {{ form_errors(form.nombre) }}
+		    <div>
+		    	{{ form_widget(form.nombre,{ 'attr': {'name': 'element_1' } }) }}
+		    </div><p class="guidelines" id="guide_1"><small>Ingrese aquí el título del emprendimiento. Máximo 80 caracteres.</small></p>
+	    </li>
+
+	    <li id="li_2" >
+		    <label class="description" for="{{form.descripcionCorta.vars.id}}">Descripción corta </label>
+		    {{ form_errors(form.descripcionCorta) }}
+		    <div>
+		    	{{ form_widget(form.descripcionCorta) }}
+		    </div><p class="guidelines" id="guide_2"><small>Debe ser una pequeña y concisa descripción de su proyecto. Será lo que los usuarios verán primero al buscarlo. Máximo 230 caracteres.</small></p>
+	    </li>
+
+	    <li id="li_3" >
+		    <label class="description" for="{{form.descripcionLarga.vars.id}}">Descripción Larga </label>
+		    {{ form_errors(form.descripcionLarga) }}
+		    <div>
+		    	{{ form_widget(form.descripcionLarga) }}
+		    </div><p class="guidelines" id="guide_3"><small>Descripción detallada de su proyecto.</small></p>
+	    </li>
+
+	    <li id="li_4" >
+		    <label class="description" for="{{form.monto.vars.id}}">Monto requerido </label>
+		    {{ form_errors(form.monto) }}
+		    <span class="symbol">$</span>
+			<span>
+				{{ form_widget(form.monto) }}
+			</span>
+			<p class="guidelines" id="guide_4"><small>Ingrese cuanto dinero necesita para poder llevar a cabo su proyecto. El valor está en pesos argentinos.</small></p>
+	    </li>
+
+	    <li id="li_5" >
+	    	<label class="description" for="{{form.rutaImagen.vars.id}}">Imagen representativa del proyecto</label>
+		    {{ form_errors(form.rutaImagen) }}
+		    <div>
+		    	{{ form_widget(form.rutaImagen) }}
+		    </div><p class="guidelines" id="guide_3"><small>Adjunte una imagen en formato JPG que represente a su proyecto.</small></p>
+	    </li>
+
+		<li class="buttons">
+		{{ form_widget(form.submit) }}
+		</li>
+	</ul>
+
+</form>	
 
 {% endblock %}
 {% block javascripts %}{% endblock %}

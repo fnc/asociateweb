@@ -21,19 +21,23 @@ class EmprendimientoType extends AbstractType
             ->add('monto', 'text', array('attr' => array('class' => 'element text currency')))
             ->add('tipoDeMeta')
             ->add('nombre', 'text', array('attr' => array('class' => 'element text large')))
-            ->add('rutaImagen')
             ->add('descripcionCorta', 'textarea', array('attr' => array('class' => 'element textarea small')))
             ->add('descripcionLarga', 'textarea', array('attr' => array('class' => 'element textarea large')))
             //->add('estado')
             ->add('precioAccion', 'text', array('attr' => array('class' => 'element text currency')))
             ->add('totalAcciones', 'text', array('attr' => array('class' => 'element text')))
+            ->add('rutaImagen', 'file', array('label' => 'Imagen emprendimiento(JPG)'))
             //->add('accionesRestantes')
             //->add('ranking')
             //->add('fechaCreacion')
             //->add('fechaAprobacion')
             //->add('fechaCancelacion')
             //->add('fechaFinalizacion')
-            ->add('categorias', 'entity', array('class' => 'asociateyaBundle:Categoria','choice_label' => 'nombre','multiple'=>true,'expanded'=>true))
+            ->add('categorias', 'entity', array('class' => 'asociateyaBundle:Categoria',
+                                                'choice_label' => 'nombre',
+                                                'multiple'=>true,
+                                                'expanded'=>true,
+                                                'placeholder'=>'Elija una categoria.'))
             //->add('emprendedor')
             //->add('caja')
         ;

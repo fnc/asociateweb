@@ -5,6 +5,7 @@ namespace asociateyaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -78,7 +79,7 @@ class Emprendimiento
     /**
      * @var string
      *
-     * @ORM\Column(name="tipoDeMeta", type="string", length=255)
+     * @ORM\Column(name="tipoDeMeta", type="string", length=255, nullable=true)
      */
     private $tipoDeMeta;
 
@@ -93,8 +94,11 @@ class Emprendimiento
      * @var string
      *
      * @ORM\Column(name="rutaImagen", type="string", length=255)
+     * @Assert\NotBlank(message="Por favor, suba una imagen para el proyecto.")
+     * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $rutaImagen;
+
     /**
      * @var string
      *
@@ -118,28 +122,28 @@ class Emprendimiento
     /**
      * @var string
      *
-     * @ORM\Column(name="precioAccion", type="decimal")
+     * @ORM\Column(name="precioAccion", type="decimal",nullable=true)
      */
     private $precioAccion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="totalAcciones", type="integer")
+     * @ORM\Column(name="totalAcciones", type="integer",nullable=true)
      */
     private $totalAcciones;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="accionesRestantes", type="integer")
+     * @ORM\Column(name="accionesRestantes", type="integer",nullable=true)
      */
     private $accionesRestantes;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ranking", type="decimal")
+     * @ORM\Column(name="ranking", type="decimal",nullable=true)
      */
     private $ranking;
     /**
