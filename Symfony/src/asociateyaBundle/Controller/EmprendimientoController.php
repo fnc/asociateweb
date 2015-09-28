@@ -61,6 +61,22 @@ class EmprendimientoController extends Controller
         $entity->setEmprendedor($this->getUser()->getEmprendedor());
 
         if ($form->isValid()) {
+            // $file stores the uploaded PDF file
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $entity->getRutaImagen();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $imagesDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos';
+            $file->move($imagesDir, $fileName);
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $entity->setRutaImagen($fileName);
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();

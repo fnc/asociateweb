@@ -43,7 +43,7 @@
 
                 <div class="elemento_portfolio"><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
                 <div class="imagen_elemento">
-                    <img src={{ asset(entity.rutaImagen) }} width="130" height="130"></div>
+                    <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130"></div>
                     <div class="texto_elemento">
                         <div class="titulo_texto">{{ entity.nombre }}</div>
                         <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
