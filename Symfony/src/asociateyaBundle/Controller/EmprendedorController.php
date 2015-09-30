@@ -62,10 +62,12 @@ class EmprendedorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('asociateyaBundle:Emprendedor')->findByEstado(0);
+        $emprendedores = $em->getRepository('asociateyaBundle:Emprendedor')->findByEstado(0);
+
+        $emprendimientos = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEstado(0);
 
         return $this->render('asociateyaBundle:Emprendedor:pendientes.html.twig', array(
-            'entities' => $entities,
+            'emprendedores' => $emprendedores,'emprendimientos' => $emprendimientos
         ));
     }
 

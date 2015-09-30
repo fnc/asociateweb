@@ -45,7 +45,7 @@
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <li><a href={{ path('emprendimiento_listado') }}>Mis Emprendimientos</a></li>
-          <li><a href="paginas/buscar_emprendimientos.html">Buscar Emprendimientos</a></li>
+          <li><a href={{ path('emprendimiento_busqueda') }}>Buscar Emprendimientos</a></li>
           <li><a href={{ path('usuario_show',{'id':app.user.getId}) }}>Mi Perfil</a></li>
           <li><a href={{ path('emprendedor_pendientes') }}>Pendientes</a></li>
           <li><a href={{ path('asociateya_acerca_de')}}>Acerca De</a></li>

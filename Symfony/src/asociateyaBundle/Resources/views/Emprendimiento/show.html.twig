@@ -1,88 +1,69 @@
-{% extends '::base.html.twig' %}
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block stylesheets %}
+  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+  <script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/datos_emprendimiento.js')}}></script>
+{% endblock %}
+
+{% block sidebar %}
+<div id="sidebar_container">
+    <div class="sidebar" id="sideBarPerfil">
+      <div class="sidebar_top"></div>
+      <div id="sidebar_emprendimiento" class="sidebar_item">
+        <div id="ID_imagenProyecto" class="image_holder"><img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="180" height="180">
+        </div>
+        <h2>Creado por:</h2>
+        <h1 id="ID_nombreCreador"><a href="perfil.html">{{entity.emprendedor.usuario.userName}}</a></h1>
+      </div>
+      <div class="sidebar_base"></div>
+    </div>
+    <div class="sidebar" id="sideBarPerfil">
+      <div class="sidebar_top"></div>
+      <div id="sidebar_emprendimiento" class="sidebar_item">
+        <h3>Total recaudado</h3>
+        <div id="ID_barraProgreso" class="progress"></div>
+        <br>
+        <h3>Precio de la acción</h3>
+        <h4 id="ID_precioAccion">${{entity.precioAccion}}</h4>
+      </div>
+      <div class="sidebar_base"></div>
+    </div>
+    {% if app.user.getId == entity.emprendedor.usuario.getId  %}
+    <div id="sideBarBotonAsociate">
+        <a href="{{ path('emprendimiento_edit', { 'id': entity.id }) }}" class="botonPM">Editar</a>
+    </div>    
+    {% else %}
+    <div id="sideBarBotonAsociate">
+        <a href="subscripciones.html" class="botonPM">¡Asociate!</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
 
 {% block body -%}
-    <h1>Emprendimiento</h1>
+      <div class="content" id="pag2_content">
+        <!-- insert the page content here -->
+        <h1 id="ID_nombreProyecto">{{ entity.nombre }}</h1>
+        <h2>{{ entity.descripcionCorta }}</h2>
+        <p>{{ entity.descripcionLarga }}</p>
+   
+        <iframe width="440" height="330" align="middle" src="http://www.youtube.com/embed/XGSy3_Czz8k?autoplay=0"><br>
+        </iframe>
+        <br>
+        
+        <h3>Archivos subidos</h3>
+        <div class="archivos_subidos">
+            <ul>
+                <li><a href="../lib/pdf/Autoorganizacion.pdf">  Autoorganizacion.pdf</a></li>
+                <li><a href="../lib/pdf/ciencia_tecnologia.pdf">    ciencia_tecnologia.pdf</a></li>
+            </ul>
+        </div>
+        <br><h3>Comentarios</h3>
+      </div>   
+{% endblock %}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Monto</th>
-                <td>{{ entity.monto }}</td>
-            </tr>
-            <tr>
-                <th>Tipodemeta</th>
-                <td>{{ entity.tipoDeMeta }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Rutaimagen</th>
-                <td>{{ entity.rutaImagen }}</td>
-            </tr>
-            <tr>
-                <th>Descripcioncorta</th>
-                <td>{{ entity.descripcionCorta }}</td>
-            </tr>
-            <tr>
-                <th>Descripcionlarga</th>
-                <td>{{ entity.descripcionLarga }}</td>
-            </tr>
-            <tr>
-                <th>Estado</th>
-                <td>{{ entity.estado }}</td>
-            </tr>
-            <tr>
-                <th>Precioaccion</th>
-                <td>{{ entity.precioAccion }}</td>
-            </tr>
-            <tr>
-                <th>Totalacciones</th>
-                <td>{{ entity.totalAcciones }}</td>
-            </tr>
-            <tr>
-                <th>Accionesrestantes</th>
-                <td>{{ entity.accionesRestantes }}</td>
-            </tr>
-            <tr>
-                <th>Ranking</th>
-                <td>{{ entity.ranking }}</td>
-            </tr>
-            <tr>
-                <th>Fechacreacion</th>
-                <td>{{ entity.fechaCreacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechaaprobacion</th>
-                <td>{{ entity.fechaAprobacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechacancelacion</th>
-                <td>{{ entity.fechaCancelacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechafinalizacion</th>
-                <td>{{ entity.fechaFinalizacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('emprendimiento') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('emprendimiento_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% block javascripts %}
+ <script type="text/javascript">
+    document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + progresoBarra + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progresoBarra + '%">' + progresoBarra + '%</div>'
 {% endblock %}

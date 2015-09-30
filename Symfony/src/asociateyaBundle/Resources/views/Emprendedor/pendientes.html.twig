@@ -2,35 +2,60 @@
 
 {% block title %}Emprendedores pendientes de aprobacion{% endblock %}
 {% block stylesheets %}
-  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
-  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
-  <link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
 {% endblock %}
 
 
 {% block body -%}
-    <h1>Emprendedores pendientes de aprobacion</h1>
+<h1>Emprendedores pendientes de aprobación:</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.usuario.username }}</td>           
-                <td>
+<table class="records_list">
+    <thead>
+        <tr>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in emprendedores %}
+        <tr>
+            <td>{{ entity.usuario.username }}</td>           
+            <td>
                 <ul>
                     <li>
                         <a href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a>
                     </li>
                 </ul>
-                </td>
-            </tr>
+            </td>
+        </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
-    {% endblock %}
+<h1>Emprendimientos pendientes de aprobación:</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in emprendimientos %}
+        <tr>
+            <td>{{ entity.nombre }}</td>           
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}">Aprobar</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

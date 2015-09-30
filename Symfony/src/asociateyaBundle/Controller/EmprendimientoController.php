@@ -31,6 +31,22 @@ class EmprendimientoController extends Controller
     }
 
     /**
+     * Muestra formulario de busqueda y resultados
+     *
+     */
+    public function buscarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findAll();
+
+        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+
+    /**
      * Lista emprendimientos propios.
      *
      */

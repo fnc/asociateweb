@@ -6,6 +6,10 @@ emprendimiento_listado:
     path:     /listado
     defaults: { _controller: "asociateyaBundle:Emprendimiento:listado" }
 
+emprendimiento_busqueda:
+    path:     /buscar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscar" }
+
 emprendimiento_show:
     path:     /{id}/mostrar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:show" }

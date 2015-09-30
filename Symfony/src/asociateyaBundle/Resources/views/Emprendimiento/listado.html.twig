@@ -41,7 +41,7 @@
             <ul>
                 {% for entity in entities %}
 
-                <div class="elemento_portfolio"><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
+                <div class="elemento_portfolio"><li><a href={{ path('emprendimiento_show',{'id':entity.getId}) }} class="link_texto_emprendimiento">
                 <div class="imagen_elemento">
                     <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130"></div>
                     <div class="texto_elemento">
