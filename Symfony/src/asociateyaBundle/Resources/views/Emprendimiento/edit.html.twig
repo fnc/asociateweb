@@ -1,16 +1,83 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
+{% block title %}Editar emprendimiento {{entity.nombre}}{% endblock %}
+
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
+<script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/view.js')}}></script>
+{% endblock %}
+
+
 {% block body -%}
-    <h1>Emprendimiento edit</h1>
 
-    {{ form(edit_form) }}
+<h1>Editar informacion del emprendimiento {{entity.nombre}}</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('emprendimiento') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+<form id="formulario_proyecto" class="appnitro" method="post" action="{{ path('emprendimiento_create') }}" {{ form_enctype(edit_form) }}>
+
+	<div class="form_description">
+		<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
+	</div>	
+
+
+	<div class="sidebar" id="sidebar_container">
+		<div class="sidebar">   	
+			<div class="sidebar_top"></div>
+			<div class="sidebar_item">
+				<h3>Selecciona</h3>
+				{{ form_errors(edit_form.categorias) }}
+				<fieldset form={{edit_form.vars.name}}>
+					<label class="titulo">Áreas:</label><br>
+
+					{% for child in edit_form.categorias %}
+
+						{{ form_widget(child,{ 'attr': {'class': 'description'} }) }}
+						{{ form_label(child) }}
+						<br>
+
+					{% endfor %}
+
+				</fieldset>
+			</div>
+			<div class="sidebar_base"></div>
+		</div>
+	</div>
+
+	{{ form_row(edit_form._token) }}
+
+	<ul>
+
+	    <li id="li_2" >
+		    <label class="description" for="{{edit_form.descripcionCorta.vars.id}}">Descripción corta </label>
+		    {{ form_errors(edit_form.descripcionCorta) }}
+		    <div>
+		    	{{ form_widget(edit_form.descripcionCorta) }}
+		    </div><p class="guidelines" id="guide_2"><small>Debe ser una pequeña y concisa descripción de su proyecto. Será lo que los usuarios verán primero al buscarlo. Máximo 230 caracteres.</small></p>
+	    </li>
+
+	    <li id="li_3" >
+		    <label class="description" for="{{edit_form.descripcionLarga.vars.id}}">Descripción Larga </label>
+		    {{ form_errors(edit_form.descripcionLarga) }}
+		    <div>
+		    	{{ form_widget(edit_form.descripcionLarga) }}
+		    </div><p class="guidelines" id="guide_3"><small>Descripción detallada de su proyecto.</small></p>
+	    </li>
+
+
+	    <li id="li_5" >
+	    	<label class="description">Imagen actual: </label>
+	    	<div class="imagen_elemento">
+                    <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130"></div>
+	    	<label class="description" for="{{edit_form.rutaImagen.vars.id}}">Imagen representativa del proyecto</label>
+		    {{ form_errors(edit_form.rutaImagen) }}
+		    <div>
+		    	{{ form_widget(edit_form.rutaImagen) }}
+		    </div><p class="guidelines" id="guide_3"><small>Adjunte una imagen en formato JPG que represente a su proyecto.</small></p>
+	    </li>
+
+		<li class="buttons">
+		{{ form_widget(edit_form.submit) }}
+		</li>
+	</ul>
+
+</form>
 {% endblock %}
