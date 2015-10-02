@@ -22,11 +22,9 @@
         <tr>
             <td>{{ entity.usuario.username }}</td>           
             <td>
-                <ul>
-                    <li>
+
                         <a href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a>
-                    </li>
-                </ul>
+
             </td>
         </tr>
         {% endfor %}
@@ -46,11 +44,9 @@
         <tr>
             <td>{{ entity.nombre }}</td>           
             <td>
-                <ul>
-                    <li>
+
                         <a href="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}">Aprobar</a>
-                    </li>
-                </ul>
+
             </td>
         </tr>
         {% endfor %}
