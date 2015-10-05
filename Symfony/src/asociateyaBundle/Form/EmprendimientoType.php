@@ -26,7 +26,7 @@ class EmprendimientoType extends AbstractType
             //->add('estado')
             ->add('precioAccion', 'text', array('attr' => array('class' => 'element text currency')))
             ->add('totalAcciones', 'text', array('attr' => array('class' => 'element text')))
-            ->add('rutaImagen', 'file', array('label' => 'Imagen emprendimiento(JPG)','data_class' => null))
+            ->add('rutaImagen', 'file', array('label' => 'Imagen emprendimiento(JPG)','data_class' => is_null(var)))
             //->add('accionesRestantes')
             //->add('ranking')
             //->add('fechaCreacion')

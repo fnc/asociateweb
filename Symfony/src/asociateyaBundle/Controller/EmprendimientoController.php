@@ -149,6 +149,7 @@ class EmprendimientoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+        $comentarios = $em->getRepository('asociateyaBundle:Comentario')->findByEmprendimiento($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
@@ -158,6 +159,7 @@ class EmprendimientoController extends Controller
 
         return $this->render('asociateyaBundle:Emprendimiento:show.html.twig', array(
             'entity'      => $entity,
+            'comentarios' => $comentarios,
             'delete_form' => $deleteForm->createView(),
         ));
     }

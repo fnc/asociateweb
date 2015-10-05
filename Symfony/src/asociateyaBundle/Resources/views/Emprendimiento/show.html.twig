@@ -13,7 +13,7 @@
         <div id="ID_imagenProyecto" class="image_holder"><img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="180" height="180">
         </div>
         <h2>Creado por:</h2>
-        <h1 id="ID_nombreCreador"><a href="perfil.html">{{entity.emprendedor.usuario.userName}}</a></h1>
+        <h1 id="ID_nombreCreador"><a href={{ path('usuario_show',{'id':entity.emprendedor.usuario.getId}) }}>{{entity.emprendedor.usuario.userName}}</a></h1>
       </div>
       <div class="sidebar_base"></div>
     </div>
@@ -60,6 +60,17 @@
             </ul>
         </div>
         <br><h3>Comentarios</h3>
+        <ul>
+          {% if comentarios %}
+            {% for comentario in comentarios %}
+              <li>
+                <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:{{comentario.texto}}
+              </li>
+            {% endfor %}
+          {% else %}
+            No hay comentarios aun.
+          {% endif %}
+        </ul>
       </div>   
 {% endblock %}
 
