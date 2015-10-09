@@ -70,6 +70,13 @@
           {% else %}
             No hay comentarios aun.
           {% endif %}
+
+          
+          <form id="formulario_comentario" method="post" action="{{ path('emprendimiento_comentar',{'id':entity.getId}) }}" >
+            {{ form_widget(formComentario.texto,{ 'attr': {'class': 'description'} }) }}
+            <input type="submit" value="Comentar">
+          </form> 
+
         </ul>
       </div>   
 {% endblock %}

@@ -44,3 +44,8 @@ emprendimiento_delete:
     path:     /{id}/eliminar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:delete" }
     methods:  [POST, DELETE]
+
+emprendimiento_comentar:
+    path:     /{id}/comentar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:comentar" }
+    methods:  POST

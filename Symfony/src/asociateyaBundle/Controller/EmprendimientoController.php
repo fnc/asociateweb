@@ -6,7 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use asociateyaBundle\Entity\Emprendimiento;
+use asociateyaBundle\Entity\Comentario;
 use asociateyaBundle\Form\EmprendimientoType;
+use asociateyaBundle\Form\ComentarioType;
 
 /**
  * Emprendimiento controller.
@@ -150,6 +152,9 @@ class EmprendimientoController extends Controller
 
         $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
         $comentarios = $em->getRepository('asociateyaBundle:Comentario')->findByEmprendimiento($id);
+        
+        $comentarioNuevo = new Comentario();
+        $formComentario   = $this->createCreateComentarioForm($comentarioNuevo);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
@@ -160,6 +165,7 @@ class EmprendimientoController extends Controller
         return $this->render('asociateyaBundle:Emprendimiento:show.html.twig', array(
             'entity'      => $entity,
             'comentarios' => $comentarios,
+            'formComentario' => $formComentario,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -276,4 +282,52 @@ class EmprendimientoController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Crea un comentario.
+     *
+     */
+    public function comentarAction(Request $request)
+    {
+        $entity = new Comentario();
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
+        $entity->setEmprendedor($this->getUser()->getEmprendedor());
+
+        if ($form->isValid()) {
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('emprendimiento_listado'));
+        }
+
+        return $this->render('asociateyaBundle:Emprendimiento:show.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+    }
+
+        /**
+     * Creates a form to create a Emprendimiento entity.
+     *
+     * @param Emprendimiento $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateComentarioForm(Comentario $entity)
+    {
+        $form = $this->createForm(new ComentarioType(), $entity, array(
+            'action' => $this->generateUrl('emprendimiento_comentar'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Comentar','attr' => array('class' => 'boton_submit')));
+
+        return $form;
+    }
+
+
 }
