@@ -154,7 +154,7 @@ class EmprendimientoController extends Controller
         $comentarios = $em->getRepository('asociateyaBundle:Comentario')->findByEmprendimiento($id);
         
         $comentarioNuevo = new Comentario();
-        $formComentario   = $this->createCreateComentarioForm($comentarioNuevo);
+        $formComentario   = $this->createCreateComentarioForm($comentarioNuevo,$id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
@@ -165,7 +165,7 @@ class EmprendimientoController extends Controller
         return $this->render('asociateyaBundle:Emprendimiento:show.html.twig', array(
             'entity'      => $entity,
             'comentarios' => $comentarios,
-            'formComentario' => $formComentario,
+            'formComentario' => $formComentario->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -287,27 +287,30 @@ class EmprendimientoController extends Controller
      * Crea un comentario.
      *
      */
-    public function comentarAction(Request $request)
+    public function comentarAction(Request $request, $id)
     {
-        $entity = new Comentario();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-        $entity->setEmprendedor($this->getUser()->getEmprendedor());
+        $em = $this->getDoctrine()->getManager();
+        $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
 
-        if ($form->isValid()) {
+
+        $entity = new Comentario();
+        $form = $this->createCreateComentarioForm($entity, $id);
+        $form->handleRequest($request);
+        $entity->setEmprendimiento($emprendimiento);
+        $entity->setUsuario($this->getUser());
+
+        
 
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('emprendimiento_listado'));
-        }
+            
+ 
 
-        return $this->render('asociateyaBundle:Emprendimiento:show.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        return $this->redirect($this->generateUrl('emprendimiento_show',array('id' => $id)));
+
     }
 
         /**
@@ -317,10 +320,10 @@ class EmprendimientoController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateComentarioForm(Comentario $entity)
+    private function createCreateComentarioForm(Comentario $entity, $id)
     {
         $form = $this->createForm(new ComentarioType(), $entity, array(
-            'action' => $this->generateUrl('emprendimiento_comentar'),
+            'action' => $this->generateUrl('emprendimiento_comentar',array('id' => $id)),
             'method' => 'POST',
         ));
 

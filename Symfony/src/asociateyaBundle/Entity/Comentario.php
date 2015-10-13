@@ -22,7 +22,7 @@ class Comentario
 
     /**
      *
-     * @ORM\Column(name="idComentarioAnterior", type="integer")
+     * @ORM\Column(name="idComentarioAnterior", type="integer",nullable=true)
      */
     private $idComentarioAnterior;
 
