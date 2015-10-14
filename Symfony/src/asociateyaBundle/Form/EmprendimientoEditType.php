@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 
 
-class EmprendimientoType extends AbstractType
+class EmprendimientoEditType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,29 +18,17 @@ class EmprendimientoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('monto', 'text', array('attr' => array('class' => 'element text currency')))
-            ->add('tipoDeMeta')
             ->add('nombre', 'text', array('attr' => array('class' => 'element text large')))
             ->add('descripcionCorta', 'textarea', array('attr' => array('class' => 'element textarea small')))
             ->add('descripcionLarga', 'textarea', array('attr' => array('class' => 'element textarea large')))
-            //->add('estado')
-            ->add('precioAccion', 'text', array('attr' => array('class' => 'element text currency')))
-            ->add('totalAcciones', 'text', array('attr' => array('class' => 'element text')))
             ->add('rutaImagen', 'file', array('label' => 'Imagen emprendimiento(JPG)','data_class' => null))
-            //->add('accionesRestantes')
-            //->add('ranking')
-            //->add('fechaCreacion')
-            //->add('fechaAprobacion')
-            //->add('fechaCancelacion')
-            //->add('fechaFinalizacion')
             ->add('categorias', 'entity', array('class' => 'asociateyaBundle:Categoria',
                                                 'choice_label' => 'nombre',
                                                 'multiple'=>true,
                                                 'expanded'=>true,
                                                 'placeholder'=>'Elija una categoria.'))
-            //->add('emprendedor')
-            //->add('caja')
-        ;
+            ;
+
     }
     
     /**

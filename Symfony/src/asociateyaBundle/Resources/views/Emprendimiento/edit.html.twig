@@ -12,7 +12,7 @@
 
 <h1>Editar informacion del emprendimiento {{entity.nombre}}</h1>
 
-<form id="formulario_proyecto" class="appnitro" method="post" action="{{ path('emprendimiento_create') }}" {{ form_enctype(edit_form) }}>
+<form id="formulario_proyecto" class="appnitro" method="post" action="{{ path('emprendimiento_update',{'id':entity.id}) }}" {{ form_enctype(edit_form) }}>
 
 	<div class="form_description">
 		<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>

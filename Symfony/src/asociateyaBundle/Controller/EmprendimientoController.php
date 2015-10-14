@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use asociateyaBundle\Entity\Emprendimiento;
 use asociateyaBundle\Entity\Comentario;
 use asociateyaBundle\Form\EmprendimientoType;
+use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
 
 /**
@@ -203,7 +204,7 @@ class EmprendimientoController extends Controller
     */
     private function createEditForm(Emprendimiento $entity)
     {
-        $form = $this->createForm(new EmprendimientoType(), $entity, array(
+        $form = $this->createForm(new EmprendimientoEditType(), $entity, array(
             'action' => $this->generateUrl('emprendimiento_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -231,7 +232,7 @@ class EmprendimientoController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+             $em->flush();
 
             return $this->redirect($this->generateUrl('emprendimiento_edit', array('id' => $id)));
         }
