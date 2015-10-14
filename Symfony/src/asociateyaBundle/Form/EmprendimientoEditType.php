@@ -17,11 +17,9 @@ class EmprendimientoEditType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('nombre', 'text', array('attr' => array('class' => 'element text large')))
-            ->add('descripcionCorta', 'textarea', array('attr' => array('class' => 'element textarea small')))
+        $builder->add('descripcionCorta', 'textarea', array('attr' => array('class' => 'element textarea small')))
             ->add('descripcionLarga', 'textarea', array('attr' => array('class' => 'element textarea large')))
-            ->add('rutaImagen', 'file', array('label' => 'Imagen emprendimiento(JPG)','data_class' => null))
+            //->add('rutaImagen', 'file', array('label' => 'Imagen emprendimiento(JPG)','data_class' => null))
             ->add('categorias', 'entity', array('class' => 'asociateyaBundle:Categoria',
                                                 'choice_label' => 'nombre',
                                                 'multiple'=>true,

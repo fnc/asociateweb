@@ -18,6 +18,31 @@ use asociateyaBundle\Form\ComentarioType;
 class EmprendimientoController extends Controller
 {
 
+
+    /**
+     * Aprueba a un emprendedor
+     * estado = 1
+     *
+     */
+    public function aprobarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Emprendedor entity.');
+        }
+
+        $entity->setEstado(1);
+        $entity->setFechaAprobacion(new \DateTime());
+
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('emprendedor_pendientes'));
+    }
+
+
     /**
      * Lists all Emprendimiento entities.
      *
@@ -172,6 +197,25 @@ class EmprendimientoController extends Controller
     }
 
     /**
+    * Creates a form to edit a Emprendimiento entity.
+    *
+    * @param Emprendimiento $entity The entity
+    *
+    * @return \Symfony\Component\Form\Form The form
+    */
+    private function createEditForm(Emprendimiento $entity)
+    {
+        $form = $this->createForm(new EmprendimientoEditType(), $entity, array(
+            'action' => $this->generateUrl('emprendimiento_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'boton_submit')));
+
+        return $form;
+    }
+
+    /**
      * Displays a form to edit an existing Emprendimiento entity.
      *
      */
@@ -195,24 +239,7 @@ class EmprendimientoController extends Controller
         ));
     }
 
-    /**
-    * Creates a form to edit a Emprendimiento entity.
-    *
-    * @param Emprendimiento $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Emprendimiento $entity)
-    {
-        $form = $this->createForm(new EmprendimientoEditType(), $entity, array(
-            'action' => $this->generateUrl('emprendimiento_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
 
-        $form->add('submit', 'submit', array('label' => 'Actualizar','attr' => array('class' => 'boton_submit')));
-
-        return $form;
-    }
     /**
      * Edits an existing Emprendimiento entity.
      *
@@ -236,6 +263,7 @@ class EmprendimientoController extends Controller
 
             return $this->redirect($this->generateUrl('emprendimiento_edit', array('id' => $id)));
         }
+
 
         return $this->render('asociateyaBundle:Emprendimiento:edit.html.twig', array(
             'entity'      => $entity,

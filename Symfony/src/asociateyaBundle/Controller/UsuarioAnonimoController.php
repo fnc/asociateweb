@@ -82,6 +82,7 @@ class UsuarioAnonimoController extends Controller
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($nuevoUsuario, $nuevoUsuario->getContrasena());
             $nuevoUsuario->setContrasena($encoded);
+            $nuevoUsuario->setRol('ROLE_INVERSOR');
             $em->persist($nuevoUsuario);
             $em->flush();
 

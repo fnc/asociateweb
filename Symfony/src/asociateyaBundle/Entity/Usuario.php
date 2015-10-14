@@ -429,7 +429,7 @@ class Usuario implements UserInterface, \Serializable
     #interfaz UserInterface
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return array($this->getRol());
     }
 
     #interfaz UserInterface

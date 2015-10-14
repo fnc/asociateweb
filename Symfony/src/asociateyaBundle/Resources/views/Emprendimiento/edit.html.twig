@@ -45,7 +45,7 @@
 	{{ form_row(edit_form._token) }}
 
 	<ul>
-
+	{{ form_errors(edit_form) }}
 	    <li id="li_2" >
 		    <label class="description" for="{{edit_form.descripcionCorta.vars.id}}">Descripción corta </label>
 		    {{ form_errors(edit_form.descripcionCorta) }}
@@ -63,16 +63,6 @@
 	    </li>
 
 
-	    <li id="li_5" >
-	    	<label class="description">Imagen actual: </label>
-	    	<div class="imagen_elemento">
-                    <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130"></div>
-	    	<label class="description" for="{{edit_form.rutaImagen.vars.id}}">Imagen representativa del proyecto</label>
-		    {{ form_errors(edit_form.rutaImagen) }}
-		    <div>
-		    	{{ form_widget(edit_form.rutaImagen) }}
-		    </div><p class="guidelines" id="guide_3"><small>Adjunte una imagen en formato JPG que represente a su proyecto.</small></p>
-	    </li>
 
 		<li class="buttons">
 		{{ form_widget(edit_form.submit) }}

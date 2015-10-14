@@ -31,6 +31,7 @@ class EmprendedorController extends Controller
         }
 
         $entity->setEstado(1);
+        $entity->getUsuario()->setRol('ROLE_EMPRENDEDOR');
         $entity->setFechaAprobacion(new \DateTime());
 
         $em->flush();
@@ -59,7 +60,9 @@ class EmprendedorController extends Controller
      *
      */
     public function pendientesAction()
-    {
+    {   
+        $this->denyAccessUnlessGranted('ROLE_EMPRENDEDOR', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $emprendedores = $em->getRepository('asociateyaBundle:Emprendedor')->findByEstado(0);
