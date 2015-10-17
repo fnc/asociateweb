@@ -73,6 +73,29 @@ class EmprendimientoController extends Controller
         ));
     }
 
+    /**
+     * Muestra formulario de busqueda y resultados
+     *
+     */
+    public function buscarPalabraAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $palabraClave = $request->request->get('search_field');
+
+        $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+   ->where('e.nombre = :nombre') 
+   ->setParameter('nombre', $palabraClave . '%')
+   ->getQuery()
+   ->getResult();
+
+
+        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+
 
     /**
      * Lista emprendimientos propios.
@@ -221,6 +244,10 @@ class EmprendimientoController extends Controller
      */
     public function editAction($id)
     {
+
+        //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE EDITAR EMPRENDIMIENTOS EN LA WEB
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);

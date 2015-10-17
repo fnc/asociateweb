@@ -61,7 +61,8 @@ class EmprendedorController extends Controller
      */
     public function pendientesAction()
     {   
-        $this->denyAccessUnlessGranted('ROLE_EMPRENDEDOR', null, 'Unable to access this page!');
+        //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE APROBAR PENDIENTES
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
 
