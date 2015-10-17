@@ -53,3 +53,7 @@ emprendimiento_comentar:
     path:     /{id}/comentar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:comentar" }
     methods:  POST
+
+emprendimiento_asociarse:
+    path:     /{id}/asociarse
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:asociarse" }

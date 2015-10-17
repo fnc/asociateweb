@@ -46,6 +46,13 @@ class Caja
      */
     private $fechaCobro;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="decimal")
+     */
+    private $estado;    
+
 
     /**
      * Get id

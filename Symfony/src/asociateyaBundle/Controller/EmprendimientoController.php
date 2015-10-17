@@ -388,5 +388,31 @@ class EmprendimientoController extends Controller
         return $form;
     }
 
+    /**
+     * Displays a form to edit an existing Emprendimiento entity.
+     *
+     */
+    public function asociarseAction($id)
+    {
 
+        //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE EDITAR EMPRENDIMIENTOS EN LA WEB
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('asociateyaBundle:Emprendimiento:asociarse.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
 }
