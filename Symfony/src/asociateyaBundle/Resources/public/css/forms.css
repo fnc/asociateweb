@@ -1,0 +1,16 @@
+/* CSS Document */
+
+.demo-container {
+	width: 100%;
+	max-width: 600px;
+	margin: 40px auto;
+}
+
+form {
+	margin: 30px;
+}
+input {
+	width: 200px;
+	margin: 10px auto;
+	display: block;
+}
