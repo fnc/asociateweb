@@ -34,7 +34,7 @@
     </div>    
     {% else %}
     <div id="sideBarBotonAsociate">
-        <a href="subscripciones.html" class="botonPM">¡Asociate!</a>
+        <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
     </div>
     {% endif %}
 </div>

@@ -57,3 +57,7 @@ emprendimiento_comentar:
 emprendimiento_asociarse:
     path:     /{id}/asociarse
     defaults: { _controller: "asociateyaBundle:Emprendimiento:asociarse" }
+
+emprendimiento_confirmarPago:
+    path:     /{id}/confirmarPago
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:confirmarPago" }

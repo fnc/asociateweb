@@ -1,5 +1,7 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
+
+
 {% block title %}Nuevo emprendimiento{% endblock %}
 {% block stylesheets %}
 <link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
@@ -48,7 +50,7 @@
       <div class="content" id="pag2_content">
         <!-- insert the page content here -->
         <h1 id="ID_nombreProyecto">Asociate a {{entity.nombre}}</h1>
-		<form action="{{ path('emprendimiento_confirmarPago', { 'id': entity.id }) }}" method="post">
+		<form action="../index.html" method="post">
          <h2>1) &iquest;Cu&aacute;nto desea inventir en este proyecto?</h2>
          	<label for="textbox1">Ingrese la cantidad de acciones a comprar:</label>
 	 	  <input id="textbox1" type="text" onchange="muestraPrecio()"/>
@@ -63,7 +65,8 @@
         
     	<h2>2) &iquest;C&oacute;mo quiere efectuar su pago?</h2>
         
-        Aca iria un boto de mercado pago
+        <a href=" {{ initPoint }}" name="MP-Checkout" class="orange-ar-m-sq-arall">Pay</a>
+        <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>
         
  
         
@@ -79,6 +82,8 @@
 
 {% endblock %}
 {% block javascripts %}
+
+
 
   <script type="text/javascript">
 	document.getElementById("ID_precioAccion").innerHTML = "$" +  precioAccion;

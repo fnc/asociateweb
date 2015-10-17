@@ -10,6 +10,7 @@ use asociateyaBundle\Entity\Comentario;
 use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
+use asociateyaBundle\Controller\mercadopago;
 
 /**
  * Emprendimiento controller.
@@ -413,6 +414,63 @@ class EmprendimientoController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+        ));
+    }
+        /**
+     * Displays a form to edit an existing Emprendimiento entity.
+     *
+     */
+    public function confirmarPagoAction($id)
+    {
+
+        //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE EDITAR EMPRENDIMIENTOS EN LA WEB
+        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+
+
+
+//$mp = new MP ("1898415348968453", "4ePPFcaX7YuiVBoUwGqYxxTZl7mKBpHI"); //user de mache
+$mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+//$mp = new MP ("TEST-26dbeb2c-1022-484c-a3df-dad971ccac8e", "TEST-813635953433843-101708-585a089a030d7c39ec859e3f5e59541e__LC_LB__-194849617");
+
+
+
+//$mp = new MP("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET");
+
+$preference_data = array(
+    "items" => array(
+        array(
+            "title" => "Inversion en ". $entity->getNombre(),
+            "currency_id" => "USD",
+            "category_id" => "Category",
+            "quantity" => 1,
+            "unit_price" => 1
+        )
+    )
+);
+
+$preference = $mp->create_preference($preference_data);
+
+
+
+
+
+        return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'initPoint' => $preference["response"]["init_point"],
         ));
     }
 }
