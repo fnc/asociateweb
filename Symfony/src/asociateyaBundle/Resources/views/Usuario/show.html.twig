@@ -2,9 +2,9 @@
 
 {% block title %}Perfil de {{ entity.nombre }} {{ entity.apellido }} {% endblock %}
 {% block stylesheets %}
-  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
   <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
-  <link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/usuario.css')}} rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block sidebar %}
@@ -13,7 +13,7 @@
             <div class="sidebar_top"></div>
             <div class="sidebar_item">
                 <h1 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h1>
-                <h2 id="ID_ocupacionCreador">Dise&ntilde;ador Web</h2>
+                </br>
                 <p>Contacto:</p>
                 <p id="ID_mailCreador">{{ entity.email }}</p>
             </div>
@@ -30,20 +30,21 @@
 {% block body -%}
 
 
-    <h1 id="ID_nombreCreador1">{{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
-    Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}
+    <h1 class="centrado" id="ID_nombreCreador1">{{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
+    <p class="centrado">Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}</p>
 
     {% if app.user.getId == entity.getId  %}
     <!-- Informacion solo para el usuario autenticado-->
-    <ul class="record_actions">
-        <li>
+    
+    <ul id="nav_usuario" class="record_actions">
+        <li class="editar">
             <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
-                Editar
+                Editar datos
             </a>
         </li>
         <li>
             <a href="{{ path('usuario_delete', { 'id': entity.id }) }}">
-                Baja
+                Dar de baja
             </a>
         </li>
         <li>
@@ -52,9 +53,9 @@
             </a>
         </li>
     </ul>
-    {% endif %}
+        {% endif %}
 
-    <h1 id="ID_nombreCreador2">Emprendimientos de Pepito Juarez</h1>
+    <h1 id="ID_nombreCreador2">Emprendimientos de {{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
     <div id="portfolio_container">
         <ul>
             <div class="elemento_portfolio"><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
