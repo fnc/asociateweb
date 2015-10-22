@@ -28,13 +28,10 @@
       </div>
       <div class="sidebar_base"></div>
     </div>
-    {% if app.user.getId == entity.emprendedor.usuario.getId  %}
-    <div id="sideBarBotonAsociate">
-        <a href="{{ path('emprendimiento_edit', { 'id': entity.id }) }}" class="botonPM">Editar</a>
-    </div>    
+    {% if app.user.getId == entity.emprendedor.usuario.getId  %}  
     {% else %}
     <div id="sideBarBotonAsociate">
-        <a href="subscripciones.html" class="botonPM">¡Asociate!</a>
+        <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
     </div>
     {% endif %}
 </div>
