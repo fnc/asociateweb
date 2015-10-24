@@ -424,7 +424,7 @@ class EmprendimientoController extends Controller
     {
 
         //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE EDITAR EMPRENDIMIENTOS EN LA WEB
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_INVERSOR', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
 
