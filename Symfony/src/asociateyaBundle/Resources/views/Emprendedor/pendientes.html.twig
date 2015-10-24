@@ -3,13 +3,12 @@
 {% block title %}Emprendedores pendientes de aprobacion{% endblock %}
 {% block stylesheets %}
 <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
-<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
-<link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/pendientes.css')}} rel="stylesheet" type="text/css">
 {% endblock %}
 
 
 {% block body -%}
-<h1>Emprendedores pendientes de aprobación:</h1>
+<h1 class="centrado">Emprendedores pendientes de aprobación:</h1>
 
 <table class="records_list">
     <thead>
@@ -20,18 +19,21 @@
     <tbody>
         {% for entity in emprendedores %}
         <tr>
-            <td>{{ entity.usuario.username }}</td>           
+            <td class="nombrePendiente">
+                {{ entity.usuario.username }}
+            </td>           
             <td>
-
-                        <a href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a>
-
+                <a class="botonPendientes botonAprobar" href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a>
+            </td>
+            <td>
+                <a class="botonPendientes botonNoAprobar" href="#">No Aprobar</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<h1>Emprendimientos pendientes de aprobación:</h1>
+<h1 class="centrado">Emprendimientos pendientes de aprobación:</h1>
 
 <table class="records_list">
     <thead>
@@ -42,11 +44,14 @@
     <tbody>
         {% for entity in emprendimientos %}
         <tr>
-            <td>{{ entity.nombre }}</td>           
+            <td class="nombrePendiente">
+                {{ entity.nombre }}
+            </td>           
             <td>
-
-                        <a href="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}">Aprobar</a>
-
+                <a class="botonPendientes botonAprobar" href="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}">Aprobar</a>
+            </td>
+            <td>
+                <a class="botonPendientes botonNoAprobar" href="#">No Aprobar</a>
             </td>
         </tr>
         {% endfor %}
