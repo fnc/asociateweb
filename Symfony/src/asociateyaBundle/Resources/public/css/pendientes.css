@@ -1,0 +1,57 @@
+
+.centrado {
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.botonPendientes {
+	-moz-box-shadow:inset 0px 1px 0px 0px #c9f0b8;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #c9f0b8;
+	box-shadow:inset 0px 1px 0px 0px #c9f0b8;
+	border:1px solid #1e3d0e;
+	display:inline-block;
+	cursor:pointer;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+}
+
+.botonPendientes:active {
+	position:relative;
+	top:1px;
+}
+
+
+.botonAprobar {
+	background-color:#73b853;
+	color:#ffffff;
+	margin-left: 70px;
+}
+
+.botonAprobar:hover {
+	background-color:#519430;
+	color: #FFF;
+}
+
+.botonNoAprobar {
+	background-color:#d15a39;
+	color:#ffffff;
+	margin-left: 20px;
+}
+
+.botonNoAprobar:hover {
+	background-color:#a82d14;
+	color: #FFF;
+}
+
+.nombrePendiente {
+	font-weight:bold;
+	color:#000000;
+	word-spacing:3pt;
+	font-size:14px;
+	text-align:left;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
