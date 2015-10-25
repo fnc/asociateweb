@@ -48,24 +48,16 @@
       <div class="content" id="pag2_content">
         <!-- insert the page content here -->
         <h1 id="ID_nombreProyecto">Asociate a {{entity.nombre}}</h1>
-		<form action="{{ path('emprendimiento_confirmarPago', { 'id': entity.id }) }}" method="post">
+		<form name="formCompra" action="{{ path('emprendimiento_confirmarPago', { 'id': entity.id }) }}" method="post">
          <h2>1) &iquest;Cu&aacute;nto desea inventir en este proyecto?</h2>
          	<label for="textbox1">Ingrese la cantidad de acciones a comprar:</label>
-	 	  <input id="textbox1" type="text" onchange="muestraPrecio()"/>
+	 	  <input name="cantidad" id="cantidad" type="text" onchange="muestraPrecio()"/>
     		<br><br>
             <label for="textbox2">El total invertido será de:</label>
             <input id="textbox2" type="text" value="$0" readonly/>
            	<br><br><br>
            
            	<h4 id="ID_precioAccion"></h4>
-
-    		<!-- <input type="submit" value="Ingresar" /> -->
-        
-    	<h2>2) &iquest;C&oacute;mo quiere efectuar su pago?</h2>
-        
-        Aca iria un boto de mercado pago
-        
- 
         
         	<br><br><br><input type="checkbox" name="checkbox" value="check" />
         	Acepto las condiciones del contrato.
@@ -76,6 +68,7 @@
       </div>
       
     </div>
+ 
 
 {% endblock %}
 {% block javascripts %}

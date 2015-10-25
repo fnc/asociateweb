@@ -71,8 +71,3 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-grunch_mercadopago:
-    client_id:  813635953433843
-    client_secret: 42DSugNu5tAKsQMj6QicKloh6Jvege3D
-    sandbox: true

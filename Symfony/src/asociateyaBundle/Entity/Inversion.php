@@ -43,7 +43,7 @@ class Inversion {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaCobro", type="datetime")
+     * @ORM\Column(name="fechaCobro", type="datetime",nullable=true)
      */
     private $fechaCobro;
 
@@ -57,21 +57,21 @@ class Inversion {
     /**
      * @var string
      *
-     * @ORM\Column(name="detalleEstado", type="string", length=80)
+     * @ORM\Column(name="detalleEstado", type="string", length=80, nullable=true)
      */
     private $detalleEstado; 
 
     /**
      * @var string
      *
-     * @ORM\Column(name="idPago", type="decimal")
+     * @ORM\Column(name="idPago", type="decimal",nullable=true)
      */
     private $idPago;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="idUsuarioMP", type="decimal")
+     * @ORM\Column(name="idUsuarioMP", type="decimal",nullable=true)
      */
     private $idUsuarioMP;
 

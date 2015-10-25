@@ -6,11 +6,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use asociateyaBundle\Entity\Emprendimiento;
+use asociateyaBundle\Entity\Inversion;
 use asociateyaBundle\Entity\Comentario;
 use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
-use asociateyaBundle\Controller\mercadopago;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 /**
  * Emprendimiento controller.
@@ -375,7 +377,7 @@ class EmprendimientoController extends Controller
 
     }
 
-        /**
+    /**
      * Creates a form to create a Emprendimiento entity.
      *
      * @param Emprendimiento $entity The entity
@@ -394,6 +396,9 @@ class EmprendimientoController extends Controller
         return $form;
     }
 
+
+
+
     /**
      * Displays a form to edit an existing Emprendimiento entity.
      *
@@ -404,6 +409,10 @@ class EmprendimientoController extends Controller
         //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE EDITAR EMPRENDIMIENTOS EN LA WEB
         $this->denyAccessUnlessGranted('ROLE_INVERSOR', null, 'Unable to access this page!');
 
+        $session = new Session();
+        $session->set('name', 'Drak');
+
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
@@ -411,6 +420,7 @@ class EmprendimientoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
         }
+
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
@@ -427,11 +437,15 @@ class EmprendimientoController extends Controller
      * Muestra pagina con el boton de mercadopago
      *
      */
-    public function confirmarPagoAction($id)
+    public function confirmarPagoAction(Request $request,$id)
     {
 
         //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE EDITAR EMPRENDIMIENTOS EN LA WEB
         $this->denyAccessUnlessGranted('ROLE_INVERSOR', null, 'Unable to access this page!');
+
+
+        //Obtengo info para trabajar
+        $session = $request->getSession();
 
         $em = $this->getDoctrine()->getManager();
 
@@ -442,6 +456,24 @@ class EmprendimientoController extends Controller
         }
 
 
+
+
+        $cantidadAcciones = $request->request->get('formCompra')['cantidad'];
+
+
+        //Creo la nueva inversion
+        $inversion = new Inversion();
+        $inversion->setUsuario($this->getUser());
+        $inversion->setEmprendimiento($entity);
+        $inversion->setFechaEmision(new \DateTime());
+        $inversion->setCantidadAcciones(1);
+        //Estado:  1= pendiente   2= acreditado
+        $inversion->setEstado(0);
+        $em->persist($inversion);
+        $em->flush();
+
+        require_once ('mercadopago.php');
+
         $mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
         
         //$mp = new MP("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET");
@@ -449,9 +481,9 @@ class EmprendimientoController extends Controller
         $preference_data = array(
             "items" => array(
                 array(
-                    "title" => "Inversion en ". $entity->getNombre(),
+                    "title" => "Inversion en ". $entity->getNombre().$session->get('name').$cantidadAcciones,
                     "description" =>  $entity->getDescripcionCorta(),
-                    "picture_url" => $imagesDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos'.$entity->getrutaimagen(),
+                    "picture_url" => $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos'.$entity->getrutaimagen(),
                     "currency_id" => "ARS",
                     "quantity" => 1,
                     "unit_price" => 1
@@ -459,10 +491,11 @@ class EmprendimientoController extends Controller
             ),
             "back_urls" => array(
                     "success" => "success",
-                    "pending" => "pending",
+                    "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendiente'),
                     "failure" => "failure",
 
-                )
+                ),
+            "notification_url" => "186.136.173.35"
         );
 
         $preference = $mp->create_preference($preference_data);
@@ -480,9 +513,18 @@ class EmprendimientoController extends Controller
      */
     public function pagoPendienteAction()
     {
-        
+            $request = $this->getRequest();
+            $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
+            $request->query->get('preference_id');
+            $request->query->get('collection_status');
+            $request->query->get('external_reference');
+            $request->query->get('payment_type');
+            $request->query->get('merchant_order_id');
+            //$request->request->get('myParam'); // get a $_POST parameter
+
+
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
-            'mensaje'      => "Tu pago esta pendiente de acreditación")
+            'mensaje'      => "Tu pago esta pendiente de acreditación"." ".$request->query->get('payment_type')." ".$request->query->get('collection_id'))
         );
     }
 
