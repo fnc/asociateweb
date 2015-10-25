@@ -63,11 +63,7 @@ class Emprendimiento
     */
     private $emprendedor;
 
-    /**
-    * @ORM\ManyToOne(targetEntity="Caja", inversedBy="emprendimientos")
-    * @ORM\JoinColumn(name="caja_id", referencedColumnName="caja_id",         onDelete="CASCADE")
-    */
-    private $caja;
+
 
     /**
      * @var string
@@ -105,6 +101,7 @@ class Emprendimiento
      * @ORM\Column(name="descripcionCorta", type="string", length=80)
      */
     private $descripcionCorta;
+    
     /**
      * @var string
      *

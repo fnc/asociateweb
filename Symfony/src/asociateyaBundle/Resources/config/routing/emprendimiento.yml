@@ -61,3 +61,11 @@ emprendimiento_asociarse:
 emprendimiento_confirmarPago:
     path:     /{id}/confirmarPago
     defaults: { _controller: "asociateyaBundle:Emprendimiento:confirmarPago" }
+
+emprendimiento_pagoPendiente:
+    path:     /pagoPendiente
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoPendiente" }
+
+emprendimiento_pagoAprobado:
+    path:     /pagoAprobado
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoAprobado" }
