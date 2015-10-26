@@ -458,7 +458,7 @@ class EmprendimientoController extends Controller
 
 
 
-        $cantidadAcciones = $request->request->get('formCompra')['cantidad'];
+        $cantidadAcciones = $request->request->get('cantidad');
 
 
         //Creo la nueva inversion
@@ -466,7 +466,7 @@ class EmprendimientoController extends Controller
         $inversion->setUsuario($this->getUser());
         $inversion->setEmprendimiento($entity);
         $inversion->setFechaEmision(new \DateTime());
-        $inversion->setCantidadAcciones(1);
+        $inversion->setCantidadAcciones($cantidadAcciones);
         //Estado:  1= pendiente   2= acreditado
         $inversion->setEstado(0);
         $em->persist($inversion);
@@ -485,7 +485,7 @@ class EmprendimientoController extends Controller
                     "description" =>  $entity->getDescripcionCorta(),
                     "picture_url" => $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos'.$entity->getrutaimagen(),
                     "currency_id" => "ARS",
-                    "quantity" => 1,
+                    "quantity" => (int)$cantidadAcciones,
                     "unit_price" => 1
                 )
             ),
