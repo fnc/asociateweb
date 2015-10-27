@@ -92,8 +92,8 @@ class EmprendimientoController extends Controller
         $palabraClave = $request->request->get('search_field');
 
         $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-   ->where('e.nombre = :nombre') 
-   ->setParameter('nombre', $palabraClave . '%')
+   ->where('e.nombre LIKE :nombre') 
+   ->setParameter('nombre','%'.$palabraClave . '%')
    ->getQuery()
    ->getResult();
 

@@ -1,0 +1,21 @@
+<div class="elemento_portfolio">
+    <li>
+        <a href={{ path('emprendimiento_show',{'id':entity.getId}) }} class="link_texto_emprendimiento">
+            <div class="imagen_elemento">
+            <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130">
+            </div>
+            <div class="texto_elemento">
+                <div class="contenedor_principal">
+                    <div class="titulo_texto">{{ entity.nombre }}</div>
+                    <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
+                </div>
+                <div class="contenedor_derecha">
+                    <div class="elemento_derecha precio"><strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}</div>
+                    <div class="elemento_derecha acciones"><strong>Disponibles:</strong> 3235</div>
+                    <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong> 23 d&iacute;as</div>
+                </div>
+                <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('Y-m-d') }}{% endif %}</div>
+            </div>
+        </a>
+    </li>
+</div>

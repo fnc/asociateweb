@@ -17,8 +17,8 @@
         <h3>Buscar</h3>
         <form method="post" action="{{ path('emprendimiento_busquedaPalabra') }}" id="search_form">
           <p>
-            <input class="search" type="text" name="search_field" value="" />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="../style/Imagenes/search.png" alt="Search" title="Search" />
+            <input class="search" type="text" name="search_field" id="search_field" value="" />
+            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src={{ asset('bundles/asociateya/Imagenes/search.png')}} alt="Search" title="Search" />
         </p>
     </form>
 </div>
@@ -111,16 +111,8 @@
             <ul>
                 {% for entity in entities %}
 
-                <div class="elemento_portfolio"><li><a href={{ path('emprendimiento_show',{'id':entity.getId}) }} class="link_texto_emprendimiento">
-                <div class="imagen_elemento">
-                    <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130"></div>
-                    <div class="texto_elemento">
-                        <div class="titulo_texto">{{ entity.nombre }}</div>
-                        <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
-                        <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('Y-m-d') }}{% endif %}</div>
-                    </div>
-                </a></li>
-                </div>
+                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+
                 {% endfor %}
 
             </ul>
