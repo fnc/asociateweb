@@ -58,16 +58,12 @@
     <h1 id="ID_nombreCreador2">Emprendimientos de {{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
     <div id="portfolio_container">
         <ul>
-            <div class="elemento_portfolio"><li><a href="emprendimiento.html" class="link_texto_emprendimiento">
-                <div class="imagen_elemento">
-                    <img src="../style/Imagenes/portfolio/imagen3.png" width="130" height="130"></div>
-                    <div class="texto_elemento">
-                        <div class="titulo_texto">Abraxas</div>
-                        <div class="descripcion_texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean placerat, turpis sed venenatis sodales, justo mi luctus velit, ornare imperdiet felis urna ac nunc. Donec in dapibus ante. Aliquam dapibus ultricies dolor.</div>
-                        <div class="creador_elemento">Creado por Hernan Budic el 03/08/2015</div>
-                    </div>
-                </a></li></div>
-            </ul>
-        </div>
+                {% for emprendimiento in emprendimientos %}
+
+                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: emprendimiento} %}
+
+                {% endfor %}
+        </ul>
+    </div>
 
 {% endblock %}

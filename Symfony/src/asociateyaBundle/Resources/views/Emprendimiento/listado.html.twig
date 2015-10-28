@@ -15,7 +15,11 @@
             <div id="portfolio_container">
             <ul>
 
+                {% for entity in participo %}
 
+                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity.emprendimiento} %}
+
+                {% endfor %}
                 
             </ul>
         </div><!-- TERMINA EL PORTAFOLIO -->
@@ -32,7 +36,7 @@
             <ul>
                 {% for entity in entities %}
 
-                {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
 
                 {% endfor %}
             </ul>

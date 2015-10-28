@@ -28,9 +28,9 @@ class Emprendimiento
 
     public function __construct($name=null)
     {
-    	$this->idInversiones = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idComentarios = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idCategorias = new  \Doctrine\Common\Collections\ArrayCollection();
+    	$this->inversiones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categorias = new  \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -172,29 +172,7 @@ class Emprendimiento
         return $this->id;
     }
 
-    /**
-     * Set idCategoria
-     *
-     * @param integer $idCategoria
-     *
-     * @return Emprendimiento
-     */
-    public function setIdCategoria($idCategoria)
-    {
-        $this->idCategoria = $idCategoria;
 
-        return $this;
-    }
-
-    /**
-     * Get idCategoria
-     *
-     * @return integer
-     */
-    public function getIdCategoria()
-    {
-        return $this->idCategoria;
-    }
 
     /**
      * Set monto
@@ -388,53 +366,8 @@ class Emprendimiento
         return $this->nombre;
     }
 
-    /**
-     * Set idEmprendedor
-     *
-     * @param \asociateyaBundle\Entity\Emprenddor $idEmprendedor
-     *
-     * @return Emprendimiento
-     */
-    public function setIdEmprendedor(\asociateyaBundle\Entity\Emprenddor $idEmprendedor = null)
-    {
-        $this->idEmprendedor = $idEmprendedor;
 
-        return $this;
-    }
 
-    /**
-     * Get idEmprendedor
-     *
-     * @return \asociateyaBundle\Entity\Emprenddor
-     */
-    public function getIdEmprendedor()
-    {
-        return $this->idEmprendedor;
-    }
-
-    /**
-     * Set idCaja
-     *
-     * @param \asociateyaBundle\Entity\Caja $idCaja
-     *
-     * @return Emprendimiento
-     */
-    public function setIdCaja(\asociateyaBundle\Entity\Caja $idCaja = null)
-    {
-        $this->idCaja = $idCaja;
-
-        return $this;
-    }
-
-    /**
-     * Get idCaja
-     *
-     * @return \asociateyaBundle\Entity\Caja
-     */
-    public function getIdCaja()
-    {
-        return $this->idCaja;
-    }
 
     /**
      * Set rutaImagen
@@ -662,88 +595,8 @@ class Emprendimiento
         return $this->idInversiones;
     }
 
-    /**
-     * Add idComentario
-     *
-     * @param \asociateyaBundle\Entity\Comentario $idComentario
-     *
-     * @return Emprendimiento
-     */
-    public function addIdComentario(\asociateyaBundle\Entity\Comentario $idComentario)
-    {
-        $this->idComentarios[] = $idComentario;
 
-        return $this;
-    }
-
-    /**
-     * Remove idComentario
-     *
-     * @param \asociateyaBundle\Entity\Comentario $idComentario
-     */
-    public function removeIdComentario(\asociateyaBundle\Entity\Comentario $idComentario)
-    {
-        $this->idComentarios->removeElement($idComentario);
-    }
-
-    /**
-     * Get idComentarios
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIdComentarios()
-    {
-        return $this->idComentarios;
-    }
-
-    /**
-     * Add idCategoria
-     *
-     * @param \asociateyaBundle\Entity\Categoria $idCategoria
-     *
-     * @return Emprendimiento
-     */
-    public function addIdCategoria(\asociateyaBundle\Entity\Categoria $idCategoria)
-    {
-        $this->idCategorias[] = $idCategoria;
-
-        return $this;
-    }
-
-    /**
-     * Remove idCategoria
-     *
-     * @param \asociateyaBundle\Entity\Categoria $idCategoria
-     */
-    public function removeIdCategoria(\asociateyaBundle\Entity\Categoria $idCategoria)
-    {
-        $this->idCategorias->removeElement($idCategoria);
-    }
-
-    /**
-     * Get idCategorias
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIdCategorias()
-    {
-        return $this->idCategorias;
-    }
-
-    /**
-     * Set idCategorias
-     *
-     * @param \asociateyaBundle\Entity\Categoria $idCategorias
-     *
-     * @return Emprendimiento
-     */
-    public function setIdCategorias(\asociateyaBundle\Entity\Categoria $idCategorias = null)
-    {
-        $this->idCategorias = $idCategorias;
-
-        return $this;
-    }
-
+    
     /**
      * Add inversione
      *
@@ -870,27 +723,4 @@ class Emprendimiento
         return $this->emprendedor;
     }
 
-    /**
-     * Set caja
-     *
-     * @param \asociateyaBundle\Entity\Caja $caja
-     *
-     * @return Emprendimiento
-     */
-    public function setCaja(\asociateyaBundle\Entity\Caja $caja = null)
-    {
-        $this->caja = $caja;
-
-        return $this;
-    }
-
-    /**
-     * Get caja
-     *
-     * @return \asociateyaBundle\Entity\Caja
-     */
-    public function getCaja()
-    {
-        return $this->caja;
-    }
 }

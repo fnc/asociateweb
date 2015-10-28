@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use asociateyaBundle\Entity\Usuario;
+use asociateyaBundle\Entity\Emprendimiento;
 use asociateyaBundle\Form\UsuarioType;
 
 /**
@@ -97,6 +98,8 @@ class UsuarioController extends Controller
 
         $entity = $em->getRepository('asociateyaBundle:Usuario')->find($id);
 
+        $emprendimientos = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEmprendedor($this->getUser()->getEmprendedor());
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Usuario entity.');
         }
@@ -105,6 +108,7 @@ class UsuarioController extends Controller
 
         return $this->render('asociateyaBundle:Usuario:show.html.twig', array(
             'entity'      => $entity,
+            'emprendimientos'      => $emprendimientos,
             'delete_form' => $deleteForm->createView(),
         ));
     }

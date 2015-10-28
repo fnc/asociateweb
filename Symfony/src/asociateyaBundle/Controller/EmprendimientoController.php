@@ -6,12 +6,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use asociateyaBundle\Entity\Emprendimiento;
+use asociateyaBundle\Entity\Usuario;
 use asociateyaBundle\Entity\Inversion;
 use asociateyaBundle\Entity\Comentario;
 use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
 use Symfony\Component\HttpFoundation\Session\Session;
+
 
 
 /**
@@ -115,8 +117,11 @@ class EmprendimientoController extends Controller
 
         $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEmprendedor($this->getUser()->getEmprendedor());
 
+        $participo = $em->getRepository('asociateyaBundle:Inversion')->findByUsuario($this->getUser());
+
         return $this->render('asociateyaBundle:Emprendimiento:listado.html.twig', array(
             'entities' => $entities,
+            'participo' => $participo,
         ));
     }
 
