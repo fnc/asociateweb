@@ -63,7 +63,7 @@ emprendimiento_confirmarPago:
     defaults: { _controller: "asociateyaBundle:Emprendimiento:confirmarPago" }
 
 emprendimiento_pagoPendiente:
-    path:     /pagoPendiente
+    path:     /{idInversion}/pagoPendiente
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoPendiente" }
 
 emprendimiento_pagoAprobado:

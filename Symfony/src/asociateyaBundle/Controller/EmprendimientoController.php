@@ -498,12 +498,12 @@ class EmprendimientoController extends Controller
                     "picture_url" => $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos'.$entity->getrutaimagen(),
                     "currency_id" => "ARS",
                     "quantity" => (int)$cantidadAcciones,
-                    "unit_price" => 1
+                    "unit_price" => (int)$entity->getPrecioAccion(),
                 )
             ),
             "back_urls" => array(
                     "success" => "success",
-                    "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendiente'),
+                    "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendiente',array('idInversion'=>$inversion->getId())),
                     "failure" => "failure",
 
                 ),
@@ -523,7 +523,7 @@ class EmprendimientoController extends Controller
      * Muestra pagina con mensaje de pago pendiente
      *
      */
-    public function pagoPendienteAction()
+    public function pagoPendienteAction($idInversion)
     {
             $request = $this->getRequest();
             $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
@@ -534,9 +534,23 @@ class EmprendimientoController extends Controller
             $request->query->get('merchant_order_id');
             //$request->request->get('myParam'); // get a $_POST parameter
 
+            require_once ('mercadopago.php');
+
+            $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+            $idDePago=$request->query->get('collection_id');
+            $paymentInfo = $mp->get_payment ($idDePago);
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
+            $inversion->setIdPago($idDePago);
+            $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
+            $em->flush();
+
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
-            'mensaje'      => "Tu pago esta pendiente de acreditación"." ".$request->query->get('payment_type')." ".$request->query->get('collection_id'))
+            'mensaje'      => "Tu pago esta pendiente de acreditación")
         );
     }
 
