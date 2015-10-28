@@ -7,14 +7,13 @@
  * @author hcasatti
  *
  */
-use Exception;
 $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {
 
     const version = "0.3.4";
 
-    public $client_id;
+    private $client_id;
     private $client_secret;
     private $ll_access_token;
     private $access_data;
@@ -49,25 +48,24 @@ class MP {
      * Get Access Token for API use
      */
     public function get_access_token() {
-        echo "ACCESS TOKEN 1 | ";
         if (isset ($this->ll_access_token) && !is_null($this->ll_access_token)) {
             return $this->ll_access_token;
         }
-        echo "ACCESS TOKEN 2 | ";
+
         $app_client_values = $this->build_query(array(
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
             'grant_type' => 'client_credentials'
         ));
-        echo "ACCESS TOKEN 3 | ";
+
         $access_data = MPRestClient::post("/oauth/token", $app_client_values, "application/x-www-form-urlencoded");
-        echo "ACCESS TOKEN 4 | ";
+
         if ($access_data["status"] != 200) {
             throw new Exception ($access_data['response']['message'], $access_data['status']);
         }
-        echo "ACCESS TOKEN 5 | ";
+
         $this->access_data = $access_data['response'];
-        echo "ACCESS TOKEN 6 | ";
+
         return $this->access_data['access_token'];
     }
 
@@ -156,18 +154,16 @@ class MP {
      * @return array(json)
      */
     public function search_payment($filters, $offset = 0, $limit = 0) {
-        $access_token = $this->get_access_token();        
-        echo "SEARCH PAYMENT 1 | ";
-        echo $access_token;
+        $access_token = $this->get_access_token();
+
         $filters["offset"] = $offset;
         $filters["limit"] = $limit;
 
         $filters = $this->build_query($filters);
-        echo "SEARCH PAYMENT 2 | ";
+
         $uri_prefix = $this->sandbox ? "/sandbox" : "";
-        echo "SEARCH PAYMENT 3 | ";
+            
         $collection_result = MPRestClient::get($uri_prefix."/collections/search?" . $filters . "&access_token=" . $access_token);
-        echo "SEARCH PAYMENT 4 | ";
         return $collection_result;
     }
 
@@ -177,9 +173,8 @@ class MP {
      * @return array(json)
      */
     public function create_preference($preference) {
-        echo "CREATE PREFERENCE 1 | ";
         $access_token = $this->get_access_token();
-        echo "CREATE PREFERENCE 2 | ";
+
         $preference_result = MPRestClient::post("/checkout/preferences?access_token=" . $access_token, $preference);
         return $preference_result;
     }
@@ -362,7 +357,7 @@ class MPRestClient {
         if (!extension_loaded ("curl")) {
             throw new Exception("cURL extension not found. You need to enable cURL in your php.ini or another configuration you have.");
         }
-        echo 'DENTRO DE CONEXION MPRESTCLIENT 1 | ';
+
         $connect = curl_init(self::API_BASE_URL . $uri);
 
         curl_setopt($connect, CURLOPT_USERAGENT, "MercadoPago PHP SDK v" . MP::version);
@@ -371,7 +366,7 @@ class MPRestClient {
         curl_setopt($connect, CURLOPT_CAINFO, $GLOBALS["LIB_LOCATION"] . "/cacert.pem");
         curl_setopt($connect, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($connect, CURLOPT_HTTPHEADER, array("Accept: application/json", "Content-Type: " . $content_type));
-        echo 'DENTRO DE CONEXION MPRESTCLIENT 2 | ';
+
         return $connect;
     }
 
@@ -395,26 +390,23 @@ class MPRestClient {
     }
 
     private static function exec($method, $uri, $data, $content_type) {
-        echo "MPRestClient EXEC 1 | ";
         $connect = self::get_connect($uri, $method, $content_type);
-        echo "MPRestClient EXEC 2 | ";
         if ($data) {
             self::set_data($connect, $data, $content_type);
         }
-        echo "MPRestClient EXEC 3 | ";
+
         $api_result = curl_exec($connect);
-        echo "MPRestClient EXEC 4 | ";
         $api_http_code = curl_getinfo($connect, CURLINFO_HTTP_CODE);
-        echo "MPRestClient EXEC 5 | ";
+
         if ($api_result === FALSE) {
             throw new Exception (curl_error ($connect));
         }
-        echo "MPRestClient EXEC 6 | ";
+
         $response = array(
             "status" => $api_http_code,
             "response" => json_decode($api_result, true)
         );
-        echo "MPRestClient EXEC 7 | ";
+
         if ($response['status'] >= 400) {
             $message = $response['response']['message'];
             if (isset ($response['response']['cause'])) {
@@ -426,20 +418,16 @@ class MPRestClient {
                     }
                 }
             }
-            echo "MPRestClient EXEC 8 | ";
-            //throw new Exception ($message, $response['status']);
-            //echo $message;
-            echo $response['status'];
-            echo "MPRestClient EXEC 9 | ";
+
+            throw new Exception ($message, $response['status']);
         }
-        echo "MPRestClient EXEC 10 | ";
+
         curl_close($connect);
 
         return $response;
     }
 
     public static function get($uri, $content_type = "application/json") {
-        ECHO "MPRestClient GET |";
         return self::exec("GET", $uri, null, $content_type);
     }
 

@@ -1,0 +1,90 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Mis Emprendimientos{% endblock %}
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block body -%}
+
+
+        <h1>Pagos</h1>
+        <div class="filtrosPagos">
+            <form action="../index.html" method="post">
+              <label>Buscar pagos desde el:</label>
+                <input class="cajaBusquedaFecha" name="pagoDesde" type="text" placeholder="DD/MM/AAAA"/>
+              <label>hasta el:</label>
+                <input class="cajaBusquedaFecha" name="pagoDesde" type="text" placeholder="DD/MM/AAAA"/>
+                <br>
+                <br>
+              <label>Con ID:</label>
+              <input class="cajaBusquedaID" name="pagoId" type="text" />
+              <label>con estado:</label>
+                <select name="pagoEstado" class="select-field">
+                    <option value="vacio"></option>
+                    <option value="pediente">Pendiente</option>
+                    <option value="acreditado">Acreditado</option>
+                </select>
+                <br><br>
+
+              <input class="botonBusqueda" type="submit" name="pagoBuscar" value="Buscar" />
+          </form>
+        </div>
+        <div class="tablaPagos">
+            <table class="table2excel" data-tableName="Test Table 1">
+                <tr>
+                    <td>
+                        ID Pago
+                    </td>
+                    <td >
+                        Fecha Emisión
+                    </td>
+                    <td>
+                        Monto
+                    </td>
+                    <td>
+                        Estado
+                    </td>
+                    <td>
+                        Fecha acreditación
+                    </td>
+                </tr>
+                {% for pago in pagos["response"]["results"] %}
+
+                    <tr>
+                        <td >
+                            {{pago["collection"]["id"]}}
+                        </td>
+                        <td>
+                            {{pago["collection"]["date_created"]}}
+                        </td>
+                        <td>
+                            ${{pago["collection"]["transaction_amount"]}}
+                        </td>
+                        <td>
+                            {{pago["collection"]["status"]}}
+                        </td>
+                        <td>
+                            {{pago["collection"]["date_approved"]}}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </table>
+            <script>
+            $("button").click(function(){
+                $(".table2excel").table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name",
+                    filename: "myFileName"  
+                });
+            });
+            </script>
+        </div>
+        <button>Export</button>
+      </div>
+
+{% endblock %}
+

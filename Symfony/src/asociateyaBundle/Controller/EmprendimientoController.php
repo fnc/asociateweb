@@ -13,6 +13,7 @@ use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
 use Symfony\Component\HttpFoundation\Session\Session;
+use asociateyaBundle\Controller\mercadopago;
 
 
 
@@ -29,23 +30,29 @@ class EmprendimientoController extends Controller
      * estado = 1
      *
      */
-    public function aprobarAction($id)
+    public function aprobarAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
 
-
+        $valorAccion = (int) $request->request->get('valor_accion');
+        $plazo = (int) $request->request->get('plazo');
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Emprendedor entity.');
         }
 
+        $totalAcciones = (int)($entity->getMonto() / $valorAccion);
+
         $entity->setEstado(1);
         $entity->setFechaCreacion(new \DateTime());
+        $entity->setTotalAcciones($totalAcciones);
+        $entity->setAccionesRestantes($totalAcciones);
+        $entity->setPrecioAccion($valorAccion);
 
         //TODO agregar plazo por parametro
-        $entity->setFechaFinalizacion(new \DateTime('+5 day'));
+        $entity->setFechaFinalizacion(new \DateTime('+'.$plazo.' day'));
 
         $em->flush();
 
@@ -530,6 +537,30 @@ class EmprendimientoController extends Controller
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
             'mensaje'      => "Tu pago esta pendiente de acreditación"." ".$request->query->get('payment_type')." ".$request->query->get('collection_id'))
+        );
+    }
+
+    /**
+     * Muestra pagina con mensaje de pago pendiente
+     *
+     */
+    public function pagosControlAction()
+    {
+        require_once ('mercadopago.php');        
+        $mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+        // Filtros de la consulta
+        $filters = array(
+            "range" => "date_created",
+            "begin_date" => "2014-10-21T00:00:00Z",
+            "end_date" => "NOW",
+            //"operation_type" => "regular_payment"
+        );
+        
+        $searchResult = $mp->search_payment($filters);
+
+
+        return $this->render('asociateyaBundle:Emprendimiento:pagosControlador.html.twig', array(
+            'pagos' => $searchResult)
         );
     }
 

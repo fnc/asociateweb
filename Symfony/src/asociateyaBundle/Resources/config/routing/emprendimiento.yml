@@ -69,3 +69,7 @@ emprendimiento_pagoPendiente:
 emprendimiento_pagoAprobado:
     path:     /pagoAprobado
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoAprobado" }
+
+emprendimiento_pagosControl:
+    path:     /controlPagos
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:pagosControl" }

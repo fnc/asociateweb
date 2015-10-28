@@ -11,8 +11,17 @@
                 </div>
                 <div class="contenedor_derecha">
                     <div class="elemento_derecha precio"><strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}</div>
-                    <div class="elemento_derecha acciones"><strong>Disponibles:</strong> 3235</div>
-                    <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong> 23 d&iacute;as</div>
+                    <div class="elemento_derecha acciones"><strong>Disponibles:</strong> {{ entity.accionesRestantes }}</div>
+                    <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong>
+                    {# endDate and startDate are strings or DateTime objects #}
+                    {% set difference = date(entity.fechaFinalizacion).diff(date(entity.fechaCreacion)) %}
+                    {% set leftDays = difference.days %}
+                    {% if leftDays == 1 %}
+                      1 d&iacute;a
+                    {% else %}
+                    {{ leftDays }} d&iacute;as
+                    {% endif %}  
+                    </div>
                 </div>
                 <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('Y-m-d') }}{% endif %}</div>
             </div>

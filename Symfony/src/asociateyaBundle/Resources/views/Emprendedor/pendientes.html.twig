@@ -48,7 +48,13 @@
                 {{ entity.nombre }}
             </td>           
             <td>
-                <a class="botonPendientes botonAprobar" href="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}">Aprobar</a>
+                <form method="post" action="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}" id="emprendimiento_form">
+                    Valor Accion:
+                    <input class="descripcion" type="text" name="valor_accion" id="valor_accion" value="" />
+                    Plazo:
+                    <input class="descripcion" type="text" name="plazo" id="plazo" value="" />
+                    <input type="submit" value="Aprobar" class="botonPendientes botonAprobar">
+                </form>
             </td>
             <td>
                 <a class="botonPendientes botonNoAprobar" href="#">No Aprobar</a>
