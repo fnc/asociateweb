@@ -33,7 +33,7 @@
     </tbody>
 </table>
 
-<h1 class="centrado">Emprendimientos pendientes de aprobación:</h1>
+<h1 class="centrado">Emprendimientos pendientes de aceptación:</h1>
 
 <table class="records_list">
     <thead>
@@ -50,14 +50,13 @@
             <td>
                 <form method="post" action="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}" id="emprendimiento_form">
                     Valor Accion:
-                    <input class="descripcion" type="text" name="valor_accion" id="valor_accion" value="" />
+                    <input class="descripcion" type="text" name="valor_accion" id="valor_accion" value="1" />
                     Plazo:
-                    <input class="descripcion" type="text" name="plazo" id="plazo" value="" />
-                    <input type="submit" value="Aprobar" class="botonPendientes botonAprobar">
+                    <input class="descripcion" type="text" name="plazo" id="plazo" value="1" />
+                    <br>
+                    <input type="submit" value="Aceptar" class="botonPendientes botonAprobar">
+                    <input type="submit" value="Rechazar" class="botonPendientes botonNoAprobar">
                 </form>
-            </td>
-            <td>
-                <a class="botonPendientes botonNoAprobar" href="#">No Aprobar</a>
             </td>
         </tr>
         {% endfor %}

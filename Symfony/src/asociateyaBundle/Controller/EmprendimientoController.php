@@ -83,7 +83,7 @@ class EmprendimientoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findAll();
+        $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEstado(1);
 
         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
             'entities' => $entities,
@@ -101,8 +101,8 @@ class EmprendimientoController extends Controller
         $palabraClave = $request->request->get('search_field');
 
         $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-   ->where('e.nombre LIKE :nombre') 
-   ->setParameter('nombre','%'.$palabraClave . '%')
+   ->where('e.nombre LIKE :nombre AND e.estado = :estado') 
+   ->setParameters(array('nombre'=>'%'.$palabraClave . '%', 'estado'=>1))
    ->getQuery()
    ->getResult();
 
@@ -147,6 +147,8 @@ class EmprendimientoController extends Controller
         $entity = new Emprendimiento();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        //Estados 0=endienteaceptar  1=aceptado 2=aprobado(financiado) 3=canceladoPagoPendiente 4=CanceladoPagoAcreditado
+        // 5=vencidoCon80Fincanciado(decide el emprendedor)
         $entity->setEstado(0);
         $entity->setAccionesRestantes($entity->getTotalAcciones());
         $entity->setRanking(0);
@@ -380,6 +382,7 @@ class EmprendimientoController extends Controller
         $form->handleRequest($request);
         $entity->setEmprendimiento($emprendimiento);
         $entity->setUsuario($this->getUser());
+        $entity->setLeido(0);
 
         
 
@@ -583,5 +586,98 @@ class EmprendimientoController extends Controller
             'pagos' => $searchResult)
         );
     }
+
+    /**
+     * Muestra pagina con el boton de mercadopago par que el emprendedor pague a asociateya los refunds
+     *
+     */
+    public function confirmarPagoRefundAction(Request $request,$id)
+    {
+
+        $this->denyAccessUnlessGranted('ROLE_EMPRENDEDOR', null, 'Unable to access this page!');
+
+
+        //Obtengo info para trabajar
+        $session = $request->getSession();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+
+        if (!$emprendimiento) {
+            throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
+        }
+
+        if ((int)$emprendimiento->getTotalAcciones()-(int)$emprendimiento->getAccionesRestantes()==0) {
+            throw $this->createNotFoundException('No hay nada que devolver.');
+        }
+
+        $montoAPagar =  ((float)$emprendimiento->getTotalAcciones()-(float)$emprendimiento->getAccionesRestantes())*(float)$emprendimiento->getPrecioAccion()*(0.0495);
+        $emprendimiento->setEstado(3);//candelado pendiente de pago
+        $inversionesADarDeBaja = $em->getRepository('asociateyaBundle:Inversion')
+            ->createQueryBuilder('e')
+            ->where('e.emprendimiento = :emprendimiento') 
+            ->setParameter('emprendimiento',$emprendimiento)
+            ->groupBy('e.emprendimiento')
+            ->getQuery()
+            ->getResult();
+
+
+
+        require_once ('mercadopago.php');
+
+        $mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+        
+        //$mp = new MP("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET");
+
+        $preference_data = array(
+            "items" => array(
+                array(
+                    "title" => "Comision por cancelacion de emprendimiento". $emprendimiento->getNombre(),
+                    "currency_id" => "ARS",
+                    "quantity" => 1,
+                    "unit_price" => $montoAPagar,
+                )
+            ),
+            "back_urls" => array(
+                    "success" => "success",
+                    "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendienteRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
+                    "failure" => "failure",
+
+                ),
+            "notification_url" => "186.136.173.35"
+        );
+
+        $preference = $mp->create_preference($preference_data);
+
+        return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
+            'entity'      => $emprendimiento,
+            'initPoint' => $preference["response"]["init_point"],
+        ));
+    }
+
+     /**
+     * Muestra pagina con mensaje de pago pendiente del refund
+     *
+     */
+    public function pagoPendienteRefundAction($idEmprendimiento)
+    {
+            $request = $this->getRequest();
+            $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
+
+            $idDePago=$request->query->get('collection_id');
+
+            $em = $this->getDoctrine()->getManager();
+
+            $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($idEmprendimiento);
+            $emprendimiento->setIdRefund($idDePago);
+            $em->flush();
+
+
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
+            'mensaje'      => "Tu pago esta pendiente de acreditación")
+        );
+    }
+
 
 }

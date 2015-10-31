@@ -28,7 +28,10 @@
       </div>
       <div class="sidebar_base"></div>
     </div>
-    {% if app.user.getId == entity.emprendedor.usuario.getId  %}  
+    {% if app.user.getId == entity.emprendedor.usuario.getId  %}
+    <div id="sideBarBotonAsociate">
+        <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="botonPM">Cancelar</a>
+    </div>  
     {% else %}
     <div id="sideBarBotonAsociate">
         <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>

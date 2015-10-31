@@ -38,6 +38,13 @@ class Comentario
     */
     private $emprendimiento;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="leido", type="string", length=1)
+     */
+    private $leido;
+
 
     /**
      * @var string
@@ -103,6 +110,30 @@ class Comentario
     public function getTexto()
     {
         return $this->texto;
+    }
+
+    /**
+     * Set leido
+     *
+     * @param string $leido
+     *
+     * @return Comentario
+     */
+    public function setLeido($leido)
+    {
+        $this->leido = $leido;
+
+        return $this;
+    }
+
+    /**
+     * Get leido
+     *
+     * @return string
+     */
+    public function getLeido()
+    {
+        return $this->leido;
     }
 
     /**

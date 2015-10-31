@@ -6,7 +6,11 @@
             </div>
             <div class="texto_elemento">
                 <div class="contenedor_principal">
-                    <div class="titulo_texto">{{ entity.nombre }}</div>
+                    <div class="titulo_texto">{{ entity.nombre }}
+                    {% if entity.estado == 0 %}(Pendiente){% endif %}
+                    {% if entity.estado == 2 %}(Aprobado){% endif %}
+                    {% if entity.estado == 4 %}(Cancelado){% endif %}
+                    </div>
                     <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
                 </div>
                 <div class="contenedor_derecha">
@@ -14,7 +18,7 @@
                     <div class="elemento_derecha acciones"><strong>Disponibles:</strong> {{ entity.accionesRestantes }}</div>
                     <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong>
                     {# endDate and startDate are strings or DateTime objects #}
-                    {% set difference = date(entity.fechaFinalizacion).diff(date(entity.fechaCreacion)) %}
+                    {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
                     {% set leftDays = difference.days %}
                     {% if leftDays == 1 %}
                       1 d&iacute;a

@@ -143,6 +143,14 @@ class Emprendimiento
      * @ORM\Column(name="ranking", type="decimal",nullable=true)
      */
     private $ranking;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="idRefund", type="decimal",nullable=true)
+     */
+    private $idRefund;
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -463,6 +471,30 @@ class Emprendimiento
     public function getRanking()
     {
         return $this->ranking;
+    }
+
+    /**
+     * Set idRefund
+     *
+     * @param string $idRefund
+     *
+     * @return Emprendimiento
+     */
+    public function setIdRefund($idRefund)
+    {
+        $this->idRefund = $idRefund;
+
+        return $this;
+    }
+
+    /**
+     * Get idRefund
+     *
+     * @return string
+     */
+    public function getIdRefund()
+    {
+        return $this->idRefund;
     }
 
     /**
