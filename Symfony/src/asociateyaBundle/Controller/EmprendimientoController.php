@@ -124,7 +124,13 @@ class EmprendimientoController extends Controller
 
         $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEmprendedor($this->getUser()->getEmprendedor());
 
-        $participo = $em->getRepository('asociateyaBundle:Inversion')->findByUsuario($this->getUser());
+        $participo = $em->getRepository('asociateyaBundle:Inversion')
+            ->createQueryBuilder('e')
+            ->where('e.usuario = :usuario') 
+            ->setParameter('usuario',$this->getUser())
+            ->groupBy('e.emprendimiento')
+            ->getQuery()
+            ->getResult();
 
         return $this->render('asociateyaBundle:Emprendimiento:listado.html.twig', array(
             'entities' => $entities,
