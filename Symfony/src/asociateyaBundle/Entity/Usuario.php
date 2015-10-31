@@ -8,10 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+// DON'T forget this use statement!!!
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
 *@ORM\Entity
 *@ORM\Table(name="Usuario")
+*@UniqueEntity("nombreUsuario")
 */
 class Usuario implements UserInterface, \Serializable 
 {
@@ -90,7 +94,7 @@ class Usuario implements UserInterface, \Serializable
     /**
     * @var string
     *
-    * @ORM\Column(name="nombreUsuario", type="string", length=255)
+    * @ORM\Column(name="nombreUsuario", type="string", length=255, unique=true)
     */
     private $nombreUsuario;
 

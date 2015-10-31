@@ -47,11 +47,14 @@
                 Dar de baja
             </a>
         </li>
-        <li>
-            <a href="{{ path('emprendedor_new') }}">
-                Aplicar para ser emprendedor
-            </a>
-        </li>
+        {%  if not entity.emprendedor%}
+            <li>
+                <a href="{{ path('emprendedor_new') }}">
+                    Aplicar para ser emprendedor
+                </a>
+            </li>
+        {% endif %}
+
     </ul>
         {% endif %}
 
