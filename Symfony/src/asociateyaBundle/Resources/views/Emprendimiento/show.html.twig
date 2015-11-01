@@ -17,25 +17,30 @@
       </div>
       <div class="sidebar_base"></div>
     </div>
-    <div class="sidebar" id="sideBarPerfil">
-      <div class="sidebar_top"></div>
-      <div id="sidebar_emprendimiento" class="sidebar_item">
-        <h3>Total recaudado</h3>
-        <div id="ID_barraProgreso" class="progress"></div>
-        <br>
-        <h3>Precio de la acción</h3>
-        <h4 id="ID_precioAccion">${{entity.precioAccion}}</h4>
+    {% if entity.estado == '1'  %}
+      <div class="sidebar" id="sideBarPerfil">
+        <div class="sidebar_top"></div>
+        <div id="sidebar_emprendimiento" class="sidebar_item">      
+          <h3>Total recaudado</h3>
+          <div id="ID_barraProgreso" class="progress"></div>
+          <br>
+          <h3>Precio de la acción</h3>
+          <h4 id="ID_precioAccion">${{entity.precioAccion}}</h4>
+
+        </div>
+        <div class="sidebar_base"></div>
       </div>
-      <div class="sidebar_base"></div>
-    </div>
-    {% if app.user.getId == entity.emprendedor.usuario.getId  %}
-    <div id="sideBarBotonAsociate">
-        <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="botonPM">Cancelar</a>
-    </div>  
+      {% if app.user.getId == entity.emprendedor.usuario.getId  %}
+      <div id="sideBarBotonAsociate">
+          <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="botonPM">Cancelar</a>
+      </div>  
+      {% else %}
+      <div id="sideBarBotonAsociate">
+          <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
+      </div>
+      {% endif %}
     {% else %}
-    <div id="sideBarBotonAsociate">
-        <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
-    </div>
+    <h3>APROBADO!</h3>
     {% endif %}
 </div>
 {% endblock %}
