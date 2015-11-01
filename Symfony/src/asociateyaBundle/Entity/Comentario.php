@@ -53,6 +53,11 @@ class Comentario
      */
     private $texto;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $fechaCreacion;
+
 
     /**
      * Get id
@@ -230,5 +235,29 @@ class Comentario
     public function getEmprendimiento()
     {
         return $this->emprendimiento;
+    }
+
+        /**
+     * Set fechaCreacion
+     *
+     * @param \DateTime $fechaCreacion
+     *
+     * @return Emprendimiento
+     */
+    public function setFechaCreacion($fechaCreacion)
+    {
+        $this->fechaCreacion = $fechaCreacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaCreacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaCreacion()
+    {
+        return $this->fechaCreacion;
     }
 }

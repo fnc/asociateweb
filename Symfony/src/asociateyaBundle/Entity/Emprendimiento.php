@@ -98,6 +98,13 @@ class Emprendimiento
     /**
      * @var string
      *
+     * @ORM\Column(name="rutaVideo", type="string", length=80)
+     */
+    private $rutaVideo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="descripcionCorta", type="string", length=80)
      */
     private $descripcionCorta;
@@ -399,6 +406,30 @@ class Emprendimiento
     public function getRutaImagen()
     {
         return $this->rutaImagen;
+    }
+
+    /**
+     * Set rutaVideo
+     *
+     * @param string $rutaVideo
+     *
+     * @return Emprendimiento
+     */
+    public function setRutaVideo($rutaVideo)
+    {
+        $this->rutaVideo = $rutaVideo;
+
+        return $this;
+    }
+
+    /**
+     * Get rutaImagen
+     *
+     * @return string
+     */
+    public function getRutaVideo()
+    {
+        return $this->rutaVideo;
     }
 
     /**

@@ -69,7 +69,7 @@
           {% if comentarios %}
             {% for comentario in comentarios %}
               <li>
-                <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:{{comentario.texto}}
+                <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}
               </li>
             {% endfor %}
           {% else %}
