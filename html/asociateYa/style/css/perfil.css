@@ -119,7 +119,69 @@
 	margin-right: auto;
 }
 
+/*COMENTARIOS*/
 
+.comentariosEmprendimiento a {
+	text-decoration: none;
+	color: #00F;
+	font-weight: bold;
+}
+
+.comentariosEmprendimiento ul {
+	 list-style-type: none;
+	 margin: 0 0 30px 0;
+
+}
+
+.comentariosEmprendimiento li {
+	margin: 15px 0 0 10px;
+	padding: 5px 15px 5px 15px;
+	border-radius: 15px;
+	background-color: #EAEAEA;
+}
+
+.comentariosEmprendimiento form {
+	 margin 30px, 0;
+
+}
+
+.comentariosEmprendimiento input[type="text"] {
+    width: 500px;
+	height: 25px;
+	margin: 10px	
+}
+
+.colorGris {
+	color: #999	
+}
+
+.comentariosEmprendimiento input[type="submit"] {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 15;
+  -moz-border-radius: 15;
+  border-radius: 15px;
+  font-weight: bold;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
+
+.comentariosEmprendimiento input[type="submit"]:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
 
 /*BARRA DE PROGRESO*/
 
