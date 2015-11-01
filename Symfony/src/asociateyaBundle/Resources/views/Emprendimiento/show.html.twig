@@ -65,30 +65,32 @@
             </ul>
         </div>
         <br><h3>Comentarios</h3>
+        <div class="comentariosEmprendimiento">
         <ul>
           {% if comentarios %}
             {% for comentario in comentarios %}
               <li>
-                <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}
+                <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.fechaCreacion|date('d-m-Y') }}</div>
               </li>
             {% endfor %}
           {% else %}
             No hay comentarios aun.
           {% endif %}
+          </ul>
 
           
           <form id="formulario_comentario" method="post" action="{{ path('emprendimiento_comentar',{'id':entity.getId}) }}" >
             {{ form_widget(formComentario.texto,{ 'attr': {'class': 'description'} }) }}
             <input type="submit" value="Comentar">
           </form> 
-
-        </ul>
+        </div>
+        
       </div>   
 {% endblock %}
 
 {% block javascripts %}
  <script type="text/javascript">
     {% set progresoBarra = ((entity.totalAcciones-entity.accionesRestantes) / entity.totalAcciones)*100 %}
-    document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + {{progresoBarra}} + '" aria-valuemin="0" aria-valuemax="100" style="width:' + {{progresoBarra}} + '%">' + {{progresoBarra}} + '%</div>'
+    document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + {{progresoBarra}} + '" aria-valuemin="0" aria-valuemax="100" style="width:' + {{progresoBarra}} + '%">' + {{progresoBarra|number_format(0, '.', ',')}} + '%</div>'
 </script>
 {% endblock %}

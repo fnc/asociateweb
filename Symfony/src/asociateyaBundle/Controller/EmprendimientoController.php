@@ -382,6 +382,7 @@ class EmprendimientoController extends Controller
         $form->handleRequest($request);
         $entity->setEmprendimiento($emprendimiento);
         $entity->setUsuario($this->getUser());
+        $entity->setFechaCreacion(new \DateTime());
         $entity->setLeido(0);
 
         
@@ -697,7 +698,7 @@ class EmprendimientoController extends Controller
             $emprendimiento->setEstado(4);//canceladoPagoAcreditado
 
             //TODO devolver dinero de cada inversion
-            
+
             $em->flush();
 
 
