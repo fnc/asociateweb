@@ -679,5 +679,32 @@ class EmprendimientoController extends Controller
         );
     }
 
+    /**
+     * Muestra pagina con mensaje de pago aceditado del refund
+     *
+     */
+    public function pagoAcreditadoRefundAction($idEmprendimiento)
+    {
+            $request = $this->getRequest();
+            $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
+
+            $idDePago=$request->query->get('collection_id');
+
+            $em = $this->getDoctrine()->getManager();
+
+            $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($idEmprendimiento);
+            $emprendimiento->setIdRefund($idDePago);
+            $emprendimiento->setEstado(4);//canceladoPagoAcreditado
+
+            //TODO devolver dinero de cada inversion
+            
+            $em->flush();
+
+
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
+            'mensaje'      => "Tu pago fue acreditado")
+        );
+    }
+
 
 }
