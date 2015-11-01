@@ -4,9 +4,9 @@
 {% block stylesheets %}
 <link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
 <script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/view.js')}}></script>
-  <link href="../style/css/formulario_asociacion.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="../lib/js/datos_emprendimiento.js"></script>
-  <script type="text/javascript" src="../lib/js/subscripciones.js"></script>
+  <link href={{ asset('bundles/asociateya/css/formulario_asociacion.css')}} rel="stylesheet" type="text/css">
+	<script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/datos_emprendimiento.js')}}></script>
+  <script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/subscripciones.js')}}></script>
 
 
 
@@ -282,7 +282,7 @@ De conformidad y a un solo efecto se firman tres ejemplares de un mismo tenor en
 {% block javascripts %}
 
   <script type="text/javascript">
-	document.getElementById("ID_precioAccion").innerHTML = "$" +  precioAccion;
+	document.getElementById("ID_precioAccion").innerHTML = "$" +  {{entity.precioAccion}};
 	document.getElementById("ID_nombreProyecto").innerHTML = "Asociate a " + nombreProyecto;
 	document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + progresoBarra + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progresoBarra + '%">' + progresoBarra + '%</div>'
 	document.getElementById("ID_nombreCreador").innerHTML = '<a href="perfil.html">' + nombreCreador + '</a>';

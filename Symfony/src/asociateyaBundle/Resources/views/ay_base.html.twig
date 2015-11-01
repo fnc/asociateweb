@@ -23,10 +23,10 @@
         </a></div>
         <div id="logo_der">
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <div id="boton_perfil">
+          <div id="boton_login">
             <a href={{ path('usuario_show',{'id':app.user.getId}) }} class="boton_ingresar">{{ app.user.username }}</a>
           </div>
-          <div id="boton_salir">
+          <div id="boton_registro">
             <a href={{ path('asociateya_salir')}} class="boton_registrar">Salir</a>
           </div>
 
