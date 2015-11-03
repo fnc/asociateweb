@@ -81,3 +81,7 @@ emprendimiento_confirmarPagoRefund:
 emprendimiento_pagoPendienteRefund:
     path:     /{idEmprendimiento}/pagoPendienteRefund
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoPendienteRefund" }
+
+emprendimiento_pagoAcreditadoRefund:
+    path:     /{idEmprendimiento}/pagoAcreditadoRefund
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoAcreditadoRefund" }

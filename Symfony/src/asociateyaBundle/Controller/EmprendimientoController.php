@@ -26,7 +26,7 @@ class EmprendimientoController extends Controller
 
 
     /**
-     * Aprueba a un emprendedor
+     * Acepta a un emprendimiento
      * estado = 1
      *
      */
@@ -144,10 +144,13 @@ class EmprendimientoController extends Controller
      */
     public function createAction(Request $request)
     {
+        
+        $this->denyAccessUnlessGranted('ROLE_EMPRENDEDOR', null, 'Esta funcion es solo para Emprendedores!');
+
         $entity = new Emprendimiento();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-        //Estados 0=endienteaceptar  1=aceptado 2=aprobado(financiado) 3=canceladoPagoPendiente 4=CanceladoPagoAcreditado
+        //Estados 0=pendienteaceptar  1=aceptado 2=aprobado(financiado) 3=canceladoPagoPendiente 4=CanceladoPagoAcreditado
         // 5=vencidoCon80Fincanciado(decide el emprendedor)
         $entity->setEstado(0);
         $entity->setAccionesRestantes($entity->getTotalAcciones());
@@ -210,6 +213,8 @@ class EmprendimientoController extends Controller
      */
     public function newAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_EMPRENDEDOR', null, 'Esta funcion es solo para Emprendedores!');
+
         $entity = new Emprendimiento();
         $form   = $this->createCreateForm($entity);
 
@@ -480,7 +485,7 @@ class EmprendimientoController extends Controller
 
 
 
-        $cantidadAcciones = $request->request->get('cantidad');
+        $cantidadAcciones = (int) $request->request->get('cantidad');
 
 
         //Creo la nueva inversion
@@ -489,8 +494,9 @@ class EmprendimientoController extends Controller
         $inversion->setEmprendimiento($entity);
         $inversion->setFechaEmision(new \DateTime());
         $inversion->setCantidadAcciones($cantidadAcciones);
-        //Estado:  1= pendiente   2= acreditado
+        //Estado:  1= pendiente   2= acreditado 3=refunded
         $inversion->setEstado(0);
+        $entity->setAccionesRestantes(((int)$entity->getAccionesRestantes())-$cantidadAcciones);
         $em->persist($inversion);
         $em->flush();
 
@@ -507,7 +513,7 @@ class EmprendimientoController extends Controller
                     "description" =>  $entity->getDescripcionCorta(),
                     "picture_url" => $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos'.$entity->getrutaimagen(),
                     "currency_id" => "ARS",
-                    "quantity" => (int)$cantidadAcciones,
+                    "quantity" => $cantidadAcciones,
                     "unit_price" => (int)$entity->getPrecioAccion(),
                 )
             ),
@@ -554,6 +560,7 @@ class EmprendimientoController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
+            $inversion->setEstado(1);//pago pendiente
             $inversion->setIdPago($idDePago);
             $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
             $em->flush();
@@ -610,7 +617,13 @@ class EmprendimientoController extends Controller
         }
 
         if ((int)$emprendimiento->getTotalAcciones()-(int)$emprendimiento->getAccionesRestantes()==0) {
-            throw $this->createNotFoundException('No hay nada que devolver.');
+            $emprendimiento->setEstado(4);//candelado
+
+            $em->flush();
+
+            return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
+                'mensaje'      => "Se ha cancelado el emprendimiento.")
+        );
         }
 
         $montoAPagar =  ((float)$emprendimiento->getTotalAcciones()-(float)$emprendimiento->getAccionesRestantes())*(float)$emprendimiento->getPrecioAccion()*(0.0495);
@@ -641,7 +654,7 @@ class EmprendimientoController extends Controller
                 )
             ),
             "back_urls" => array(
-                    "success" => "success",
+                    "success" => "localhost:8000".$this->generateUrl('emprendimiento_pagoAcreditadoRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
                     "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendienteRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
                     "failure" => "failure",
 
@@ -650,6 +663,8 @@ class EmprendimientoController extends Controller
         );
 
         $preference = $mp->create_preference($preference_data);
+
+        $em->flush();
 
         return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
             'entity'      => $emprendimiento,
@@ -671,9 +686,12 @@ class EmprendimientoController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($idEmprendimiento);
-            $emprendimiento->setIdRefund($idDePago);
-            $em->flush();
 
+            $emprendimiento->setIdRefund($idDePago);
+
+            $emprendimiento->setEstado(3);//canceladoPagoPendiente
+
+            $em->flush();
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
             'mensaje'      => "Tu pago esta pendiente de acreditación")
@@ -687,6 +705,7 @@ class EmprendimientoController extends Controller
     public function pagoAcreditadoRefundAction($idEmprendimiento)
     {
             $request = $this->getRequest();
+
             $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
 
             $idDePago=$request->query->get('collection_id');
@@ -694,10 +713,44 @@ class EmprendimientoController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($idEmprendimiento);
+
             $emprendimiento->setIdRefund($idDePago);
+
             $emprendimiento->setEstado(4);//canceladoPagoAcreditado
 
             //TODO devolver dinero de cada inversion
+            $inversiones = $emprendimiento->getInversiones();
+
+            require_once ('mercadopago.php');
+
+            $mp = new MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+
+
+            foreach ($inversiones as $inversion) {
+                
+                $resultado = $mp->refund_payment($inversion->getIdPago());
+
+                $inversion->setEstado(3);//refunded
+
+                $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
+
+                //TODO completar bien la info del pago
+
+                $payment_data = array(
+                    "transaction_amount" => $comisionRefund,
+                    "token" => "42DSugNu5tAKsQMj6QicKloh6Jvege3D",
+                    "description" => "Devolucion a usuario ".$inversion->getUsuario()->getNombreUsuario()." por la cancelacion del emprendimiento ".$emprendimiento->getNombre() ,
+                    "installments" => 1,
+                    "payer" => array ("id" => "12345678"),
+                    "payment_method_id" => "visa",
+                    "application_fee" => 0
+                    );
+
+                $payment = $mp->post("/v1/payments", $payment_data);
+
+                //print_r($resultado["status"]);
+
+            }
 
             $em->flush();
 

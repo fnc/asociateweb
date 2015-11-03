@@ -39,8 +39,18 @@
           <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
       </div>
       {% endif %}
-    {% else %}
+    {% endif %}
+    {% if entity.estado == '2' %}
     <h3>APROBADO!</h3>
+    {% endif %}
+    {% if entity.estado == '0' %}
+    <h3>Pendiente de aceptación</h3>
+    {% endif %}
+    {% if entity.estado == '3' %}
+    <h3>CANCELADO</h3>
+    {% endif %}
+    {% if entity.estado == '4' %}
+    <h3>CANCELADO</h3>
     {% endif %}
 </div>
 {% endblock %}
@@ -53,7 +63,7 @@
         <h2>{{ entity.descripcionCorta }}</h2>
         <p>{{ entity.descripcionLarga }}</p>
    
-        <iframe width="440" height="330" align="middle" src="http://www.youtube.com/embed/XGSy3_Czz8k?autoplay=0"><br>
+        <iframe width="440" height="330" align="middle" src={{ entity.rutaVideo }}><br>
         </iframe>
         <br>
         

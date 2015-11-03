@@ -98,7 +98,7 @@ class Emprendimiento
     /**
      * @var string
      *
-     * @ORM\Column(name="rutaVideo", type="string", length=80)
+     * @ORM\Column(name="rutaVideo", type="string", length=80,nullable=true)
      */
     private $rutaVideo;
 
