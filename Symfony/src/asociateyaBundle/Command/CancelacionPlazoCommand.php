@@ -25,25 +25,46 @@ class CancelacionPlazoCommand extends ContainerAwareCommand
 
         $toDate = clone $fromDate;
         $toDate->modify('+1 day'); // Have 2013-06-11 00:00:00
-$output->writeln($fromDate);
+        //$output->writeln($fromDate);
 
+        $output->writeln("");
+        $output->writeln("<info>A continuación se listarán los emprendimientos con el plazo vencido:</info>");
+        $output->writeln("");
 
         $q = $em->getRepository("asociateyaBundle:Emprendimiento")
             ->createQueryBuilder('e')
             ->where('e.fechaFinalizacion >= :fromDate')
             ->andWhere('e.fechaFinalizacion < :toDate')
+            ->andWhere('e.estado = :estado')
             ->setParameter('fromDate', $fromDate)
             ->setParameter('toDate', $toDate)
+            ->setParameter('estado', 1)
             ->getQuery();
 
             $emprendimientos = $q->getResult();
 
         foreach ($emprendimientos as $emprendimiento) {
-            $output->writeln($emprendimiento->getNombre());
+            $output->writeln("Emprendimiento: ".$emprendimiento->getNombre());
+            $emprendimiento->setEstado(4);//Cancelado pago acreditado (en realidad se refiere a una cancelacion definitiva)
+            $inversiones = $emprendimiento->getInversiones();
+            if(count($inversiones)>0){
+                $output->writeln("<comment>Se emitiran las devoluciones de las ".count($inversiones)." inversiones del emprendimiento ".$emprendimiento->getNombre()."</comment>");
+                
+                foreach ($inversiones as $inversion) {
+                    //TODO Devolver la inversion
+                }
+
+            }
+            else{
+                $output->writeln("<comment>No hay inveriones para devolver en el emprendimiento ".$emprendimiento->getNombre()."</comment>");
+            }
+
         } 
 
 
         
         $em->flush();
+
+        $output->writeln("");
     }
 }

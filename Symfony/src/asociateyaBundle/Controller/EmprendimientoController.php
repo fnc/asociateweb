@@ -151,7 +151,7 @@ class EmprendimientoController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         //Estados 0=pendienteaceptar  1=aceptado 2=aprobado(financiado) 3=canceladoPagoPendiente 4=CanceladoPagoAcreditado
-        // 5=vencidoCon80Fincanciado(decide el emprendedor)
+        // 5=vencidoCon80Fincanciado(decide el emprendedor)  6= aprobado con pagos pendientes
         $entity->setEstado(0);
         $entity->setAccionesRestantes($entity->getTotalAcciones());
         $entity->setRanking(0);
