@@ -22,21 +22,21 @@ ul#nav_usuario li a {
 text-decoration:none;
 display: block;
 padding:5px 21px;
-background:#5F3222;
+background:#04B431;
 color:#eee;
 float:left;
 text-align:center;
-border-top:2px solid #815444;
-border-right:2px solid #3d1000;
-border-bottom:2px solid #3d1000;
-border-left:2px solid #815444;
+border-top:2px solid #21610B;
+border-right:2px solid #04B404;
+border-bottom:2px solid #04B404;
+border-left:2px solid #21610B;
 }
 
 ul#nav_usuario li a:hover {
-background:#a37666;
+background: #BEF781;
 color:#000;
-border-top:2px solid #815444;
-border-right:2px solid #c59888;
-border-bottom:2px solid #c59888;
-border-left:2px solid #815444;
+border-top:2px solid #21610B;
+border-right:2px solid #80FF00;
+border-bottom:2px solid #80FF00;
+border-left:2px solid #21610B;
 }
