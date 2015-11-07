@@ -1,8 +1,10 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
 {% block tittle %}
-<p class="mensajeAlerta alertaVerde">{{ mensaje }}</p>
-<p class="mensajeAlerta alertaRoja">{{ mensaje }}</p>
+  {{ mensaje }}
 {% endblock %}
 
-{% block body %}{{ mensaje }}{% endblock %}
+{% block body %}
+  <p class="mensajeAlerta alertaVerde">{{ mensaje }}</p>
+  <p class="mensajeAlerta alertaRoja">{{ mensaje }}</p>
+{% endblock %}
