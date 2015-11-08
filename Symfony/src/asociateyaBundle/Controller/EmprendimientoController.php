@@ -596,6 +596,22 @@ class EmprendimientoController extends Controller
     }
 
     /**
+     * Muestra pagina con mensaje de pago pendiente
+     *
+     */
+    public function pagarGananciasAction(Request $request)
+    {
+        require_once ('mercadopago.php');        
+        $mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+
+
+
+        return $this->render('asociateyaBundle:Emprendimiento:pagosControlador.html.twig', array(
+            'pagos' => $searchResult)
+        );
+    }
+
+    /**
      * Muestra pagina con el boton de mercadopago par que el emprendedor pague a asociateya los refunds
      *
      */

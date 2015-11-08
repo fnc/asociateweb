@@ -5,7 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use asociateyaBundle\Controller\mercadopago;
+use asociateyaBundle\Controller;
  
 class PublicarEstadoResultadoCommand extends ContainerAwareCommand
 {
@@ -26,39 +26,45 @@ class PublicarEstadoResultadoCommand extends ContainerAwareCommand
 
         $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->findByNombre($nombreEmprendimiento);
 
+         
+
         if (!$emprendimiento) {
             $output->writeln("<error>No se encontró el emprendimiento ".$nombreEmprendimiento." </error>");
             return;
         }
 
- 
+         $output->writeln("<info>Se pagaran ganacias del emprendimiento ".$emprendimiento[0]->getNombre()." </info>");
   
 
         //recorrer inversiones
 
-        $inversiones = $emprendimiento->getInversiones();
+        $inversiones = $emprendimiento[0]->getInversiones();
+
+        require_once __DIR__.'/../Controller/mercadopago.php';
+
+        $output->writeln(__DIR__.'/../Controller/mercadopago.php');
+
+        $mp = new \MP ("ff8080814c11e237014c1ff593b57b4d");
 
 
-        $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
 
 
         foreach ($inversiones as $inversion) {
                 
-            $montoAPagar = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
+            $montoAPagar = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento[0]->getPrecioAccion()*(0.0495);
 
             //TODO completar bien la info del pago
-$output->writeln("<info>Se pagaran ganacias a ".." </info>");
-                $payment_data = array(
-                    "transaction_amount" => $montoAPagar,
-                    "token" => "42DSugNu5tAKsQMj6QicKloh6Jvege3D",
-                    "description" => "Ganancias de emprendimiento ".$emprendimiento->getNombre() ,
+            $output->writeln("<info>Se pagaran ganacias a ".$inversion->getUsuario()->getNombreUsuario()." </info>");
+            $payment_data = array(
+                    "transaction_amount" => 1,//$montoAPagar,
+                    "token" => "ff8080814c11e237014c1ff593b57b4d",
+                    "description" => "Ganancias de emprendimiento ".$emprendimiento[0]->getNombre() ,
                     "installments" => 1,
-                    "payer" => array ("id" => "12345678"),
-                    "payment_method_id" => "visa",
-                    "application_fee" => 0
+                    "payer" => array ("id" => "1683437747"),
+                    "application_fee" => 0,
                     );
 
-                //$payment = $mp->post("/v1/payments", $payment_data);
+            $payment = $mp->post("/v1/payments", $payment_data);
 
         }
 
@@ -70,11 +76,12 @@ $output->writeln("<info>Se pagaran ganacias a ".." </info>");
         ->setSubject("Se han acreditado ganancias del emprendimiento")//.$emprendimiento->getNombre())
         ->setFrom('noreply@asociateya.com')
         ->setTo('fedecroci@hotmail.com')
-        ->setBody($this->getContainer()->get('templating')->render(
+        ->setBody(//$this->getContainer()->get('templating')->render(
                  // app/Resources/views/Emails/registration.html.twig
                  'Emails/resultado.html.twig',
-                 //array('name' => $emprendimiento->getNombre())
-             ),
+                 //array('name' => $emprendimiento[0]->getNombre())
+             //),
+            
             'text/html'
         )
 

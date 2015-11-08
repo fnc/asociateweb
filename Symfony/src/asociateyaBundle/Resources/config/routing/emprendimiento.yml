@@ -74,6 +74,10 @@ emprendimiento_pagosControl:
     path:     /controlPagos
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pagosControl" }
 
+emprendimiento_pagoGanancia:
+    path:     /controlPagos
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:pagarGanancias" }
+
 emprendimiento_confirmarPagoRefund:
     path:     /{id}/confirmarPagoRefund
     defaults: { _controller: "asociateyaBundle:Emprendimiento:confirmarPagoRefund" }

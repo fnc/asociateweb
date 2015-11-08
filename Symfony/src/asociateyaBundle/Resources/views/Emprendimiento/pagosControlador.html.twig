@@ -2,7 +2,7 @@
 
 {% block title %}Mis Emprendimientos{% endblock %}
 {% block stylesheets %}
-<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/pagos.css')}} rel="stylesheet" type="text/css">
 {% endblock %}
 
 
@@ -73,17 +73,9 @@
                 {% endfor %}
 
             </table>
-            <script>
-            $("button").click(function(){
-                $(".table2excel").table2excel({
-                    exclude: ".noExl",
-                    name: "Excel Document Name",
-                    filename: "myFileName"  
-                });
-            });
-            </script>
+
         </div>
-        <button>Export</button>
+        
       </div>
 
 {% endblock %}

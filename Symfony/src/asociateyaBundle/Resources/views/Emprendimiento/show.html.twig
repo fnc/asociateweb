@@ -42,6 +42,14 @@
     {% endif %}
     {% if entity.estado == '2' %}
     <h3>APROBADO!</h3>
+      {% if app.user and is_granted('ROLE_SUPER_ADMIN')  %}
+        <div id="sideBarBotonGanancia">
+          <form method="post" action="{{ path('emprendimiento_pagoGanancia') }}" id="search_form">
+              <input class="search" type="text" name="search_field" id="search_field" value="% ganacias" />
+              <button name="search" type="submit"  class="botonPM" >Pagar Ganancia</button>
+          </form>
+        </div>  
+      {% endif %}
     {% endif %}
     {% if entity.estado == '0' %}
     <h3>Pendiente de aceptación</h3>
