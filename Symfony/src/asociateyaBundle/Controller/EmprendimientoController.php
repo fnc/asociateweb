@@ -599,11 +599,8 @@ class EmprendimientoController extends Controller
      * Muestra pagina con mensaje de pago pendiente
      *
      */
-    public function pagarGananciasAction(Request $request)
+    public function pagarGananciasAction($id)
     {
-        require_once ('mercadopago.php');        
-        $mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
-
 
 
         return $this->render('asociateyaBundle:Emprendimiento:pagosControlador.html.twig', array(
@@ -748,23 +745,7 @@ class EmprendimientoController extends Controller
 
                 $inversion->setEstado(3);//refunded
 
-                $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
-
-                //TODO completar bien la info del pago
-
-                $payment_data = array(
-                    "transaction_amount" => $comisionRefund,
-                    "token" => "42DSugNu5tAKsQMj6QicKloh6Jvege3D",
-                    "description" => "Devolucion a usuario ".$inversion->getUsuario()->getNombreUsuario()." por la cancelacion del emprendimiento ".$emprendimiento->getNombre() ,
-                    "installments" => 1,
-                    "payer" => array ("id" => "12345678"),
-                    "payment_method_id" => "visa",
-                    "application_fee" => 0
-                    );
-
-                $payment = $mp->post("/v1/payments", $payment_data);
-
-                //print_r($resultado["status"]);
+                $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495)
 
             }
 
