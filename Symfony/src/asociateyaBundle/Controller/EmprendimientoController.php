@@ -390,6 +390,20 @@ class EmprendimientoController extends Controller
         $entity->setFechaCreacion(new \DateTime());
         $entity->setLeido(0);
 
+        //mandar mail de notificacion
+        $message = \Swift_Message::newInstance()
+        ->setSubject("Un inversor hizo un comentario en el emprendimiento ".$emprendimiento->getNombre())//.$emprendimiento->getNombre())
+        ->setFrom('noreply@asociateya.com')
+        ->setTo($emprendimiento->getEmprendedor()->getUsuario()->getEmail())
+        ->setBody($this->renderView('asociateyaBundle:Emails:notificacionComentario.html.twig',
+                 array('emprendimiento' => $emprendimiento,
+                    'mensaje' => $entity->getTexto())
+             ),
+            
+            'text/html'
+        );
+        $this->get('mailer')->send($message);
+
         
 
 
@@ -529,7 +543,7 @@ class EmprendimientoController extends Controller
         $preference = $mp->create_preference($preference_data);
 
         return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
-            'entity'      => $entity,
+            'emprendimiento'      => $entity,
             'initPoint' => $preference["response"]["init_point"],
         ));
     }
@@ -599,9 +613,9 @@ class EmprendimientoController extends Controller
      * Muestra pagina con mensaje de pago pendiente
      *
      */
-    public function pagarGananciasAction($id)
+    public function pagarGananciasAction(Request $request,$id)
     {
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->get('doctrine')->getManager();
 
         $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
 
@@ -613,11 +627,14 @@ class EmprendimientoController extends Controller
 
         //recorrer inversiones
 
-        $inversiones = $emprendimiento[0]->getInversiones();
+        $inversiones = $emprendimiento->getInversiones();
+
+        $porGanancia = (float) $request->request->get('ganancia');
 
         return $this->render('asociateyaBundle:Emprendimiento:pagoGanancias.html.twig', array(
-            'emprendimiento' => $searchResult,
-            'inversiones' => $inversiones)
+            'emprendimiento' => $emprendimiento,
+            'inversiones' => $inversiones,
+            'porGanancia' => $porGanancia)
         );
     }
 

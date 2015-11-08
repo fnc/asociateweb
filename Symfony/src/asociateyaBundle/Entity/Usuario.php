@@ -85,13 +85,6 @@ class Usuario implements UserInterface, \Serializable
     private $cbu;
 
     /**
-     *
-     * @ORM\Column(name="saldo", type="string", length=255,nullable=true)
-     */
-    private $saldo;
-
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $fechaCreacion;
@@ -522,30 +515,7 @@ class Usuario implements UserInterface, \Serializable
 
 
 
-    /**
-     * Set saldo
-     *
-     * @param string $saldo
-     *
-     * @return Usuario
-     */
-    public function setSaldo($saldo)
-    {
-        $this->saldo = $saldo;
-
-        return $this;
-    }
-
-    /**
-     * Get saldo
-     *
-     * @return string
-     */
-    public function getSaldo()
-    {
-        return $this->saldo;
-    }
-
+   
     /**
      * Set nombreUsuario
      *

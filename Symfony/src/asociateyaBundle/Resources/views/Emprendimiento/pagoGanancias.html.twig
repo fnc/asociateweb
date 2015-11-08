@@ -10,43 +10,51 @@
 
 
         <h1>Inversiones en el emprendimiento {{ emprendimiento.nombre }}</h1>
+        Precio de la accion:{{emprendimiento.precioAccion}}<br>
+        Coeficiente de ganancia:{{porGanancia}}
 
         <div class="tablaPagos">
             <table class="table2excel" data-tableName="Test Table 1">
                 <tr>
                     <td>
-                        ID Pago
+                        Usuario
                     </td>
                     <td >
-                        Fecha Emisión
+                        Nombre Completo
                     </td>
                     <td>
-                        Monto
+                        Cantidad de Acciones
                     </td>
                     <td>
-                        Estado
+                        Ganancias a pagar
                     </td>
                     <td>
-                        Fecha acreditación
+                        CBU
+                    </td>
+                    <td>
+                        Notificar
                     </td>
                 </tr>
-                {% for pago in pagos["response"]["results"] %}
+                {% for inversion in inversiones %}
 
                     <tr>
                         <td >
-                            {{pago["collection"]["id"]}}
+                            {{inversion.usuario.nombreUsuario}}
                         </td>
                         <td>
-                            {{pago["collection"]["date_created"]}}
+                            {{inversion.usuario.nombre}} {{inversion.usuario.apellido}}
                         </td>
                         <td>
-                            ${{pago["collection"]["transaction_amount"]}}
+                            {{inversion.cantidadAcciones}}
                         </td>
                         <td>
-                            {{pago["collection"]["status"]}}
+                            {{inversion.cantidadAcciones * emprendimiento.precioAccion * porGanancia|number_format(2, '.', ',')}}
                         </td>
                         <td>
-                            {{pago["collection"]["date_approved"]}}
+                            {{inversion.usuario.cbu}}
+                        </td>
+                        <td>
+                            Enviar E-mail
                         </td>
                     </tr>
 

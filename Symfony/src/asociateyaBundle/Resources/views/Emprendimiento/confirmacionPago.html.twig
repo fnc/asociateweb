@@ -2,7 +2,7 @@
 
 
 
-{% block title %}Nuevo emprendimiento{% endblock %}
+{% block title %}Asociarse{% endblock %}
 {% block stylesheets %}
 <link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
 <script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/view.js')}}></script>
@@ -23,6 +23,9 @@
 {% block body -%}
 
       <div class="content" id="pag2_content">
+
+      <h1>Realice el pago con el boton de MercadoPago:</h1>
+      <p>El pago corresponde a una inversion en el emprendimiento {{emprendimiento.nombre}}.<br>El valor de las acciones es ${{emprendimiento.precioAccion}}.</p>
         
         <a href=" {{ initPoint }}" name="MP-Checkout" class="green-ar-l-rn-none">Pagar</a>
         <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>        
