@@ -51,7 +51,7 @@ class EmprendimientoController extends Controller
         $entity->setAccionesRestantes($totalAcciones);
         $entity->setPrecioAccion($valorAccion);
 
-        //TODO agregar plazo por parametro
+        // agregar plazo por parametro
         $entity->setFechaFinalizacion(new \DateTime('+'.$plazo.' day'));
 
         $em->flush();
@@ -601,10 +601,23 @@ class EmprendimientoController extends Controller
      */
     public function pagarGananciasAction($id)
     {
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
+        $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
 
-        return $this->render('asociateyaBundle:Emprendimiento:pagosControlador.html.twig', array(
-            'pagos' => $searchResult)
+         
+
+        if (!$emprendimiento) {
+
+        }
+
+        //recorrer inversiones
+
+        $inversiones = $emprendimiento[0]->getInversiones();
+
+        return $this->render('asociateyaBundle:Emprendimiento:pagoGanancias.html.twig', array(
+            'emprendimiento' => $searchResult,
+            'inversiones' => $inversiones)
         );
     }
 
@@ -731,7 +744,7 @@ class EmprendimientoController extends Controller
 
             $emprendimiento->setEstado(4);//canceladoPagoAcreditado
 
-            //TODO devolver dinero de cada inversion
+            //devolver dinero de cada inversion
             $inversiones = $emprendimiento->getInversiones();
 
             require_once ('mercadopago.php');
@@ -745,7 +758,7 @@ class EmprendimientoController extends Controller
 
                 $inversion->setEstado(3);//refunded
 
-                $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495)
+                $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
 
             }
 

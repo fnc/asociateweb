@@ -21,6 +21,7 @@ class UsuarioType extends AbstractType
             ->add('dni')
             ->add('direccion')
             ->add('cuit')
+            ->add('cbu')
             //->add('saldo')
             //->add('fechaCreacion')
             //->add('nombreUsuario')

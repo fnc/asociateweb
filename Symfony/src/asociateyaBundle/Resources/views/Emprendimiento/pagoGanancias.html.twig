@@ -1,0 +1,62 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Informacion par pago de ganancias{% endblock %}
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/pagos.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block body -%}
+
+
+        <h1>Inversiones en el emprendimiento {{ emprendimiento.nombre }}</h1>
+
+        <div class="tablaPagos">
+            <table class="table2excel" data-tableName="Test Table 1">
+                <tr>
+                    <td>
+                        ID Pago
+                    </td>
+                    <td >
+                        Fecha Emisión
+                    </td>
+                    <td>
+                        Monto
+                    </td>
+                    <td>
+                        Estado
+                    </td>
+                    <td>
+                        Fecha acreditación
+                    </td>
+                </tr>
+                {% for pago in pagos["response"]["results"] %}
+
+                    <tr>
+                        <td >
+                            {{pago["collection"]["id"]}}
+                        </td>
+                        <td>
+                            {{pago["collection"]["date_created"]}}
+                        </td>
+                        <td>
+                            ${{pago["collection"]["transaction_amount"]}}
+                        </td>
+                        <td>
+                            {{pago["collection"]["status"]}}
+                        </td>
+                        <td>
+                            {{pago["collection"]["date_approved"]}}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+        
+      </div>
+
+{% endblock %}
+

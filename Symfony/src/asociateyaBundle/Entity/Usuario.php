@@ -80,6 +80,12 @@ class Usuario implements UserInterface, \Serializable
 
     /**
      *
+     * @ORM\Column(name="cbu", type="string", length=40, nullable=true)
+     */
+    private $cbu;
+
+    /**
+     *
      * @ORM\Column(name="saldo", type="string", length=255,nullable=true)
      */
     private $saldo;
@@ -278,6 +284,30 @@ class Usuario implements UserInterface, \Serializable
     public function getCuit()
     {
         return $this->cuit;
+    }
+
+    /**
+     * Set cbu
+     *
+     * @param string $cbu
+     *
+     * @return Usuario
+     */
+    public function setCbu($cbu)
+    {
+        $this->cbu = $cbu;
+
+        return $this;
+    }
+
+    /**
+     * Get cbu
+     *
+     * @return string
+     */
+    public function getCbu()
+    {
+        return $this->cbu;
     }
 
     /**

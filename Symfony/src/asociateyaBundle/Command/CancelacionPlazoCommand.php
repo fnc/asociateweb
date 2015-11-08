@@ -51,7 +51,12 @@ class CancelacionPlazoCommand extends ContainerAwareCommand
                 $output->writeln("<comment>Se emitiran las devoluciones de las ".count($inversiones)." inversiones del emprendimiento ".$emprendimiento->getNombre()."</comment>");
                 
                 foreach ($inversiones as $inversion) {
-                    //TODO Devolver la inversion
+                    //Devolver la inversion
+                    $resultado = $mp->refund_payment($inversion->getIdPago());
+
+                	$inversion->setEstado(3);//refunded
+
+                	$comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
                 }
 
             }
