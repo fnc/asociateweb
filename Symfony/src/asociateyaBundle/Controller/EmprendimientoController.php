@@ -508,7 +508,7 @@ class EmprendimientoController extends Controller
         $inversion->setEmprendimiento($entity);
         $inversion->setFechaEmision(new \DateTime());
         $inversion->setCantidadAcciones($cantidadAcciones);
-        //Estado:  1= pendiente   2= acreditado 3=refunded
+        //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
         $inversion->setEstado(0);
         $entity->setAccionesRestantes(((int)$entity->getAccionesRestantes())-$cantidadAcciones);
         $em->persist($inversion);
@@ -520,20 +520,22 @@ class EmprendimientoController extends Controller
         
         //$mp = new MP("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET");
 
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+
         $preference_data = array(
             "items" => array(
                 array(
-                    "title" => "Inversion en ". $entity->getNombre().$session->get('name').$cantidadAcciones,
+                    "title" => "Inversion en ". $entity->getNombre(),
                     "description" =>  $entity->getDescripcionCorta(),
-                    "picture_url" => $this->container->getParameter('kernel.root_dir').'/../web/uploads/emprendimientos'.$entity->getrutaimagen(),
+                    "picture_url" => $baseurl."/uploads/emprendimientos/".$entity->getrutaimagen(),
                     "currency_id" => "ARS",
                     "quantity" => $cantidadAcciones,
                     "unit_price" => (int)$entity->getPrecioAccion(),
                 )
             ),
             "back_urls" => array(
-                    "success" => "success",
-                    "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendiente',array('idInversion'=>$inversion->getId())),
+                    "success" => $baseurl.$this->generateUrl('emprendimiento_pagoAcreditado',array('idInversion'=>$inversion->getId())),
+                    "pending" => $baseurl.$this->generateUrl('emprendimiento_pagoPendiente',array('idInversion'=>$inversion->getId())),
                     "failure" => "failure",
 
                 ),
@@ -584,6 +586,45 @@ class EmprendimientoController extends Controller
             'mensaje'      => "Tu pago esta pendiente de acreditación")
         );
     }
+
+        /**
+     * Muestra pagina con mensaje de pago Acreditado
+     *
+     */
+    public function pagoAcreditadoAction($idInversion)
+    {
+            $request = $this->getRequest();
+            $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
+            $request->query->get('preference_id');
+            $request->query->get('collection_status');
+            $request->query->get('external_reference');
+            $request->query->get('payment_type');
+            $request->query->get('merchant_order_id');
+            //$request->request->get('myParam'); // get a $_POST parameter
+
+            require_once ('mercadopago.php');
+
+            $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+            $idDePago=$request->query->get('collection_id');
+            $paymentInfo = $mp->get_payment ($idDePago);
+
+
+            $em = $this->getDoctrine()->getManager();
+
+            $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
+            $inversion->setEstado(2);//pago acreditado
+            $inversion->setIdPago($idDePago);
+            $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
+            $em->flush();
+
+
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
+            'mensaje'      => "Tu pago fue acreditado exitosamente!")
+        );
+    }
+
+
+
 
     /**
      * Muestra pagina con mensaje de pago pendiente

@@ -98,11 +98,19 @@ class UsuarioController extends Controller
 
         $entity = $em->getRepository('asociateyaBundle:Usuario')->find($id);
 
-        $emprendimientos = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEmprendedor($this->getUser()->getEmprendedor());
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Usuario entity.');
         }
+
+        $emprendimientos = null;
+
+        if($entity->getEmprendedor()){
+
+            $emprendimientos = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEmprendedor($entity->getEmprendedor());
+        
+        } 
+
+
 
         $deleteForm = $this->createDeleteForm($id);
 
