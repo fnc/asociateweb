@@ -88,6 +88,14 @@
 		    </div><p class="guidelines" id="guide_3"><small>Adjunte una imagen en formato JPG que represente a su proyecto.</small></p>
 	    </li>
 
+	    <li id="li_6" >
+		    <label class="description" for="{{form.rutaVideo.vars.id}}">Video informativo </label>
+		    {{ form_errors(form.rutaVideo) }}
+		    <div>
+		    	{{ form_widget(form.rutaVideo) }}
+		    </div><p class="guidelines" id="guide_3"><small>Codigo de video de YouTube.</small></p>
+	    </li>
+
 		<li class="buttons">
 		{{ form_widget(form.submit) }}
 		</li>

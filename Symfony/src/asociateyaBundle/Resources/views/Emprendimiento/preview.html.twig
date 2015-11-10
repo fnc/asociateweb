@@ -27,7 +27,7 @@
                     {% endif %}  
                     </div>
                 </div>
-                <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('Y-m-d') }}{% endif %}</div>
+                <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('d-m-Y') }}{% endif %}</div>
             </div>
         </a>
     </li>

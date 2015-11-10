@@ -108,7 +108,11 @@
 
 {% block javascripts %}
  <script type="text/javascript">
-    {% set progresoBarra = ((entity.totalAcciones-entity.accionesRestantes) / entity.totalAcciones)*100 %}
+    {% if entity.totalAcciones>0 %}
+      {% set progresoBarra = ((entity.totalAcciones-entity.accionesRestantes) / entity.totalAcciones)*100 %}
+
+
     document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + {{progresoBarra}} + '" aria-valuemin="0" aria-valuemax="100" style="width:' + {{progresoBarra}} + '%">' + {{progresoBarra|number_format(0, '.', ',')}} + '%</div>'
+    {% endif %}
 </script>
 {% endblock %}
