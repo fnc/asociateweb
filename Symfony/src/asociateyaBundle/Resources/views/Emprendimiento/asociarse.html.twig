@@ -14,7 +14,7 @@
 
 {% block sidebar %}
 
-	  <div id="sidebar_container">
+<!-- 	  <div id="sidebar_container">
         <div class="sidebar" id="sideBarPerfil">
           <div class="sidebar_top"></div>
           <div id="sidebar_emprendimiento" class="sidebar_item">
@@ -37,7 +37,7 @@
           </div>
           <div class="sidebar_base"></div>
         </div>
-	  </div>
+	  </div> -->
 
 {% endblock %}
 
@@ -56,7 +56,7 @@
             <label for="textbox2">El total invertido será de:</label>
             <input id="textbox2" type="text" value="$0" readonly/>
            	<br><br><br>
-           
+            <label>Precio de la acción:</label>
            	<h4 id="ID_precioAccion"></h4>
         
 
@@ -67,7 +67,7 @@ CONTRATO DE FIDEICOMISO
  
 Este contrato se suscribe en la Ciudad de Buenos Aires  a los ___ ( _______)  días del mes de _______ de 2015 entre: 
 
-I. [INVERSOR 1], argentino, DNI [_____],  con domicilio en la calle ________ de la Ciudad de __________ ; [INVERSOR 2], argentino, DNI [_____],  con domicilio en la calle ________ de la Ciudad de __________ ; [INVERSOR 3], argentino, DNI [_____],  con domicilio en la calle ________ de la Ciudad de __________ ; en adelante denominados los  “ Fiduciantes”
+I. {{app.user.getNombre}} {{app.user.getApellido}}, argentino, DNI {{ app.user.getDni}},  con domicilio en la calle {{app.user.getDireccion}} de la Ciudad de __________  en adelante denominados los  “ Fiduciantes”
 Y
 II. ASOCIATE YA TRUST SOCIEDAD ANÓNIMA , con  domicilio en la calle 11 de Septiembre de 1888, 748, 7mo B, de la Ciudad de Buenos Aires , representada en este acto por la representante legal Julián García, en adelante llamado el “Fiduciario”, quienes: 
  

@@ -25,7 +25,7 @@ class ActualizarEstadoPagosCommand extends ContainerAwareCommand
 
         $toDate = clone $fromDate;
         $toDate->modify('+1 day'); // Have 2013-06-11 00:00:00
-$output->writeln($fromDate);
+        $output->writeln($fromDate);
 
 
         $q = $em->getRepository("asociateyaBundle:Emprendimiento")

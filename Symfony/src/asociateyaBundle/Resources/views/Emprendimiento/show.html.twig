@@ -60,6 +60,9 @@
     {% if entity.estado == '4' %}
     <h3>CANCELADO</h3>
     {% endif %}
+    {% if entity.estado == '6' %}
+    <h3>APROBADO(Pendiente de acreditar)</h3>
+    {% endif %}
 </div>
 {% endblock %}
 

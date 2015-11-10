@@ -83,7 +83,15 @@ class EmprendimientoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEstado(1);
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+          
+          $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findAll();  
+        
+        }
+        else{
+
+            $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEstado(1);
+        }
 
         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
             'entities' => $entities,
@@ -100,11 +108,23 @@ class EmprendimientoController extends Controller
 
         $palabraClave = $request->request->get('search_field');
 
-        $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-   ->where('e.nombre LIKE :nombre AND e.estado = :estado') 
-   ->setParameters(array('nombre'=>'%'.$palabraClave . '%', 'estado'=>1))
-   ->getQuery()
-   ->getResult();
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+
+            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+                            ->where('e.nombre LIKE :nombre') 
+                            ->setParameters(array('nombre'=>'%'.$palabraClave . '%'))
+                            ->getQuery()
+                            ->getResult();
+        }
+        else{
+
+            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+                            ->where('e.nombre LIKE :nombre AND e.estado = :estado') 
+                            ->setParameters(array('nombre'=>'%'.$palabraClave . '%', 'estado'=>1))
+                            ->getQuery()
+                            ->getResult();
+
+        }
 
 
         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
@@ -463,6 +483,10 @@ class EmprendimientoController extends Controller
         }
 
 
+        if($entity->getAccionesRestantes()==0){
+            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "Lo sentimos, ya no quedan acciones en este emprendimiento."));
+        }
+
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -500,6 +524,11 @@ class EmprendimientoController extends Controller
 
 
         $cantidadAcciones = (int) $request->request->get('cantidad');
+
+        if($cantidadAcciones>$entity->getAccionesRestantes()){
+            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "No Hay suficientes acciones disponibles, solo quedan ".$entity->getAccionesRestantes()." acciones.")
+            );
+        }
 
 
         //Creo la nueva inversion
@@ -579,6 +608,13 @@ class EmprendimientoController extends Controller
             $inversion->setEstado(1);//pago pendiente
             $inversion->setIdPago($idDePago);
             $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
+            
+            //verificacion emprendimiento aprobado
+            if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
+
+                    $inversion->getEmprendimiento()->setEstado(6);//aprobado con pagos pendientes
+            }
+
             $em->flush();
 
 
@@ -615,6 +651,17 @@ class EmprendimientoController extends Controller
             $inversion->setEstado(2);//pago acreditado
             $inversion->setIdPago($idDePago);
             $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
+            
+            //verificacion emprendimiento aprobado
+            if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
+                if($em->getRepository('asociateyaBundle:Emprendimiento')->findOneByEstado(1)){
+                    $inversion->getEmprendimiento()->setEstado(6);//aprobado con pagos pendientes
+                }
+                else{
+                    $inversion->getEmprendimiento()->setEstado(2);//aprobado con pagos acreditados
+                }
+            }
+
             $em->flush();
 
 
@@ -728,6 +775,8 @@ class EmprendimientoController extends Controller
         
         //$mp = new MP("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET");
 
+        $baseurl = $request->getScheme() . '://' . $request->getHttpHost() . $request->getBasePath();
+
         $preference_data = array(
             "items" => array(
                 array(
@@ -738,12 +787,12 @@ class EmprendimientoController extends Controller
                 )
             ),
             "back_urls" => array(
-                    "success" => "localhost:8000".$this->generateUrl('emprendimiento_pagoAcreditadoRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
-                    "pending" => "localhost:8000".$this->generateUrl('emprendimiento_pagoPendienteRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
+                    "success" => $baseurl.$this->generateUrl('emprendimiento_pagoAcreditadoRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
+                    "pending" => $baseurl.$this->generateUrl('emprendimiento_pagoPendienteRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
                     "failure" => "failure",
 
                 ),
-            "notification_url" => "186.136.173.35"
+            "notification_url" => $baseurl //TODO poner controlador que reciba la notificacion de acreditado
         );
 
         $preference = $mp->create_preference($preference_data);
