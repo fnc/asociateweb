@@ -136,6 +136,41 @@ class EmprendimientoController extends Controller
         ));
     }
 
+    /**
+     * Muestra formulario de busqueda y resultados
+     *
+     */
+    public function buscarPrecioAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $precio = $request->request->get('search_field');
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+
+            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+                            ->where('e.precioAccion <= :precio') 
+                            ->setParameters(array('precio'=> $precio))
+                            ->getQuery()
+                            ->getResult();
+        }
+        else{
+
+            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+                            ->where('e.precioAccion <= :precio AND e.estado = :estado') 
+                            ->setParameters(array('precio'=> $precio, 'estado'=>1))
+                            ->getQuery()
+                            ->getResult();
+
+        }
+
+        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
+        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
+            'entities' => $entities,
+            'categorias' => $categorias,
+        ));
+    }
+
         /**
      * Muestra formulario de busqueda y resultados
      *

@@ -18,6 +18,10 @@ emprendimiento_busquedaCategoria:
     path:     /buscar/categoria
     defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarCategoria" }
 
+emprendimiento_busquedaPrecio:
+    path:     /buscar/precio
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarPrecio" }
+
 emprendimiento_show:
     path:     /{id}/mostrar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:show" }

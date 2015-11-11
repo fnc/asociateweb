@@ -69,6 +69,15 @@
         <br><button type="submit" id="boton_submit">Buscar</button>
     </form>
 </div>
+  <div class="sidebar_item">
+    <h3>Buscar por precio menor a:</h3>
+    <form action="{{ path('emprendimiento_busquedaPrecio') }}" method="post" id="search_form">
+        <p>
+            <input class="search" type="text" name="search_field" id="search_field" value="" />        
+            <br><button type="submit" id="boton_submit">Buscar</button>
+        </p>
+    </form>
+</div>
 <div class="sidebar_base"></div>
 </div>
         <!-- OTRO SIDE BOX
