@@ -14,7 +14,7 @@
     <div class="sidebar">
       <div class="sidebar_top"></div>
       <div class="sidebar_item">
-        <h3>Buscar</h3>
+        <h3>Buscar por nombre:</h3>
         <form method="post" action="{{ path('emprendimiento_busquedaPalabra') }}" id="search_form">
           <p>
             <input class="search" type="text" name="search_field" id="search_field" value="" />
@@ -29,9 +29,9 @@
 <div class="sidebar">
   <div class="sidebar_top"></div>
   <div class="sidebar_item">
-    <h3>Filtrar</h3>
+    <h3>Buscar por:</h3>
     <form action="{{ path('emprendimiento_busquedaCategoria') }}" method="post" id="search_form">
-        <label class="titulo">Áreas:</label><br>
+        <label class="titulo">Categorias:</label><br>
         {% for categoria in categorias %}
             <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="area_emprendimiento" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
         {% endfor %}
@@ -89,19 +89,24 @@
 
 
       <div class="content" id="emp_content">
-        <h1>Emprendimientos</h1>
-        <!-- EMPIEZA EL PORTAFOLIO -->
-        <div id="portfolio_container">
-            <ul>
-                {% for entity in entities %}
+        
+        {% if entities %}
+            <h1>Emprendimientos</h1>
+            <!-- EMPIEZA EL PORTAFOLIO -->
+            <div id="portfolio_container">
+                <ul>
+                    {% for entity in entities %}
 
-                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+                        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
 
-                {% endfor %}
+                    {% endfor %}
 
-            </ul>
-            <!--REFER TO THE js/drifolio.js-->
-        </div><!-- TERMINA EL PORTAFOLIO -->
+                </ul>
+                <!--REFER TO THE js/drifolio.js-->
+            </div><!-- TERMINA EL PORTAFOLIO -->
+        {% else %}
+            <h3>No se encontró ningun emprendimiento.</h3>
+        {% endif %}
       </div>
 
 {% endblock %}

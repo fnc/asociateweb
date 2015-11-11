@@ -1,0 +1,41 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+
+
+{% block title %}Asociarse{% endblock %}
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/view.css')}} rel="stylesheet" type="text/css">
+<script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/view.js')}}></script>
+  <link href="../style/css/formulario_asociacion.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="../lib/js/datos_emprendimiento.js"></script>
+  <script type="text/javascript" src="../lib/js/subscripciones.js"></script>
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}
+
+
+
+{% block body -%}
+
+      <div class="content" id="pag2_content">
+
+      <h1>Usted esta a punto de realizar un pago. Presione Pagar para confirmar</h1>
+      <p>El pago corresponde al valor de las comisiones de mercadopago para cada inversor.</p>
+      
+        <a href=" {{ initPoint }}" name="MP-Checkout" class="green-ar-l-rn-none">Pagar</a>
+        <script type="text/javascript" src="http://mp-tools.mlstatic.com/buttons/render.js"></script>        
+
+      </div>
+      
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

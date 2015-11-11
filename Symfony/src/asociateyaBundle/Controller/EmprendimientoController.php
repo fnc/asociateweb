@@ -838,7 +838,7 @@ class EmprendimientoController extends Controller
 
         $em->flush();
 
-        return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
+        return $this->render('asociateyaBundle:Emprendimiento:confirmacionPagoRefund.html.twig', array(
             'entity'      => $emprendimiento,
             'initPoint' => $preference["response"]["init_point"],
         ));

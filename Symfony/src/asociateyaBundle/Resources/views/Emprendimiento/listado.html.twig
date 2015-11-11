@@ -10,41 +10,52 @@
 
 
 <div class="content emp_participo">
+        
         <div class="texto_emp">
             <h1>Emprendimientos en los que participo</h1>
             <div id="portfolio_container">
-            <ul>
+            {% if participo %}
+                <ul>
 
-                {% for entity in participo %}
+                    {% for entity in participo %}
 
-                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity.emprendimiento} %}
+                        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity.emprendimiento} %}
 
-                {% endfor %}
-                
-            </ul>
+                    {% endfor %}
+                    
+                </ul>
+            {% else %}
+                <h3>No ha invertido en ningun emprendimiento aun.</h3>
+            {% endif %}
         </div><!-- TERMINA EL PORTAFOLIO -->
         </div>
+
         <div class="img_emp img_container">
-        <a href="buscar_emprendimientos.html"><img src={{asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a> </div>
+        <a href={{ path('emprendimiento_busqueda') }}><img src={{asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a> </div>
 </div>
 
+{% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
+    <div class="content emp_participo">
+            <div class="texto_emp">
+              <h1>Emprendimientos que he creado</h1>
+            <div id="portfolio_container">
+            {% if entities %}
+                <ul>
+                    {% for entity in entities %}
 
-<div class="content emp_participo">
-        <div class="texto_emp">
-          <h1>Emprendimientos que he creado</h1>
-        <div id="portfolio_container">
-            <ul>
-                {% for entity in entities %}
+                        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
 
-                    {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-
-                {% endfor %}
-            </ul>
-        </div><!-- TERMINA EL PORTAFOLIO -->
-      </div>
-      <div class="img_emp img_container">
-    <a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a> </div>  
-</div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h3>No ha creado ningun emprendimiento aun.</h3>
+            {% endif %}
+            </div><!-- TERMINA EL PORTAFOLIO -->
+          </div>
+          <div class="img_emp img_container">
+        <a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a> </div>  
+    </div>
+{% endif %}
 
 {% endblock %}
 

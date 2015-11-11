@@ -22,29 +22,31 @@
 	</div>	
 
 
-	<div class="sidebar" id="sidebar_container">
-		<div class="sidebar">   	
-			<div class="sidebar_top"></div>
-			<div class="sidebar_item">
-				<h3>Selecciona</h3>
-				{{ form_errors(form.categorias) }}
-				<fieldset form={{form.vars.name}}>
-					<label class="titulo">Áreas:</label><br>
 
-					{% for child in form.categorias %}
-
-						{{ form_widget(child,{ 'attr': {'class': 'description'} }) }}
-						{{ form_label(child) }}
-						<br>
-
-					{% endfor %}
-
-				</fieldset>
-			</div>
-			<div class="sidebar_base"></div>
-		</div>
-	</div>
 	{{ form_row(form._token) }}
+
+			<div class="sidebar" id="sidebar_container">
+				<div class="sidebar">   	
+					<div class="sidebar_top"></div>
+					<div class="sidebar_item">
+						<h3>Selecciona</h3>
+						{{ form_errors(form.categorias) }}
+						<fieldset form={{form.vars.name}}>
+							<label class="titulo">Categorias:</label><br>
+
+							{% for child in form.categorias %}
+
+								{{ form_widget(child,{ 'attr': {'class': 'description'} }) }}
+								{{ form_label(child) }}
+								<br>
+
+							{% endfor %}
+
+						</fieldset>
+					</div>
+					<div class="sidebar_base"></div>
+				</div>
+			</div>
 	<ul>
 	    <li id="li_1" > 
 		    <label class="description" for="{{form.nombre.vars.id}}">Título </label>
@@ -69,7 +71,7 @@
 		    	{{ form_widget(form.descripcionLarga) }}
 		    </div><p class="guidelines" id="guide_3"><small>Descripción detallada de su proyecto.</small></p>
 	    </li>
-
+		
 	    <li id="li_4" >
 		    <label class="description" for="{{form.monto.vars.id}}">Monto requerido </label>
 		    {{ form_errors(form.monto) }}
@@ -93,13 +95,16 @@
 		    {{ form_errors(form.rutaVideo) }}
 		    <div>
 		    	{{ form_widget(form.rutaVideo) }}
-		    </div><p class="guidelines" id="guide_3"><small>Codigo de video de YouTube.</small></p>
+		    </div><p class="guidelines" id="guide_3"><small>Codigo de video de YouTube. (Ejemplo: si la URL del video es https://www.youtube.com/watch?v=8k_g9hDeOic , usted debe ingresar 8k_g9hDeOic )</small></p>
 	    </li>
 
 		<li class="buttons">
 		{{ form_widget(form.submit) }}
 		</li>
 	</ul>
+
+
+
 
 </form>	
 

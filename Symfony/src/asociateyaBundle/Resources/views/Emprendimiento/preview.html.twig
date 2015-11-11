@@ -9,7 +9,10 @@
                     <div class="titulo_texto">{{ entity.nombre }}
                     {% if entity.estado == 0 %}(Pendiente){% endif %}
                     {% if entity.estado == 2 %}(Aprobado){% endif %}
+                    {% if entity.estado == 3 %}(Cancelado){% endif %}
                     {% if entity.estado == 4 %}(Cancelado){% endif %}
+                    {% if entity.estado == 6 %}(Aprobado){% endif %}
+
                     </div>
                     <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
                 </div>
