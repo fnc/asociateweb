@@ -765,6 +765,35 @@ class EmprendimientoController extends Controller
         );
     }
 
+
+    /**
+     * Muestra pagina con mensaje de pago pendiente
+     *
+     */
+    public function pagarGananciasNotificarAction($id)
+    {
+        $em = $this->get('doctrine')->getManager();
+
+        $usuario = $em->getRepository('asociateyaBundle:Usuario')->find($id);
+
+         
+        //mandar mail de notificacion
+        $message = \Swift_Message::newInstance()
+        ->setSubject("Se le han acreditado ganancias.")
+        ->setFrom('noreply@asociateya.com')
+        ->setTo($usuario->getEmail())
+        ->setBody($this->renderView('asociateyaBundle:Emails:notificacionGanancias.html.twig',
+                 array()
+             ),            
+            'text/html'
+        );
+        $this->get('mailer')->send($message);
+
+
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
+                'mensaje'      => "Se notificado correctamente"));
+    }
+
     /**
      * Muestra pagina con el boton de mercadopago par que el emprendedor pague a asociateya los refunds
      *
@@ -909,6 +938,19 @@ class EmprendimientoController extends Controller
             }
 
             $em->flush();
+
+
+        //mandar mail de notificacion
+        $message = \Swift_Message::newInstance()
+        ->setSubject("Se ha dado de baja el emprendimiento ".$emprendimiento->getNombre())
+        ->setFrom('noreply@asociateya.com')
+        ->setTo($emprendimiento->getEmprendedor()->getUsuario()->getEmail())
+        ->setBody($this->renderView('asociateyaBundle:Emails:notificacionBajaEmprendimiento.html.twig',
+                 array()
+             ),            
+            'text/html'
+        );
+        $this->get('mailer')->send($message);
 
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(

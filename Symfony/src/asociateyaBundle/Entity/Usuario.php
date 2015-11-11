@@ -6,7 +6,7 @@ namespace asociateyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 // DON'T forget this use statement!!!
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 *@ORM\Table(name="Usuario")
 *@UniqueEntity("nombreUsuario")
 */
-class Usuario implements UserInterface, \Serializable 
+class Usuario implements AdvancedUserInterface, \Serializable 
 {
 
     /**
@@ -487,6 +487,27 @@ class Usuario implements UserInterface, \Serializable
             // $this->salt
             ) = unserialize($serialized);
     }
+
+      public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
 
     /**
     * Add idInversion
