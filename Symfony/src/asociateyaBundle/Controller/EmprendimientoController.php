@@ -93,8 +93,11 @@ class EmprendimientoController extends Controller
             $entities = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEstado(1);
         }
 
+        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
+
         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
             'entities' => $entities,
+            'categorias' => $categorias,
         ));
     }
 
@@ -126,9 +129,45 @@ class EmprendimientoController extends Controller
 
         }
 
-
+        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
             'entities' => $entities,
+            'categorias' => $categorias,
+        ));
+    }
+
+        /**
+     * Muestra formulario de busqueda y resultados
+     *
+     */
+    public function buscarCategoriaAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $categoria = $em->getRepository('asociateyaBundle:Categoria')->findByNombre($request->request->get('area_emprendimiento'));
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+
+            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+                            ->where(':categoria MEMBER OF e.categorias' ) 
+                            ->setParameters(array('categoria'=> $categoria))
+                            ->getQuery()
+                            ->getResult();
+        }
+        else{
+
+            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
+                            ->where(':categoria MEMBER OF e.categorias AND e.estado = :estado') 
+                            ->setParameters(array('categoria'=> $categoria, 'estado'=>1))
+                            ->getQuery()
+                            ->getResult();
+
+        }
+
+        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
+        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
+            'entities' => $entities,
+            'categorias' => $categorias,
         ));
     }
 

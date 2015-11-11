@@ -112,7 +112,7 @@ class Emprendimiento
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcionLarga", type="string", length=255)
+     * @ORM\Column(name="descripcionLarga", type="string", length=600)
      */
     private $descripcionLarga;
 

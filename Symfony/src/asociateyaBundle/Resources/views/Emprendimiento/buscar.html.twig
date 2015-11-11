@@ -30,29 +30,13 @@
   <div class="sidebar_top"></div>
   <div class="sidebar_item">
     <h3>Filtrar</h3>
-    <form action="../index.html" method="post">
+    <form action="{{ path('emprendimiento_busquedaCategoria') }}" method="post" id="search_form">
         <label class="titulo">Áreas:</label><br>
-        <input type="checkbox" id="animales" value="area_animales" name="area_emprendimiento" checked><label class="light" for="animales">Animales</label><br>
-        <input type="checkbox" id="arte" value="area_arte" name="area_emprendimiento" checked><label class="light" for="arte">Arte</label><br>
-        <input type="checkbox" id="deportes" value="area_deportes" name="area_emprendimiento" checked><label class="light" for="deportes">Deportes</label><br>
-        <input type="checkbox" id="caridad" value="area_caridad" name="area_emprendimiento" checked><label class="light" for="caridad">Caridad</label><br>
-        <input type="checkbox" id="comunidad" value="area_comunidad" name="area_emprendimiento" checked><label class="light" for="comunidad">Comunidad</label><br>
-        <input type="checkbox" id="competiciones" value="area_competiciones" name="area_emprendimiento" checked><label class="light" for="competiciones">Competiciones</label><br>
-        <input type="checkbox" id="educacion" value="area_educacion" name="area_emprendimiento" checked><label class="light" for="educacion">Educación</label><br>
-        <input type="checkbox" id="emergencias" value="area_emergencias" name="area_emprendimiento" checked><label class="light" for="emergencias">Emergencias</label><br>
-        <input type="checkbox" id="eventos" value="area_eventos" name="area_emprendimiento" checked><label class="light" for="eventos">Eventos</label><br>
-        <input type="checkbox" id="fe" value="area_fe" name="area_emprendimiento" checked><label class="light" for="fe">Fe</label><br>
-        <input type="checkbox" id="familia" value="area_familia" name="area_emprendimiento" checked><label class="light" for="familia">Familia</label><br>
-        <input type="checkbox" id="juegos" value="area_juegos" name="area_emprendimiento" checked><label class="light" for="juegos">Juegos</label><br>
-        <input type="checkbox" id="medicina" value="area_medicina" name="area_emprendimiento" checked><label class="light" for="medicina">Medicina</label><br>
-        <input type="checkbox" id="musica" value="area_musica" name="area_emprendimiento" checked><label class="light" for="musica">Música</label><br>
-        <input type="checkbox" id="negocios" value="area_negocios" name="area_emprendimiento" checked><label class="light" for="negocios">Negocios</label><br>
-        <input type="checkbox" id="noticias" value="area_noticias" name="area_emprendimiento" checked><label class="light" for="noticias">Noticias Nacionales</label><br>
-        <input type="checkbox" id="tecnologia" value="area_tecnologia" name="area_emprendimiento" checked><label class="light" for="tecnologia">Tecnologia</label><br>
-        <input type="checkbox" id="viajes" value="area_viajes" name="area_emprendimiento" checked><label class="light" for="viajes">Viajes</label><br>
-        <input type="checkbox" id="voluntariado" value="area_voluntariado" name="area_emprendimiento" checked><label class="light" for="voluntariado">Voluntariado</label><br><br>
+        {% for categoria in categorias %}
+            <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="area_emprendimiento" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
+        {% endfor %}
 
-        <label class="titulo">Fecha de creación:</label><br>
+       <!--  <label class="titulo">Fecha de creación:</label><br>
         <input type="radio" id="fecha_ayer" value="fecha_ayer" name="fecha_creacion">
         <label for="fecha_ayer" class="light">Ayer</label><br>
         <input type="radio" id="menor_3_dias" value="fecha_menor_3_dias" name="fecha_creacion">
@@ -80,9 +64,9 @@
         <input type="radio" id="monto" value="orden_monto" name="ordenamiento">
         <label for="monto" class="light">Monto de financiación</label><br>
         <input type="radio" id="azar" value="orden_azar" name="ordenamiento" checked="checked">
-        <label for="azar" class="light">Azar</label><br>
+        <label for="azar" class="light">Azar</label><br> -->
 
-        <br><button type="submit" id="boton_submit">Aplicar</button>
+        <br><button type="submit" id="boton_submit">Buscar</button>
     </form>
 </div>
 <div class="sidebar_base"></div>

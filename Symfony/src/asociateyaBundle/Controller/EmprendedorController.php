@@ -36,6 +36,17 @@ class EmprendedorController extends Controller
 
         $em->flush();
 
+
+         //mandar mail de notificacion
+        $message = \Swift_Message::newInstance()
+        ->setSubject("Su solicitud de Emprendedor ha sido aprobada.")//.$emprendimiento->getNombre())
+        ->setFrom('noreply@asociateya.com')
+        ->setTo($entity->getUsuario()->getEmail())
+        ->setBody($this->renderView('asociateyaBundle:Emails:notificacionEmprendedor.html.twig',array(), 'text/html'));
+        $this->get('mailer')->send($message);
+
+
+
         return $this->redirect($this->generateUrl('emprendedor_pendientes'));
     }
 
@@ -160,7 +171,7 @@ class EmprendedorController extends Controller
      */
     public function newExitoAction()
     {
-        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Se ha aplicado para ser emprendedor exitosamente"));
+        return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Su solicitud para aplicar como emprendedor ha sido enviada al comite de aprobación."));
     }
 
     /**

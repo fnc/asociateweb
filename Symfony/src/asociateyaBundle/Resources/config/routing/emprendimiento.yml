@@ -14,6 +14,10 @@ emprendimiento_busquedaPalabra:
     path:     /buscar/palabra
     defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarPalabra" }
 
+emprendimiento_busquedaCategoria:
+    path:     /buscar/categoria
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarCategoria" }
+
 emprendimiento_show:
     path:     /{id}/mostrar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:show" }
