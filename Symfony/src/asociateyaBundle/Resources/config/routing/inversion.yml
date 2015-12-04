@@ -1,0 +1,39 @@
+inversion:
+    path:     /
+    defaults: { _controller: "asociateyaBundle:Inversion:index" }
+
+inversion_confirmarPago:
+    path:     /{id}/confirmarPago
+    defaults: { _controller: "asociateyaBundle:Inversion:confirmarPago" }
+
+inversion_pagoPendiente:
+    path:     /{idInversion}/pagoPendiente
+    defaults: { _controller: "asociateyaBundle:Inversion:pagoPendiente" }
+
+inversion_pagoAcreditado:
+    path:     /{idInversion}/pagoAcreditado
+    defaults: { _controller: "asociateyaBundle:Inversion:pagoAcreditado" }
+
+inversion_pagosControl:
+    path:     /controlPagos
+    defaults: { _controller: "asociateyaBundle:Inversion:pagosControl" }
+
+inversion_pagoGanancia:
+    path:     /{id}/pagoGanancia
+    defaults: { _controller: "asociateyaBundle:Inversion:pagarGanancias" }
+
+inversion_pagoGananciaNotificacion:
+    path:     /{id}/pagoGananciaNotificacion
+    defaults: { _controller: "asociateyaBundle:Inversion:pagarGananciasNotificar" }
+
+inversion_confirmarPagoRefund:
+    path:     /{id}/confirmarPagoRefund
+    defaults: { _controller: "asociateyaBundle:Inversion:confirmarPagoRefund" }
+
+inversion_pagoPendienteRefund:
+    path:     /{idEmprendimiento}/pagoPendienteRefund
+    defaults: { _controller: "asociateyaBundle:Inversion:pagoPendienteRefund" }
+
+inversion_pagoAcreditadoRefund:
+    path:     /{idEmprendimiento}/pagoAcreditadoRefund
+    defaults: { _controller: "asociateyaBundle:Inversion:pagoAcreditadoRefund" }
