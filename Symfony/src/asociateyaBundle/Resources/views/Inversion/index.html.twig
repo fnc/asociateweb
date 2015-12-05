@@ -1,0 +1,37 @@
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
+
+{% block title %}Mis Inversiones{% endblock %}
+{% block stylesheets %}
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block body -%}
+
+
+<div class="content emp_participo">
+
+        <div class="texto_emp">
+            <h1>Inversiones realizadas</h1>
+            <div id="portfolio_container">
+            {% if inversiones %}
+                <ul>
+
+                    {% for inversion in inversiones %}
+
+                      {{inversion.emprendimiento.nombre}}
+
+                    {% endfor %}
+
+                </ul>
+            {% else %}
+                <h3>No ha invertido en ningun emprendimiento aun.</h3>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="img_emp img_container">
+        <a href={{ path('emprendimiento_busqueda') }}><img src={{asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a> </div>
+</div>
+
+{% endblock %}

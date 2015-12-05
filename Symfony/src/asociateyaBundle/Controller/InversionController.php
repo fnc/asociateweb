@@ -23,6 +23,22 @@ use asociateyaBundle\Controller\mercadopago;
  */
 class InversionController extends Controller
 {
+
+   /**
+   * Lists all Emprendimiento entities.
+   *
+   */
+   public function indexAction($idInversor)
+   {
+      $em = $this->getDoctrine()->getManager();
+
+      $entities = $em->getRepository('asociateyaBundle:Inversion')->findByUsuario($idInversor);
+
+      return $this->render('asociateyaBundle:Inversion:index.html.twig', array(
+           'inversiones' => $entities,
+      ));
+   }
+
     /**
      * Muestra pagina con el boton de mercadopago
      *
