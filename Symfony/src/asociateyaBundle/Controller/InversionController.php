@@ -25,17 +25,19 @@ class InversionController extends Controller
 {
 
    /**
-   * Lists all Emprendimiento entities.
+   * Lista las inversiones del usuario logueado.
    *
    */
-   public function indexAction($idInversor)
+   public function indexAction()
    {
+      $this->denyAccessUnlessGranted('ROLE_INVERSOR', null, 'Unable to access this page!');
+
       $em = $this->getDoctrine()->getManager();
 
-      $entities = $em->getRepository('asociateyaBundle:Inversion')->findByUsuario($idInversor);
+      $inversiones = $em->getRepository('asociateyaBundle:Inversion')->findByUsuario($this->getUser());
 
       return $this->render('asociateyaBundle:Inversion:index.html.twig', array(
-           'inversiones' => $entities,
+           'inversiones' => $inversiones,
       ));
    }
 
