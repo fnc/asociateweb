@@ -5,100 +5,47 @@
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
  {% endblock %}
 
-
-{% block sidebar %}
+{% block body -%}
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 
 <div class="sidebar" id="sidebar_container">
 
-    <!-- BUSCAR EMPRENDIMIENTOS -->
-    <div class="sidebar">
-      <div class="sidebar_top"></div>
-      <div class="sidebar_item">
-        <h3>Buscar por nombre:</h3>
-        <form method="post" action="{{ path('emprendimiento_busquedaPalabra') }}" id="search_form">
-          <p>
-            <input class="search" type="text" name="search_field" id="search_field" value="" />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src={{ asset('bundles/asociateya/Imagenes/search.png')}} alt="Search" title="Search" />
-        </p>
+  <!-- BUSCAR EMPRENDIMIENTOS -->
+  <div class="sidebar_item">
+    <h3>Buscar por nombre:</h3>
+    <form method="post" action="{{ path('emprendimiento_busquedaPalabra') }}" id="search_form">
+      <p>
+        <input class="search" type="text" name="search_field" id="search_field" value="" />
+        <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src={{ asset('bundles/asociateya/Imagenes/search.png')}} alt="Search" title="Search" />
+      </p>
     </form>
-</div>
-<div class="sidebar_base"></div>
-</div>
+  </div>
 
-<!-- FILTRAR EMPRENDIMIENTOS -->
-<div class="sidebar">
-  <div class="sidebar_top"></div>
+  <!-- FILTRAR EMPRENDIMIENTOS -->
   <div class="sidebar_item">
     <h3>Buscar por:</h3>
     <form action="{{ path('emprendimiento_busquedaCategoria') }}" method="post" id="search_form">
-        <label class="titulo">Categorias:</label><br>
-        {% for categoria in categorias %}
-            <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="area_emprendimiento" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
-        {% endfor %}
-
-       <!--  <label class="titulo">Fecha de creación:</label><br>
-        <input type="radio" id="fecha_ayer" value="fecha_ayer" name="fecha_creacion">
-        <label for="fecha_ayer" class="light">Ayer</label><br>
-        <input type="radio" id="menor_3_dias" value="fecha_menor_3_dias" name="fecha_creacion">
-        <label for="menor_3_dias" class="light">Menor a 3 días</label><br>
-        <input type="radio" id="menor_semana" value="fecha_menor_semana" name="fecha_creacion">
-        <label for="menor_semana" class="light">Menor a 1 semana</label><br>
-        <input type="radio" id="menor_15_dias" value="fecha_menor_15_dias" name="fecha_creacion">
-        <label for="menor_15_dias" class="light">Menor a 15 días</label><br>
-        <input type="radio" id="menor_mes" value="fecha_menor_mes" name="fecha_creacion">
-        <label for="menor_mes" class="light">Menor a 1 mes</label><br>
-        <input type="radio" id="menor_3_meses" value="fecha_menor_3_meses" name="fecha_creacion">
-        <label for="menor_3_meses" class="light">Menor a 3 meses</label><br>
-        <input type="radio" id="menor_anio" value="fecha_menor_anio" name="fecha_creacion">
-        <label for="menor_anio" class="light">Menor a 1 año</label><br>
-        <input type="radio" id="fecha_todos" value="fecha_todos" name="fecha_creacion" checked="checked">
-        <label for="fecha_todos" class="light">Todos</label><br><br>
-
-        <label class="titulo">Ordenar por:</label><br>
-        <input type="radio" id="popularidad" value="orden_popularidad" name="ordenamiento">
-        <label for="popularidad" class="light">Popularidad</label><br>
-        <input type="radio" id="publicacion" value="orden_publicacion" name="ordenamiento">
-        <label for="publicacion" class="light">Fecha de publicación</label><br>
-        <input type="radio" id="finalizacion" value="orden_finalizacion" name="ordenamiento">
-        <label for="finalizacion" class="light">Fecha de finalización</label><br>
-        <input type="radio" id="monto" value="orden_monto" name="ordenamiento">
-        <label for="monto" class="light">Monto de financiación</label><br>
-        <input type="radio" id="azar" value="orden_azar" name="ordenamiento" checked="checked">
-        <label for="azar" class="light">Azar</label><br> -->
-
-        <br><button type="submit" id="boton_submit">Buscar</button>
+      <label class="titulo">Categorias:</label><br>
+      {% for categoria in categorias %}
+        <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="area_emprendimiento" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
+      {% endfor %}
+      <br><button type="submit" id="boton_submit">Buscar</button>
     </form>
-</div>
+  </div>
   <div class="sidebar_item">
     <h3>Buscar por precio menor a:</h3>
     <form action="{{ path('emprendimiento_busquedaPrecio') }}" method="post" id="search_form">
-        <p>
-            <input class="search" type="text" name="search_field" id="search_field" value="" />        
-            <br><button type="submit" id="boton_submit">Buscar</button>
-        </p>
+      <p>
+        <input class="search" type="text" name="search_field" id="search_field" value="" />
+        <br><button type="submit" id="boton_submit">Buscar</button>
+      </p>
     </form>
-</div>
-<div class="sidebar_base"></div>
-</div>
-        <!-- OTRO SIDE BOX
-        <div class="sidebar">
-          <div class="sidebar_top"></div>
-          <div class="sidebar_item">
-            <h3>Ordenar</h3>
-          </div>
-          <div class="sidebar_base"></div>
-        </div>
-    -->
+  </div>
+
 </div>
 
-{% endblock %}
+<div class="content" id="emp_content">
 
-
-{% block body -%}
-
-
-      <div class="content" id="emp_content">
-        
         {% if entities %}
             <h1>Emprendimientos</h1>
             <!-- EMPIEZA EL PORTAFOLIO -->

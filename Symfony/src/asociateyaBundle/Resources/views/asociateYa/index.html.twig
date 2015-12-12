@@ -1,18 +1,5 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
-{% block sidebar -%}
-<div id="sidebar_container" class="img_container">
-	{% if app.user and not is_granted('ROLE_SUPER_ADMIN') %}
-		{% if app.user and is_granted('ROLE_INVERSOR') %}
-			<div id="imagenBusca"><a href={{ path('emprendimiento_busqueda') }}><img src={{ asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a></div>
-		{% endif %}
-		{% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
-			<div id="imagenCrea"><a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a></div>
-		{% endif %}
-	{% endif %}
-</div>
-{% endblock -%}
-
 {% block body -%}
 
 <div class="content" id="home_content">

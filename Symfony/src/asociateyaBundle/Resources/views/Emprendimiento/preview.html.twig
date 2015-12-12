@@ -1,37 +1,43 @@
-<div class="elemento_portfolio">
-    <li>
-        <a href={{ path('emprendimiento_show',{'id':entity.getId}) }} class="link_texto_emprendimiento">
-            <div class="imagen_elemento">
-            <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="130" height="130">
-            </div>
-            <div class="texto_elemento">
-                <div class="contenedor_principal">
-                    <div class="titulo_texto">{{ entity.nombre }}
-                    {% if entity.estado == 0 %}(Pendiente){% endif %}
-                    {% if entity.estado == 2 %}(Aprobado){% endif %}
-                    {% if entity.estado == 3 %}(Cancelado){% endif %}
-                    {% if entity.estado == 4 %}(Cancelado){% endif %}
-                    {% if entity.estado == 6 %}(Aprobado){% endif %}
+<li>
+  <a href={{ path('emprendimiento_show',{'id':entity.getId}) }} class="link_texto_emprendimiento">
 
-                    </div>
-                    <div class="descripcion_texto">{{ entity.descripcionCorta }}</div>
-                </div>
-                <div class="contenedor_derecha">
-                    <div class="elemento_derecha precio"><strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}</div>
-                    <div class="elemento_derecha acciones"><strong>Disponibles:</strong> {{ entity.accionesRestantes }}</div>
-                    <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong>
-                    {# endDate and startDate are strings or DateTime objects #}
-                    {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
-                    {% set leftDays = difference.days %}
-                    {% if leftDays == 1 %}
-                      1 d&iacute;a
-                    {% else %}
-                    {{ leftDays }} d&iacute;as
-                    {% endif %}  
-                    </div>
-                </div>
-                <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('d-m-Y') }}{% endif %}</div>
-            </div>
-        </a>
-    </li>
-</div>
+
+          <ul class="elemento_portfolio">
+            <li class="imagen_elemento">
+              <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="100" height="100">
+            </li>
+            <li class="contenedor_principal">
+              <div class="titulo_texto">{{ entity.nombre }}
+                {% if entity.estado == 0 %}(Pendiente){% endif %}
+                {% if entity.estado == 2 %}(Aprobado){% endif %}
+                {% if entity.estado == 3 %}(Cancelado){% endif %}
+                {% if entity.estado == 4 %}(Cancelado){% endif %}
+                {% if entity.estado == 6 %}(Aprobado){% endif %}
+              </div>
+              <div class="descripcion_texto">
+                {{ entity.descripcionCorta }}
+              </div>
+            </li>
+            <li class="contenedor_derecha">
+              <div class="elemento_derecha precio"><strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}</div>
+            </li>
+            <li class="contenedor_derecha">
+              <div class="elemento_derecha acciones"><strong>Disponibles:</strong> {{ entity.accionesRestantes }}</div>
+            </li>
+            <li class="contenedor_derecha">
+              <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong>
+              {# endDate and startDate are strings or DateTime objects #}
+              {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
+              {% set leftDays = difference.days %}
+              {% if leftDays == 1 %}
+                1 d&iacute;a
+              {% else %}
+                {{ leftDays }} d&iacute;as
+              {% endif %}
+              </div>
+            </li>
+            <!-- <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('d-m-Y') }}{% endif %}</div> -->
+          </ul>
+
+  </a>
+</li>

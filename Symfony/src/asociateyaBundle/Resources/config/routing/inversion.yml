@@ -2,6 +2,10 @@ inversion:
     path:     /
     defaults: { _controller: "asociateyaBundle:Inversion:index" }
 
+inversion_porEmprendimiento:
+    path:     /{emprendimientoId}
+    defaults: { _controller: "asociateyaBundle:Inversion:porEmprendimiento" }
+
 inversion_confirmarPago:
     path:     /{id}/confirmarPago
     defaults: { _controller: "asociateyaBundle:Inversion:confirmarPago" }

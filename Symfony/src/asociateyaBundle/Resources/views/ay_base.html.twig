@@ -2,73 +2,120 @@
 <html>
 
 <head>
-  <title>{% block title %}{% endblock %}- Asociate Ya!</title>  
+  <title>{% block title %}{% endblock %}Asociate Ya!</title>
   <link rel="shortcut icon" type="image/x-icon" href={{ asset('bundles/asociateya/Imagenes/iconito32.png')}} />
   <link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src={{ asset('bundles/asociateya/js/jquery.headtacular.min.js')}}></script>
+  <script>
+    $(document).ready(function(){
+        // var botones = "#boton_buscar,#boton_emprendimientos, #boton_inversiones,#boton_perfil";
+        // $("#boton_buscar").click(function(event){
+        //   event.preventDefault();
+        //   $.get("{{path('emprendimiento_busqueda')}}" , function(data, status){
+        //       var body = $(data).find('#site_content');
+        //       $(botones).removeClass("active");
+        //       $("#boton_buscar").addClass("active");
+        //       $("#site_content").html(body);
+        //   });
+        //   return false; //for good measure
+        // });
+        // $("#boton_emprendimientos").click(function(event){
+        //     event.preventDefault();
+        //     $.get("{{ path('emprendimiento_listado') }}" , function(data, status){
+        //         var body = $(data).find('#site_content');
+        //         $(botones).removeClass("active");
+        //         $("#boton_emprendimientos").addClass("active");
+        //         $("#site_content").html(body);
+        //     });
+        //     return false; //for good measure
+        // });
+        // $("#boton_inversiones").click(function(event){
+        //   event.preventDefault();
+        //   $.get("{{ path('inversion') }}" , function(data, status){
+        //       var body = $(data).find('#site_content');
+        //       $(botones).removeClass("active");
+        //       $("#boton_inversiones").addClass("active");
+        //       $("#site_content").html(body);
+        //   });
+        //   return false; //for good measure
+        // });
+        // {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        // $("#boton_perfil").click(function(event){
+        //   event.preventDefault();
+        //   $.get("{{ path('usuario_show',{'id':app.user.getId}) }}" , function(data, status){
+        //       var body = $(data).find('#site_content');
+        //       $(botones).removeClass("active");
+        //       $("#boton_perfil").addClass("active");
+        //       $("#site_content").html(body);
+        //   });
+        //   return false; //for good measure
+        // });
+        // {% endif %}
+        // $("#boton_acercaDe").click(function(event){
+        //   event.preventDefault();
+        //   $.get("{{ path('asociateya_acerca_de')}}" , function(data, status){
+        //       var body = $(data).find('#site_content');
+        //       $("#site_content").html(body);
+        //   });
+        //   return false; //for good measure
+        // });
+
+
+    });
+
+  </script>
+
+
   {% block stylesheets %}{% endblock %}
 </head>
 
 <body>
   <div id="main">
-    <div id="header">
-      <div id="logo">
-        <div id="logo_izq"><a href={{ path('asociateya_homepage')}}>
-          <div id="imagen_logo"><img src={{ asset('bundles/asociateya/Imagenes/billetin.png')}} width="70" height="70"></div>
-          <div id="texto_logo"><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="250" height="50">
-            <p>Crowdfounding Argentina</p>
-          </div>
-        </a></div>
-        <div id="logo_der">
-          {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <div id="boton_login">
-            <a href={{ path('usuario_show',{'id':app.user.getId}) }} class="boton_ingresar">{{ app.user.username }}</a>
-          </div>
-          <div id="boton_registro">
-            <a href={{ path('asociateya_salir')}} class="boton_registrar">Salir</a>
-          </div>
+    <header class="header">
+        <ul>
+          <li>
+          <a style ="padding: 15px 20px;"href={{ path('asociateya_homepage')}}><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="182" height="30"></a>
+          </li>
 
-          {% else %}
-          <div id="boton_login">
-          	<a href={{ path('asociateya_ingresar')}} class="boton_ingresar">Ingresa</a>
-          </div>
-          <div id="boton_registro">
-          	<a href={{ path('asociateya_formularioRegistrarse')}} class="boton_registrar">Registrate</a>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-      <div id="menubar">
-        <ul id="menu">
+
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
           {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
-              <li><a href={{ path('emprendimiento_busqueda') }}>Buscar</a></li>
-              <li><a href={{ path('emprendedor_pendientes') }}>Aprobación</a></li>
-              <li><a href={{ path('emprendimiento_pagosControl') }}>Pagos</a></li>
+          <li><a id="boton_buscar" href={{ path('emprendimiento_busqueda')}} >Buscar</a></li>
+          <li><a id="boton_aprobacion" href={{ path('emprendedor_pendientes') }}>Aprobación</a></li>
+          <li><a href={{ path('emprendimiento_pagosControl') }}>Pagos</a></li>
           {% else %}
-              {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <li><a href={{ path('emprendimiento_listado') }}>Mis Emprendimientos</a></li>
-                <li><a href={{ path('emprendimiento_busqueda') }}>Buscar</a></li>
-                <li><a href={{ path('usuario_show',{'id':app.user.getId}) }}>Mi Perfil</a></li>
-                <li><a href={{ path('asociateya_acerca_de')}}>Acerca De</a></li>
-              {% else %}
-                <li><a href={{ path('emprendimiento_busqueda') }}>Buscar</a></li>
-              {% endif %}
+            {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li><a id="boton_emprendimientos" href={{ path('emprendimiento_listado') }} >Mis Emprendimientos</a></li>
+            <li><a id="boton_inversiones" href={{ path('inversion') }}>Mis Inversiones</a></li>
+            <li><a id="boton_buscar" href={{ path('emprendimiento_busqueda')}} >Buscar</a></li>
+            {% else %}
+            <li><a id="boton_buscar">Buscar</a></li>
+            {% endif %}
           {% endif %}
+          <ul style="float:right;list-style-type:none;">
+          {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+          <li><a id="boton_perfil" href={{ path('usuario_show',{'id':app.user.getId}) }} >{{ app.user.username }}</a></li>
+          <li><a href={{ path('asociateya_salir')}} >Salir</a></li>
+          {% else %}
+          <li><a href={{ path('asociateya_ingresar')}} >Ingresa</a></li>
+          <li><a href={{ path('asociateya_formularioRegistrarse')}} style="background-color: #ff9900 ">Registrate</a></li>
+          {% endif %}
+          </ul>
         </ul>
-      </div>
-    </div>
+    </header>
     <div id="content_header"></div>
     <div id="site_content">
-      <div id="banner"></div>
+      <!-- <div id="banner"></div> -->
 
-      
+
       {% block sidebar %}<!--<div id="sidebar_container" class="img_container"></div>-->{% endblock %}
-      
 
-      
+
+
         <!-- insert the page content here -->
         {% block body %}
         <div class="content" id="home_content">
@@ -78,20 +125,26 @@
         {% endblock %}
     </div>
     <div id="footer">
-      <p>
-      <a href={{ path('asociateya_homepage')}}>Home</a>
-      {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
-      | <a href={{ path('emprendimiento_busqueda') }}>Buscar Emprendimientos</a> 
-
-      {% else %}
-        {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          | <a href={{ path('emprendimiento_listado') }}>Mis Emprendimientos</a> 
-          | <a href={{ path('usuario_show',{'id':app.user.getId}) }}>Mi Perfil</a> 
-          | <a href={{ path('asociateya_acerca_de')}}>Acerca De</a></p>
-        {% endif %}
-      {% endif %}
-       
-      <p>Proyecto final UTN - AsociateYa</p>
+      <h1>Acerca De</h1>
+              <p>Somos el grupo &quot;Asociate Ya&quot; de la materia Proyecto final de la Universidad Tecnologica Nacional. </p>
+              <p><strong>Director de Cátedra:</strong> Dra. Inés Casanovas</p>
+              <p><strong>Profesor a cargo del curso:</strong> Ing. Gabriela Salem</p>
+              <p><strong>Profesor a cargo del proyecto:</strong> Ing. Federico Casuseslu, Ing. Nicolás Rodriguez</p>
+              <div id="fotos_integrantes">
+              	<h2>Integrantes</h2>
+                <div class="foto_integrante" id="foto_hernan"><img src={{ asset('bundles/asociateya/Imagenes/fotos/Hernan.png') }} width="220" height="220">
+                	<p>Hern&aacute;n Budic</p>
+                </div>
+                <div class="foto_integrante" id="foto_franco"><img src={{ asset('bundles/asociateya/Imagenes/fotos/Franco.png') }} width="220" height="220">
+                  <p>Franco Tiberti</p>
+                </div>
+                <div class="foto_integrante" id="foto_maxi"><img src={{ asset('bundles/asociateya/Imagenes/fotos/Maxi.png') }} width="220" height="220">
+                  <p>Maximiliano Rodriguez</p>
+                </div>
+                <div class="foto_integrante" id="foto_fede"><img src={{ asset('bundles/asociateya/Imagenes/fotos/Fede.png') }} width="220" height="220">
+                	<p>Federico Croci</p>
+                </div>
+              </div>
     </div>
   </div>
 </body>

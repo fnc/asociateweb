@@ -2,60 +2,46 @@
 
 {% block title %}Mis Emprendimientos{% endblock %}
 {% block stylesheets %}
-<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+<script>
+  $(document).ready(function(){
+    $("#boton_emprendimientos").addClass("active");
+  });
+</script>
 {% endblock %}
 
 
 {% block body -%}
-
-
-<div class="content emp_participo">
-        
-        <div class="texto_emp">
-            <h1>Emprendimientos en los que participo</h1>
-            <div id="portfolio_container">
-            {% if participo %}
-                <ul>
-
-                    {% for entity in participo %}
-
-                        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity.emprendimiento} %}
-
-                    {% endfor %}
-                    
-                </ul>
-            {% else %}
-                <h3>No ha invertido en ningun emprendimiento aun.</h3>
-            {% endif %}
-        </div><!-- TERMINA EL PORTAFOLIO -->
-        </div>
-
-        <div class="img_emp img_container">
-        <a href={{ path('emprendimiento_busqueda') }}><img src={{asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a> </div>
-</div>
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 
 {% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
-    <div class="content emp_participo">
-            <div class="texto_emp">
-              <h1>Emprendimientos que he creado</h1>
+      <div class="texto_emp">
             <div id="portfolio_container">
             {% if entities %}
                 <ul>
                     {% for entity in entities %}
 
                         {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+                        <li>
+                        {% if entity.inversiones %}
+                          {% for inversion in entity.inversiones %}
 
+
+
+                          {% else %}
+                          Nadie ha invertido en su emprendimiento aun.
+                          {% endfor %}
+                        {% endif %}
+                        </li>
                     {% endfor %}
                 </ul>
             {% else %}
                 <h3>No ha creado ningun emprendimiento aun.</h3>
             {% endif %}
             </div><!-- TERMINA EL PORTAFOLIO -->
-          </div>
-          <div class="img_emp img_container">
-        <a href={{ path('emprendimiento_new') }}><img src={{ asset('bundles/asociateya/Imagenes/crea.png')}} width="220" height="275"></a> </div>  
-    </div>
+      </div>
+      <div class="img_emp img_container">
+        <a class="boton" style="float: right;" href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
+      </div>
 {% endif %}
 
 {% endblock %}
-

@@ -1,13 +1,12 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
 {% block title %}Perfil de {{ entity.nombre }} {{ entity.apellido }} {% endblock %}
-{% block stylesheets %}
-  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
-  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
-  <link href={{ asset('bundles/asociateya/css/usuario.css')}} rel="stylesheet" type="text/css">
-{% endblock %}
 
-{% block sidebar %}
+
+{% block body %}
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/usuario.css')}} rel="stylesheet" type="text/css">
     <div class="sidebar" id="sidebar_container">
         <div class="sidebar" id="sideBarPerfil">
             <div class="sidebar_top"></div>
@@ -25,17 +24,13 @@
         </div> -->
         {% endif %}
     </div>
-{% endblock %}
-
-{% block body -%}
-
 
     <h1 class="centrado" id="ID_nombreCreador1">{{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
     <p class="centrado">Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}</p>
 
     {% if app.user.getId == entity.getId  %}
     <!-- Informacion solo para el usuario autenticado-->
-    
+
     <ul id="nav_usuario" class="record_actions">
         <li class="editar">
             <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">

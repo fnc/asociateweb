@@ -41,6 +41,25 @@ class InversionController extends Controller
       ));
    }
 
+   /**
+   * Lista las inversiones de un emprendimiento.
+   *
+   */
+   public function porEmprendimientoAction($emprendimientoId)
+   {
+      $this->denyAccessUnlessGranted('ROLE_INVERSOR', null, 'Unable to access this page!');
+
+      $em = $this->getDoctrine()->getManager();
+
+      $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($emprendimientoId);
+
+      $inversiones = $em->getRepository('asociateyaBundle:Inversion')->findByEmprendimiento($emprendimiento);
+
+      return $this->render('asociateyaBundle:Inversion:index.html.twig', array(
+           'inversiones' => $inversiones,
+      ));
+   }
+
     /**
      * Muestra pagina con el boton de mercadopago
      *

@@ -14,6 +14,10 @@ asociateya_emprendedor:
     resource: "@asociateyaBundle/Resources/config/routing/emprendedor.yml"
     prefix:   /emprendedor
 
+asociateya_inversion:
+    resource: "@asociateyaBundle/Resources/config/routing/inversion.yml"
+    prefix:   /inversion
+
 asociateya_homepage:
     path:     /
     defaults: { _controller: asociateyaBundle:Default:index }

@@ -7,7 +7,7 @@ html
 
 body
 { font: normal .80em 'trebuchet ms', arial, sans-serif;
-  background: #FFF;
+  background: #DDD;
   color: #555;
   padding-top: 100px;
 }
@@ -110,12 +110,13 @@ blockquote
   z-index: 9999;
   padding: 0px;
   background-color: #323534;
+  border-bottom: 3px solid #00cc00;
   height: auto;
   width: 100%;
   top: 0;
   transition: all 300ms;
   vertical-align: middle;
-  font-family:Arial;
+  font-family: Arial;
   font-size: 20px;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.7);
 }
@@ -130,6 +131,8 @@ blockquote
     background-color: #333;
     text-align: center;
     cursor:pointer;
+    margin-left: 80px;
+    margin-right: 20px;
 }
 
 .header li {
@@ -152,44 +155,6 @@ blockquote
 .header .active {
     background-color: #4CAF50;
 }
-
-/*Aca comienza el CSS de los botones del login y registro*/
-
-/*myButton1 es el boton de login*/
-.boton_ingresar {
-	background-color:#89c403;
-	color:#ffffff;
-	font-weight:bold;
-	width: 160px;
-
-}
-.boton_ingresar:hover {
-	background-color:#77a809;
-}
-.boton_ingresar:active {
-	position:relative;
-	top:1px;
-}
-
-/*myButton2 es el boton de registro*/
-.boton_registrar {
-	background-color:#3d94f6;
-	color:#ffffff;
-	font-weight:bold;
-	padding:5px 5px;
-	width: 160px;
-}
-.boton_registrar:hover {
-	background-color:#1e62d0;
-}
-.boton_registrar:active {
-	position:relative;
-	top:1px;
-}
-/*Aca termina el CSS de los botones del login y registro*/
-
-
-
 
 #banner
 {  background: transparent url(../Imagenes/banner.jpg) no-repeat;
@@ -288,7 +253,7 @@ ul#menu li a:hover
 
 #site_content
 {
-	width: 880px;
+	width: 80%;
 	overflow: hidden;
 	margin: 20px auto 0 auto;
 	padding: 0 0 10px 0;
@@ -304,28 +269,23 @@ ul#menu li a:hover
 	-moz-transition: all .4s ease-in-out;
 }
 
-#sidebar_container
-{
-	float: right;
-	width: 224px;
-	height: auto;
-}
-
 .sidebar_top
-{ width: 222px;
+{ width: auto;
   height: 14px;
   background: transparent url(../Imagenes/side_top.png) no-repeat;}
 
 .sidebar_base
-{ width: 222px;
+{ width: auto;
   height: 14px;
   background: url(../Imagenes/side_base.png) no-repeat;}
 
 .sidebar
-{ float: right;
-  width: 222px;
+{
+  float: left;
+  width: 19%;
   padding: 0;
-  margin: 0 0 16px 0;}
+  height: auto;
+}
 
 .sidebar_item input[type='checkbox'], input[type='radio'] {
     vertical-align: -2px;
@@ -347,7 +307,7 @@ ul#menu li a:hover
 {
 	background: url(../Imagenes/side_back.png) repeat-y;
 	padding: 0 15px;
-	width: 192px;
+	width: auto;
 	font-size: 14px;
 }
 
@@ -400,14 +360,55 @@ ul#menu li a:hover
 	position:relative;
 	top:1px;
 }
+.boton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+	background:-moz-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+	background:-webkit-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+	background:-o-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+	background:-ms-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf',GradientType=0);
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-family:Arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+
+.boton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
+	background:-moz-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+	background:-webkit-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+	background:-o-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+	background:-ms-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
+	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed',GradientType=0);
+	background-color:#dfdfdf;
+}
+.boton:active {
+	position:relative;
+	top:1px;
+}
 
 
 
 /*CONTENT*/
 .content
 {
-	width: auto;
-	float: none;
+	width: 80%;
+	float: right;
 	font-size: 14px;
 	font-family: Verdana, Geneva, sans-serif;
 	padding-top: 0;
@@ -426,21 +427,6 @@ ul#menu li a:hover
   padding: 0 0 4px 25px;
   line-height: 1.5em;}
 */
-
-#home_content {
-	float: left;
-	width: 620px;
-}
-
-#emp_content {
-	float: left;
-	width: 620px;
-}
-
-#pag2_content {
-	float: left;
-	width: 620px;
-}
 
 
 #fotos_integrantes {
