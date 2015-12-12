@@ -1,0 +1,169 @@
+#portfolio_container {
+	width: 580px;
+	margin: 20px;
+	height: auto;
+}
+.titulo_texto {
+	height: auto;
+	margin-bottom: 5px;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	padding-bottom: 5px;
+	border-top-width: 2px;
+	border-right-width: 2px;
+	border-bottom-width: 2px;
+	border-left-width: 2px;
+	border-bottom-style: solid;
+	border-top-color: #666;
+	border-right-color: #666;
+	border-bottom-color: #666;
+	border-left-color: #666;
+	float: none;
+}
+
+.texto_elemento {
+	float: right;
+	height: 145px;
+	width: 415px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #000;
+	border-right-color: #000;
+	border-bottom-color: #000;
+	border-left-color: #000;
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+	position: relative;
+}
+
+
+#portfolio_container a:hover {
+	color: #333;
+}
+
+.contenedor_derecha {
+	float: right;
+	width: 100px;
+	height: auto;
+	background-color: #999;
+	margin-top: 5px;
+	margin-right: 8px;
+	padding-top: 3px;
+	padding-bottom: 8px;
+	padding-left: 0px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.contenedor_principal {
+	float: left;
+	width: 300px;
+}
+
+
+.creador_elemento {
+	margin-top: 5px;
+	margin-right: 5px;
+	position: absolute;
+	bottom: 4px;
+	right: 4px;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	width: 236px;
+}
+
+.descripcion_texto {
+	height: auto;
+	width: auto;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	float: none;
+}
+.elemento_derecha {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-left: 6px;
+}
+
+
+
+.imagen_elemento {
+	border: 1px solid #000;
+	margin: 10px;
+	float: left;
+	height: 130px;
+	width: 130px;
+}
+
+
+#portfolio_container ul {
+	list-style-type: none;
+	padding:0; margin:0;
+}
+
+.elemento_portfolio {
+	height: 150px;
+	width: auto;
+	padding: 0px;
+	border: 2px solid #FFF;
+	background-color: #F0F0F0;
+	margin-top: 30px;
+}
+
+.elemento_portfolio:hover {
+	border: 2px solid #000;
+}
+
+
+.link_texto_emprendimiento
+{
+   color:#333;
+   text-decoration: none; 
+   background-color: none;
+}
+
+.link_texto_emprendimiento a:link {
+   color:inherit;
+}
+
+.link_texto_emprendimiento a:active {
+    color: none;
+}
+
+/*MIS EMPRENDIMIENTOS*/
+
+.img_emp {
+	float: right;
+	width: 222px;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+.texto_emp {
+	width: 620px;
+	margin: 0px;
+	float: left;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+}
+
+.emp_participo {
+	overflow: hidden;
+	float: left;
+	width: 880px;
+	padding: 0px;
+}

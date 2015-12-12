@@ -1,0 +1,10 @@
+/* CSS Document */
+
+input[type="text"] {
+    width: 50px;
+}
+
+#textbox2 {
+    outline: 0;
+	border: 0px solid;
+}
