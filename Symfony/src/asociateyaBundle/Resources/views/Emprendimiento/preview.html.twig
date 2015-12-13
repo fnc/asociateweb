@@ -19,22 +19,33 @@
               </div>
             </li>
             <li class="contenedor_derecha">
-              <div class="elemento_derecha precio"><strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}</div>
-            </li>
-            <li class="contenedor_derecha">
-              <div class="elemento_derecha acciones"><strong>Disponibles:</strong> {{ entity.accionesRestantes }}</div>
-            </li>
-            <li class="contenedor_derecha">
-              <div class="elemento_derecha tiempo"><strong>Tiempo restante:</strong>
-              {# endDate and startDate are strings or DateTime objects #}
-              {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
-              {% set leftDays = difference.days %}
-              {% if leftDays == 1 %}
-                1 d&iacute;a
-              {% else %}
-                {{ leftDays }} d&iacute;as
-              {% endif %}
-              </div>
+              <ul style="width: 49%;float: right;">
+                <li style="float: none; display: block;" class="etiqueta precio">
+                  <strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}
+                </li>
+                <li style="float: none; display: block;" class="etiqueta acciones">
+                  <strong>Disponibles:</strong> {{ entity.accionesRestantes }}
+                </li>
+
+                <li style="float: none; display: block;" class="etiqueta tiempo">
+                  <strong>Tiempo restante:</strong>
+                  {# endDate and startDate are strings or DateTime objects #}
+                  {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
+                  {% set leftDays = difference.days %}
+                  {% if leftDays == 1 %}
+                    1 d&iacute;a
+                  {% else %}
+                    {{ leftDays }} d&iacute;as
+                  {% endif %}
+                </li>
+              </ul>
+              <ul style="width: 49%;float: right;">
+                {% for categoria in entity.categorias %}
+                  <li>
+                    <div style="float: right;" class="etiqueta categoria">{{ categoria.nombre }}</div>
+                  </li>
+                {% endfor %}
+              </ul>
             </li>
             <!-- <div class="creador_elemento">Creado por {{ entity.emprendedor.usuario.username }} el {% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('d-m-Y') }}{% endif %}</div> -->
           </ul>

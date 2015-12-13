@@ -14,8 +14,12 @@
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 
 {% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
+
       <div class="texto_emp">
             <div id="portfolio_container">
+              <div style="text-align: right;" class="img_emp img_container">
+                <a class="boton"  href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
+              </div>
             {% if entities %}
                 <ul>
                     {% for entity in entities %}
@@ -39,9 +43,7 @@
             {% endif %}
             </div><!-- TERMINA EL PORTAFOLIO -->
       </div>
-      <div class="img_emp img_container">
-        <a class="boton" style="float: right;" href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
-      </div>
+
 {% endif %}
 
 {% endblock %}

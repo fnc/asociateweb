@@ -29,7 +29,7 @@
       {% for categoria in categorias %}
         <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="area_emprendimiento" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
       {% endfor %}
-      <br><button type="submit" id="boton_submit">Buscar</button>
+      <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
     </form>
   </div>
   <div class="sidebar_item">
@@ -37,7 +37,7 @@
     <form action="{{ path('emprendimiento_busquedaPrecio') }}" method="post" id="search_form">
       <p>
         <input class="search" type="text" name="search_field" id="search_field" value="" />
-        <br><button type="submit" id="boton_submit">Buscar</button>
+        <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
       </p>
     </form>
   </div>

@@ -41,7 +41,7 @@
 
 .contenedor_derecha {
 	float: right;
-	width: auto;
+	width: 50%;
 	height:inherit;
 	vertical-align: middle;
 	border-radius: 6px;
@@ -49,7 +49,7 @@
 
 .contenedor_principal {
 	float: left;
-	width: auto;
+	width: 30%;
 	vertical-align: middle;
 	height: inherit;
 }
@@ -74,15 +74,32 @@
 	font-size: 12px;
 	float: none;
 }
-.elemento_derecha {
+.etiqueta {
+	display: inline-block;
 	font-family: Verdana, Geneva, sans-serif;
 	font-size: 12px;
+	width: auto;
 	margin-top: 5px;
 	margin-right: 5px;
 	margin-left: 6px;
 	background-color: #F0F0F0;
 	border: 4px solid #F0F0F0;
 	border-radius: 4px;
+}
+
+.precio{
+	border-color: #c2f0c2;
+	background-color: #c2f0c2;
+}
+
+.acciones{
+	border-color: #ffcccc;
+	background-color: #ffcccc;
+}
+
+.tiempo{
+	border-color: #e5f9ff;
+	background-color: #e5f9ff;
 }
 
 
@@ -102,7 +119,7 @@
 }
 
 .elemento_portfolio {
-	height: 110px;
+	height: 112px;
 	width: auto;
 	padding: 0px;
 	border-bottom: 1px solid #999;
