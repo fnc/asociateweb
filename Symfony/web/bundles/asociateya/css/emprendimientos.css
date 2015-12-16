@@ -131,6 +131,21 @@
 	background-color: #F0F0F0;
 }
 
+.elemento_inversion {
+	color: #666666;
+	background-color: #cccccc;
+	height: 32px;
+	width: auto;
+	padding: 0px;
+	border-bottom: 1px solid #999;
+	vertical-align: middle;
+	margin-top: 2px;
+}
+
+.elemento_inversion:hover {
+	background-color: #F0F0F0;
+}
+
 
 .link_texto_emprendimiento
 {

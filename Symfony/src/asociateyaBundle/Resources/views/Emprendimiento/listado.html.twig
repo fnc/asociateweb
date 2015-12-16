@@ -5,6 +5,11 @@
 <script>
   $(document).ready(function(){
     $("#boton_emprendimientos").addClass("active");
+    $(".emprendimiento").hover(function(){
+      jQuery(".inversion", this).fadeIn(800);
+    },function(){
+      jQuery(".inversion", this).fadeOut(10);
+    });
   });
 </script>
 {% endblock %}
@@ -23,18 +28,17 @@
             {% if entities %}
                 <ul>
                     {% for entity in entities %}
-
-                        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-                        <li>
-                        {% if entity.inversiones %}
-                          {% for inversion in entity.inversiones %}
-
-
-
-                          {% else %}
-                          Nadie ha invertido en su emprendimiento aun.
-                          {% endfor %}
-                        {% endif %}
+                        <li class="emprendimiento">
+                          {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+                          <div class="inversion" style="display:none;">
+                          {% if entity.inversiones %}
+                            {% for inversion in entity.inversiones %}
+                              {% include 'asociateyaBundle:Inversion:preview.html.twig' with {inversion: inversion} %}
+                            {% else %}
+                            Nadie ha invertido en su emprendimiento aun.
+                            {% endfor %}
+                          {% endif %}
+                          </div>
                         </li>
                     {% endfor %}
                 </ul>

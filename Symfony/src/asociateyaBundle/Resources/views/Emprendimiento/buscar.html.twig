@@ -2,7 +2,11 @@
 
 
  {% block stylesheets %}
-<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+  <script>
+    $(document).ready(function(){
+      $("#boton_buscar").addClass("active");
+    });
+  </script>
  {% endblock %}
 
 {% block body -%}
@@ -52,9 +56,9 @@
             <div id="portfolio_container">
                 <ul>
                     {% for entity in entities %}
-
+                      <li>
                         {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-
+                      </li>
                     {% endfor %}
 
                 </ul>

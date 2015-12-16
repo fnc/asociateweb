@@ -89,7 +89,9 @@
           <li><a href={{ path('emprendimiento_pagosControl') }}>Pagos</a></li>
           {% else %}
             {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <li><a id="boton_emprendimientos" href={{ path('emprendimiento_listado') }} >Mis Emprendimientos</a></li>
+              {% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
+              <li><a id="boton_emprendimientos" href={{ path('emprendimiento_listado') }} >Mis Emprendimientos</a></li>
+              {% endif %}
             <li><a id="boton_inversiones" href={{ path('inversion') }}>Mis Inversiones</a></li>
             <li><a id="boton_buscar" href={{ path('emprendimiento_busqueda')}} >Buscar</a></li>
             {% else %}

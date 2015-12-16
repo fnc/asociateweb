@@ -18,14 +18,16 @@
 <div class="content emp_participo">
 
         <div class="texto_emp">
-            <h1>Inversiones realizadas</h1>
             <div id="portfolio_container">
+              <div style="text-align: right;" class="img_emp img_container">
+                <a class="boton"  href={{ path('emprendimiento_busqueda') }}>Buscar Emprendimientos</a>
+              </div>
             {% if inversiones %}
                 <ul>
 
                     {% for inversion in inversiones %}
 
-                      {{inversion.emprendimiento.nombre}}
+                      {% include 'asociateyaBundle:Inversion:inversion.html.twig' with {inversion: inversion} %}
 
                     {% endfor %}
 
@@ -35,9 +37,6 @@
             {% endif %}
           </div>
         </div>
-
-        <div class="img_emp img_container">
-        <a href={{ path('emprendimiento_busqueda') }}><img src={{asset('bundles/asociateya/Imagenes/busca.png')}} width="220" height="275"></a> </div>
 </div>
 
 {% endblock %}

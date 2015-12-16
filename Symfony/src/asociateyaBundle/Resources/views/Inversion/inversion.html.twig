@@ -1,0 +1,17 @@
+<ul class="elemento_inversion">
+  <li style="float: left; width: 25%;text-align: center;" class="etiqueta">
+    <strong>{{ inversion.emprendimiento.nombre }}</strong>
+    {% if inversion.estado == 0 %}(Pendiente){% endif %}
+  </li>
+  <div style="margin-right: 40px;">
+    <li style="float: right;width: 20%;text-align: center;" class="etiqueta">
+          Fecha:<strong> {{ inversion.fechaEmision|date('d-m-Y') }}</strong>
+    </li>
+    <li style="float: right;width: 20%;text-align: center;" class="etiqueta">
+          Estado:<strong> {{ inversion.detalleEstado }}</strong>
+    </li>
+    <li style="float: right; width: 20%; text-align: center;" class="etiqueta precio">
+          Acci&oacute;nes compradas:<strong>{{ inversion.cantidadAcciones }}</strong>
+    </li>
+  </div>
+</ul>
