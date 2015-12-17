@@ -22,6 +22,9 @@
 
       <div class="texto_emp">
             <div id="portfolio_container">
+              <div style="float: left;" >
+                Estos son los emprendimientos que ha creado:
+              </div>
               <div style="text-align: right;" class="img_emp img_container">
                 <a class="boton"  href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
               </div>
@@ -32,10 +35,24 @@
                           {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
                           <div class="inversion" style="display:none;">
                           {% if entity.inversiones %}
+                            <div class="elemento_mensaje">
+                              <strong>Inversores</strong>
+                            </div>
+                            <ul class="elemento_mensaje">
+                              <li style="float: left; width: 20%;" class="etiqueta">Usuario</li>
+                              <div style="margin-right: 40px;">
+                                <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Fecha de emision</li>
+                                <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Estado</li>
+                                <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Participacion</li>
+                                <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Acciones compradas</li>
+                              </div>
+                            </ul>
                             {% for inversion in entity.inversiones %}
                               {% include 'asociateyaBundle:Inversion:preview.html.twig' with {inversion: inversion} %}
                             {% else %}
-                            Nadie ha invertido en su emprendimiento aun.
+                            <div class="elemento_mensaje">
+                              Nadie ha invertido en su emprendimiento aun.
+                            </div>
                             {% endfor %}
                           {% endif %}
                           </div>

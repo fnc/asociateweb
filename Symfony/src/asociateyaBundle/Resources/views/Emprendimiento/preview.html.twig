@@ -18,14 +18,14 @@
             <li class="contenedor_derecha">
               <ul style="width: 49%;float: right;">
                 <li style="float: none; display: block;" class="etiqueta precio">
-                  <strong>Acci&oacute;n</strong>: ${{ entity.precioAccion }}
+                  Acci&oacute;n: <strong>${{ entity.precioAccion }}</strong>
                 </li>
                 <li style="float: none; display: block;" class="etiqueta acciones">
-                  <strong>Disponibles:</strong> {{ entity.accionesRestantes }}
+                  Disponibles:<strong>{{ entity.accionesRestantes }}</strong> Total:<strong>{{ entity.totalAcciones }}</strong>
                 </li>
 
                 <li style="float: none; display: block;" class="etiqueta tiempo">
-                  <strong>Tiempo restante:</strong>
+                  Tiempo restante:<strong>
                   {# endDate and startDate are strings or DateTime objects #}
                   {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
                   {% set leftDays = difference.days %}
@@ -34,7 +34,16 @@
                   {% else %}
                     {{ leftDays }} d&iacute;as
                   {% endif %}
+                  </strong>
                 </li>
+                {% if entity.totalAcciones>0 %}
+                  {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+                  <li style="float: none; display: block; padding: 0px;" class="progress">
+                    <div style="width:{{progresoBarra}}%" class="progress-bar progress-bar active" role="progressbar" aria-valuenow="{{progresoBarra}}" aria-valuemin="0" aria-valuemax="100">
+                         {{progresoBarra|number_format(0, '.', ',')}} %
+                    </div>
+                  </li>
+                {% endif %}
               </ul>
               <ul style="width: 49%;float: right;">
                 {% for categoria in entity.categorias %}

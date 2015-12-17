@@ -1,17 +1,20 @@
         <ul class="elemento_inversion">
-          <li style="float: left; width: 20%;" class="etiqueta">
-            Usuario: <strong>{{ inversion.usuario.nombre }}</strong>
+          <li style="float: left; width: 20%;text-align: center;" class="etiqueta">
+            {{ inversion.usuario.nombre }}
             {% if inversion.estado == 0 %}(Pendiente){% endif %}
           </li>
           <div style="margin-right: 40px;">
-            <li style="float: right;width: 20%;text-align: center;" class="etiqueta">
-                  Fecha:<strong> {{ inversion.fechaEmision|date('d-m-Y') }}</strong>
+            <li style="float: right;width: 15%;text-align: center;" class="etiqueta">
+                  {{ inversion.fechaEmision|date('d-m-Y') }}
             </li>
-            <li style="float: right;width: 20%;text-align: center;" class="etiqueta">
-                  Estado:<strong> {{ inversion.detalleEstado }}</strong>
+            <li style="float: right;width: 15%;text-align: center;" class="etiqueta">
+                  <strong> {{ inversion.estado }}{{ inversion.detalleEstado }}</strong>
             </li>
-            <li style="float: right; width: 20%; text-align: center;" class="etiqueta precio">
-                  Acci&oacute;nes compradas:<strong>{{ inversion.cantidadAcciones }}</strong>
+            <li style="float: right; width: 15%; text-align: center;" class="etiqueta precio">
+                  <strong>{{ ((inversion.cantidadAcciones / entity.totalAcciones)*100)|number_format(0, '.', ',')}}%</strong>
+            </li>
+            <li style="float: right; width: 15%; text-align: center;" class="etiqueta ">
+                  <strong>{{ inversion.cantidadAcciones }}</strong>
             </li>
           </div>
         </ul>
