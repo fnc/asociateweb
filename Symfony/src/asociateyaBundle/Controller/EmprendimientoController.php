@@ -9,6 +9,8 @@ use asociateyaBundle\Entity\Emprendimiento;
 use asociateyaBundle\Entity\Usuario;
 use asociateyaBundle\Entity\Inversion;
 use asociateyaBundle\Entity\Comentario;
+use asociateyaBundle\Entity\Notificacion;
+use asociateyaBundle\Entity\NuevoComentario;
 use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
@@ -484,6 +486,18 @@ class EmprendimientoController extends Controller
         $entity->setFechaCreacion(new \DateTime());
         $entity->setLeido(0);
 
+        $em->persist($entity);
+        $em->flush();
+
+
+        $notificacion = new NuevoComentario();
+        $notificacion->setUsuario($emprendimiento->getEmprendedor()->getUsuario());
+        $notificacion->setFechaCreacion(new \DateTime());
+        $notificacion->setComentario($entity);
+
+        $em->persist($notificacion);
+        $em->flush();
+
         //mandar mail de notificacion
         $message = \Swift_Message::newInstance()
         ->setSubject("Un inversor hizo un comentario en el emprendimiento ".$emprendimiento->getNombre())//.$emprendimiento->getNombre())
@@ -501,9 +515,7 @@ class EmprendimientoController extends Controller
 
 
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+
 
 
 

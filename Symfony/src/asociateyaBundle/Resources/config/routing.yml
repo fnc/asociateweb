@@ -2,6 +2,10 @@ asociateya_categoria:
     resource: "@asociateyaBundle/Resources/config/routing/categoria.yml"
     prefix:   /categoria
 
+asociateya_notificacion:
+    resource: "@asociateyaBundle/Resources/config/routing/notificacion.yml"
+    prefix:   /notificacion
+
 asociateya_emprendimiento:
     resource: "@asociateyaBundle/Resources/config/routing/emprendimiento.yml"
     prefix:   /emprendimiento

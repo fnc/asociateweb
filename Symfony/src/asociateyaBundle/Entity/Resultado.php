@@ -15,7 +15,7 @@ class Resultado
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="resultado_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -125,4 +125,3 @@ class Resultado
         return $this->fecha;
     }
 }
-

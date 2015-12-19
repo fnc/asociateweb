@@ -1,0 +1,30 @@
+notificacion:
+    path:     /
+    defaults: { _controller: "asociateyaBundle:Notificacion:index" }
+
+# notificacion_show:
+#     path:     /{id}/show
+#     defaults: { _controller: "asociateyaBundle:Notificacion:show" }
+#
+# notificacion_new:
+#     path:     /new
+#     defaults: { _controller: "asociateyaBundle:Notificacion:new" }
+#
+# notificacion_create:
+#     path:     /create
+#     defaults: { _controller: "asociateyaBundle:Notificacion:create" }
+#     methods:  POST
+#
+# notificacion_edit:
+#     path:     /{id}/edit
+#     defaults: { _controller: "asociateyaBundle:Notificacion:edit" }
+#
+# notificacion_update:
+#     path:     /{id}/update
+#     defaults: { _controller: "asociateyaBundle:Notificacion:update" }
+#     methods:  [POST, PUT]
+#
+# notificacion_delete:
+#     path:     /{id}/delete
+#     defaults: { _controller: "asociateyaBundle:Notificacion:delete" }
+#     methods:  [POST, DELETE]

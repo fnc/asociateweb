@@ -242,4 +242,9 @@ class Comentario
     {
         return $this->comentarioHijo;
     }
+
+   public function __toString()
+   {
+       return strval($this->id);
+   }
 }

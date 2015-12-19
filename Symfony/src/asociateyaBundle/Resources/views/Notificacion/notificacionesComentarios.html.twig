@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}Asociate Ya!</title>
+  <link rel="shortcut icon" type="image/x-icon" href={{ asset('bundles/asociateya/Imagenes/iconito32.png')}} />
+  <link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+</head>
+<body>
+  <ul>
+    {% if notificacionesComentario %}
+      {% for notificacion in notificacionesComentario %}
+      <li>
+        El usuario {{notificacion.comentario.usuario.nombre}} ha comentaro en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
+      </li>
+      {% endfor %}
+    {% else %}
+      <li>
+        No hay comentarios nuevos.
+      </li>
+    {% endif %}
+  </ul>
+</body>
+</html>
