@@ -513,6 +513,49 @@ class EmprendimientoController extends Controller
     }
 
     /**
+     * Crea una respuesta a un comentario.
+     *
+     */
+    public function responderAction(Request $request, $id, $idComentario)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+        $comentarioPadre = $em->getRepository('asociateyaBundle:Comentario')->find($idComentario);
+
+
+        $comentarioRespuesta = new Comentario();
+        $form = $this->createCreateComentarioForm($comentarioRespuesta, $id);
+        $form->handleRequest($request);
+        $comentarioRespuesta->setEmprendimiento($emprendimiento);
+        $comentarioRespuesta->setUsuario($this->getUser());
+        $comentarioRespuesta->setComentarioPadre($comentarioPadre);
+        $comentarioRespuesta->setFechaCreacion(new \DateTime());
+        $comentarioRespuesta->setLeido(0);
+
+        $comentarioPadre->setComentarioHijo($comentarioRespuesta);
+
+        //mandar mail de notificacion
+        $message = \Swift_Message::newInstance()
+        ->setSubject("Un inversor hizo un comentario en el emprendimiento ".$emprendimiento->getNombre())//.$emprendimiento->getNombre())
+        ->setFrom('noreply@asociateya.com')
+        ->setTo($emprendimiento->getEmprendedor()->getUsuario()->getEmail())
+        ->setBody($this->renderView('asociateyaBundle:Emails:notificacionComentario.html.twig',
+                 array('emprendimiento' => $emprendimiento,
+                    'mensaje' => $comentarioRespuesta->getTexto())
+             ),
+
+            'text/html'
+        );
+        $this->get('mailer')->send($message);
+
+         $em = $this->getDoctrine()->getManager();
+         $em->persist($comentarioRespuesta);
+         $em->flush();
+        return $this->redirect($this->generateUrl('emprendimiento_show',array('id' => $id)));
+    }
+
+
+    /**
      * Creates a form to create a Emprendimiento entity.
      *
      * @param Emprendimiento $entity The entity

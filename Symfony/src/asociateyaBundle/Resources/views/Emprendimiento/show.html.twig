@@ -20,7 +20,7 @@
     {% if entity.estado == '1'  %}
       <div class="sidebar" id="sideBarPerfil">
         <div class="sidebar_top"></div>
-        <div id="sidebar_emprendimiento" class="sidebar_item">      
+        <div id="sidebar_emprendimiento" class="sidebar_item">
           <h3>Total recaudado</h3>
           <div id="ID_barraProgreso" class="progress"></div>
           <br>
@@ -33,7 +33,7 @@
       {% if app.user.getId == entity.emprendedor.usuario.getId  %}
       <div id="sideBarBotonAsociate">
           <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="botonPM">Cancelar</a>
-      </div>  
+      </div>
       {% else %}
       <div id="sideBarBotonAsociate">
           <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
@@ -48,7 +48,7 @@
               <input class="search" type="text" name="ganancia" id="ganancia" value="% ganacias" />
               <button name="search" type="submit"  class="botonPM" >Pagar Ganancia</button>
           </form>
-        </div>  
+        </div>
       {% endif %}
     {% endif %}
     {% if entity.estado == '0' %}
@@ -73,11 +73,11 @@
         <h1 id="ID_nombreProyecto">{{ entity.nombre }}</h1>
         <h2>{{ entity.descripcionCorta }}</h2>
         <p>{{ entity.descripcionLarga }}</p>
-   
+
         <iframe width="440" height="330" align="middle" src="http://www.youtube.com/embed/{{ entity.rutaVideo }}?autoplay=0"><br>
         </iframe>
         <br>
-        
+
 <!--         <h3>Archivos subidos</h3>
         <div class="archivos_subidos">
             <ul>
@@ -90,23 +90,35 @@
         <ul>
           {% if comentarios %}
             {% for comentario in comentarios %}
-              <li>
-                <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.fechaCreacion|date('d-m-Y') }}</div>
-              </li>
+              {% if not comentario.comentarioPadre %}
+                <li>
+                  <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.fechaCreacion|date('d-m-Y') }}</div>
+                </li>
+                {% if comentario.comentarioHijo %}
+                  <li style="margin-left: 40px;">
+                    Respuesta:&nbsp{{comentario.comentarioHijo.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.comentarioHijo.fechaCreacion|date('d-m-Y') }}</div>
+                  </li>
+                {% else %}
+                  {% if app.user.getId == entity.emprendedor.usuario.getId  %}
+                    <form method="post" action="{{ path('emprendimiento_responder',{'id':entity.getId,'idComentario':comentario.id}) }}" style="margin-left: 40px;">
+                      <input id="asociateyabundle_comentario_texto" name="asociateyabundle_comentario[texto]" required="required" maxlength="255" class="description" type="text">
+                      <input class="boton" type="submit" value="Responder">
+                    </form>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
             {% endfor %}
           {% else %}
             No hay comentarios aun.
           {% endif %}
           </ul>
-
-          
           <form id="formulario_comentario" method="post" action="{{ path('emprendimiento_comentar',{'id':entity.getId}) }}" >
             {{ form_widget(formComentario.texto,{ 'attr': {'class': 'description'} }) }}
-            <input type="submit" value="Comentar">
-          </form> 
+            <input type="submit" value="Comentar" class="boton">
+          </form>
         </div>
-        
-      </div>   
+
+      </div>
 {% endblock %}
 
 {% block javascripts %}

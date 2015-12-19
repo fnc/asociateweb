@@ -41,7 +41,7 @@
 
 .contenedor_derecha {
 	float: right;
-	width: 50%;
+	width: 45%;
 	height:inherit;
 	vertical-align: middle;
 	border-radius: 6px;
@@ -49,7 +49,7 @@
 
 .contenedor_principal {
 	float: left;
-	width: 30%;
+	width: 35%;
 	vertical-align: middle;
 	height: inherit;
 }
@@ -100,6 +100,12 @@
 .tiempo{
 	border-color: #e5f9ff;
 	background-color: #e5f9ff;
+}
+
+.nuevo{
+	color: #FFFFFF;
+	border-color: #ff0066;
+	background-color: #ff0066;
 }
 
 

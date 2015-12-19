@@ -4,15 +4,26 @@
               <img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="100" height="100">
             </li>
             <li class="contenedor_principal">
-              <div class="titulo_texto">{{ entity.nombre }}
-                {% if entity.estado == 0 %}(Pendiente){% endif %}
-                {% if entity.estado == 2 %}(Aprobado){% endif %}
-                {% if entity.estado == 3 %}(Cancelado){% endif %}
-                {% if entity.estado == 4 %}(Cancelado){% endif %}
-                {% if entity.estado == 6 %}(Aprobado){% endif %}
+
+              <div class="titulo_texto">
+                {{ entity.nombre }}
+
               </div>
               <div class="descripcion_texto">
                 {{ entity.descripcionCorta }}
+              </div>
+              <div style="float: left;">
+                <!-- <div style="float: right;" class="etiqueta nuevo">
+                  <strong>+121 comentarios</strong>
+                </div> -->
+                <div style="float: left;" class="etiqueta">
+                  {% if entity.estado == 0 %}Pendiente{% endif %}
+                  {% if entity.estado == 1 %}Aceptado{% endif %}
+                  {% if entity.estado == 2 %}Aprobado{% endif %}
+                  {% if entity.estado == 3 %}Cancelado{% endif %}
+                  {% if entity.estado == 4 %}Cancelado{% endif %}
+                  {% if entity.estado == 6 %}Aprobado{% endif %}
+                </div>
               </div>
             </li>
             <li class="contenedor_derecha">

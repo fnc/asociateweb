@@ -20,11 +20,18 @@ class Comentario
     */
     private $id;
 
+
     /**
-     *
-     * @ORM\Column(name="idComentarioAnterior", type="integer",nullable=true)
+     * @ORM\OneToOne(targetEntity="Comentario")
+     * @ORM\JoinColumn(name="comentarioPadre_id" , referencedColumnName="comentario_id")
      */
-    private $idComentarioAnterior;
+    private $comentarioPadre;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Comentario")
+     * @ORM\JoinColumn(name="comentarioHijo_id" , referencedColumnName="comentario_id")
+     */
+    private $comentarioHijo;
 
     /**
     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="comentarios")
@@ -44,7 +51,6 @@ class Comentario
      * @ORM\Column(name="leido", type="string", length=1)
      */
     private $leido;
-
 
     /**
      * @var string
@@ -67,30 +73,6 @@ class Comentario
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set idComentarioAnterior
-     *
-     * @param integer $idComentarioAnterior
-     *
-     * @return Comentario
-     */
-    public function setIdComentarioAnterior($idComentarioAnterior)
-    {
-        $this->idComentarioAnterior = $idComentarioAnterior;
-
-        return $this;
-    }
-
-    /**
-     * Get idComentarioAnterior
-     *
-     * @return integer
-     */
-    public function getIdComentarioAnterior()
-    {
-        return $this->idComentarioAnterior;
     }
 
     /**
@@ -139,54 +121,6 @@ class Comentario
     public function getLeido()
     {
         return $this->leido;
-    }
-
-    /**
-     * Set idUsuario
-     *
-     * @param \asociateyaBundle\Entity\Usuario $idUsuario
-     *
-     * @return Comentario
-     */
-    public function setIdUsuario(\asociateyaBundle\Entity\Usuario $idUsuario = null)
-    {
-        $this->idUsuario = $idUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Get idUsuario
-     *
-     * @return \asociateyaBundle\Entity\Usuario
-     */
-    public function getIdUsuario()
-    {
-        return $this->idUsuario;
-    }
-
-    /**
-     * Set idEmprendimiento
-     *
-     * @param \asociateyaBundle\Entity\Emprendimiento $idEmprendimiento
-     *
-     * @return Comentario
-     */
-    public function setIdEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $idEmprendimiento = null)
-    {
-        $this->idEmprendimiento = $idEmprendimiento;
-
-        return $this;
-    }
-
-    /**
-     * Get idEmprendimiento
-     *
-     * @return \asociateyaBundle\Entity\Emprendimiento
-     */
-    public function getIdEmprendimiento()
-    {
-        return $this->idEmprendimiento;
     }
 
     /**
@@ -259,5 +193,53 @@ class Comentario
     public function getFechaCreacion()
     {
         return $this->fechaCreacion;
+    }
+
+    /**
+     * Set comentarioPadre
+     *
+     * @param \asociateyaBundle\Entity\Comentario $comentarioPadre
+     *
+     * @return Comentario
+     */
+    public function setComentarioPadre(\asociateyaBundle\Entity\Comentario $comentarioPadre = null)
+    {
+        $this->comentarioPadre = $comentarioPadre;
+
+        return $this;
+    }
+
+    /**
+     * Get comentarioPadre
+     *
+     * @return \asociateyaBundle\Entity\Comentario
+     */
+    public function getComentarioPadre()
+    {
+        return $this->comentarioPadre;
+    }
+
+    /**
+     * Set comentarioHijo
+     *
+     * @param \asociateyaBundle\Entity\Comentario $comentarioHijo
+     *
+     * @return Comentario
+     */
+    public function setComentarioHijo(\asociateyaBundle\Entity\Comentario $comentarioHijo = null)
+    {
+        $this->comentarioHijo = $comentarioHijo;
+
+        return $this;
+    }
+
+    /**
+     * Get comentarioHijo
+     *
+     * @return \asociateyaBundle\Entity\Comentario
+     */
+    public function getComentarioHijo()
+    {
+        return $this->comentarioHijo;
     }
 }
