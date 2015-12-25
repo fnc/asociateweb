@@ -10,17 +10,9 @@ emprendimiento_busqueda:
     path:     /buscar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:buscar" }
 
-emprendimiento_busquedaPalabra:
-    path:     /buscar/palabra
-    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarPalabra" }
-
-emprendimiento_busquedaCategoria:
-    path:     /buscar/categoria
-    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarCategoria" }
-
-emprendimiento_busquedaPrecio:
-    path:     /buscar/precio
-    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarPrecio" }
+emprendimiento_busquedaFiltrada:
+    path:     /buscarFiltrado
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:buscarFiltro" }
 
 emprendimiento_show:
     path:     /{id}/mostrar

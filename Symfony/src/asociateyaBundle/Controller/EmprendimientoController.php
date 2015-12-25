@@ -78,7 +78,7 @@ class EmprendimientoController extends Controller
     }
 
     /**
-     * Muestra formulario de busqueda y resultados
+     * Muestra formulario de busqueda
      *
      */
     public function buscarAction()
@@ -104,108 +104,49 @@ class EmprendimientoController extends Controller
     }
 
     /**
-     * Muestra formulario de busqueda y resultados
+     * Devuelve resultados de busqueda
      *
      */
-    public function buscarPalabraAction(Request $request)
+    public function buscarFiltroAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+      $palabra = $request->query->get('palabra');
+      $categoria = $request->query->get('categoria');
+      $precio = $request->query->get('precio');
+      $em = $this->getDoctrine()->getManager();
 
-        $palabraClave = $request->request->get('search_field');
+      $query = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e');
+      $parameters = null;
 
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+         if($categoria){
+            $cat = $em->getRepository('asociateyaBundle:Categoria')->findByNombre($categoria);
+            if(!$cat){
+               //no se encontro la categoria
+            }
+            $query= $query->where(':categoria MEMBER OF e.categorias' );
+            $parameters['categoria']= $cat;
+         }
 
-            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-                            ->where('e.nombre LIKE :nombre')
-                            ->setParameters(array('nombre'=>'%'.$palabraClave . '%'))
-                            ->getQuery()
-                            ->getResult();
-        }
-        else{
+         if($precio){
+            $query= $query->andWhere('e.precioAccion <= :precio');
+            $parameters['precio']= $precio;
+         }
+         if($palabra){
+            $query= $query->andWhere('e.nombre LIKE :nombre');
+            $parameters['nombre']='%'.$palabra . '%';
+         }
 
-            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-                            ->where('e.nombre LIKE :nombre AND e.estado = :estado')
-                            ->setParameters(array('nombre'=>'%'.$palabraClave . '%', 'estado'=>1))
-                            ->getQuery()
-                            ->getResult();
+         if (!$this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+            $query= $query->andwhere('e.estado = :estado');
+            $parameters['estado']=1;
+         }
 
-        }
+         $entities = $query->setParameters($parameters)->getQuery()->getResult();
 
-        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
-        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
-            'entities' => $entities,
-            'categorias' => $categorias,
-        ));
-    }
-
-    /**
-     * Muestra formulario de busqueda y resultados
-     *
-     */
-    public function buscarPrecioAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $precio = $request->request->get('search_field');
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-
-            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-                            ->where('e.precioAccion <= :precio')
-                            ->setParameters(array('precio'=> $precio))
-                            ->getQuery()
-                            ->getResult();
-        }
-        else{
-
-            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-                            ->where('e.precioAccion <= :precio AND e.estado = :estado')
-                            ->setParameters(array('precio'=> $precio, 'estado'=>1))
-                            ->getQuery()
-                            ->getResult();
-
-        }
-
-        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
-        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
-            'entities' => $entities,
-            'categorias' => $categorias,
-        ));
-    }
-
-        /**
-     * Muestra formulario de busqueda y resultados
-     *
-     */
-    public function buscarCategoriaAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $categoria = $em->getRepository('asociateyaBundle:Categoria')->findByNombre($request->request->get('area_emprendimiento'));
-
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-
-            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-                            ->where(':categoria MEMBER OF e.categorias' )
-                            ->setParameters(array('categoria'=> $categoria))
-                            ->getQuery()
-                            ->getResult();
-        }
-        else{
-
-            $entities = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')
-                            ->where(':categoria MEMBER OF e.categorias AND e.estado = :estado')
-                            ->setParameters(array('categoria'=> $categoria, 'estado'=>1))
-                            ->getQuery()
-                            ->getResult();
-
-        }
-
-        $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
-        return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
-            'entities' => $entities,
-            'categorias' => $categorias,
-        ));
+         $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
+         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
+             'entities' => $entities,
+             'categorias' => $categorias,
+         ));
     }
 
 

@@ -15,36 +15,29 @@
 <div class="sidebar" id="sidebar_container">
 
   <!-- BUSCAR EMPRENDIMIENTOS -->
-  <div class="sidebar_item">
-    <h3>Buscar por nombre:</h3>
-    <form method="post" action="{{ path('emprendimiento_busquedaPalabra') }}" id="search_form">
-      <p>
-        <input class="search" type="text" name="search_field" id="search_field" value="" />
-        <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src={{ asset('bundles/asociateya/Imagenes/search.png')}} alt="Search" title="Search" />
-      </p>
-    </form>
-  </div>
+  <form method="get" action="{{ path('emprendimiento_busquedaFiltrada') }}" id="search_form">
+    <div class="sidebar_item">
+      <label class="titulo">Nombre:</label>
+        <p>
+          <input class="search" type="text" name="palabra" id="palabra" value="" />
+        </p>
 
-  <!-- FILTRAR EMPRENDIMIENTOS -->
-  <div class="sidebar_item">
-    <h3>Buscar por:</h3>
-    <form action="{{ path('emprendimiento_busquedaCategoria') }}" method="post" id="search_form">
-      <label class="titulo">Categorias:</label><br>
-      {% for categoria in categorias %}
-        <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="area_emprendimiento" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
-      {% endfor %}
-      <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
-    </form>
-  </div>
-  <div class="sidebar_item">
-    <h3>Buscar por precio menor a:</h3>
-    <form action="{{ path('emprendimiento_busquedaPrecio') }}" method="post" id="search_form">
-      <p>
-        <input class="search" type="text" name="search_field" id="search_field" value="" />
-        <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
-      </p>
-    </form>
-  </div>
+    <!-- FILTRAR EMPRENDIMIENTOS -->
+        <label class="titulo">Categoria:</label><br>
+        {% for categoria in categorias %}
+          <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
+        {% endfor %}
+        <br>
+      <label class="titulo">Precio menor a:</label>
+        <p>
+          <input class="search" type="text" name="precio" id="precio" value="" />
+          <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
+        </p>
+    </div>
+  </form>
+
+
+
 
 </div>
 

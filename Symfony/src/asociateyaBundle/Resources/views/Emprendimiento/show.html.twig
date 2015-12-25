@@ -93,7 +93,7 @@
               {% if not comentario.comentarioPadre %}
                 <li>
                   <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.fechaCreacion|date('d-m-Y') }}</div>
-                </li>
+
                 {% if comentario.comentarioHijo %}
                   <li style="margin-left: 40px;">
                     Respuesta:&nbsp{{comentario.comentarioHijo.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.comentarioHijo.fechaCreacion|date('d-m-Y') }}</div>
@@ -106,6 +106,7 @@
                     </form>
                   {% endif %}
                 {% endif %}
+                </li>
               {% endif %}
             {% endfor %}
           {% else %}

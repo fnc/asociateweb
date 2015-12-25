@@ -14,7 +14,7 @@
     {% if notificacionesComentario %}
       {% for notificacion in notificacionesComentario %}
       <li>
-        El usuario {{notificacion.comentario.usuario.nombre}} ha comentaro en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
+        El usuario {{notificacion.comentario.usuario.nombre}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
       </li>
       {% endfor %}
     {% else %}
