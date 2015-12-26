@@ -5,6 +5,11 @@
   <script>
     $(document).ready(function(){
       $("#boton_buscar").addClass("active");
+
+      $('#boton_submit').click( function(event) {
+        event.preventDefault();
+        $.get( '{{path('emprendimiento_busquedaFiltrada')}}'+'?'+ $('#search_form').serialize(), function(data) {$("#resultados_content").html(data);},'html');
+      });
     });
   </script>
  {% endblock %}
@@ -15,7 +20,7 @@
 <div class="sidebar" id="sidebar_container">
 
   <!-- BUSCAR EMPRENDIMIENTOS -->
-  <form method="get" action="{{ path('emprendimiento_busquedaFiltrada') }}" id="search_form">
+  <form method="get" action=" " id="search_form">
     <div class="sidebar_item">
       <label class="titulo">Nombre:</label>
         <p>
@@ -24,6 +29,7 @@
 
     <!-- FILTRAR EMPRENDIMIENTOS -->
         <label class="titulo">Categoria:</label><br>
+        <input type="radio" id="Todas" value="" name="categoria" ><label class="light" for="animales">Todas</label><br>
         {% for categoria in categorias %}
           <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
         {% endfor %}
@@ -32,6 +38,7 @@
         <p>
           <input class="search" type="text" name="precio" id="precio" value="" />
           <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
+          <br><button type="reset" class="boton boton_submit">Limpiar</button>
         </p>
     </div>
   </form>
@@ -41,7 +48,7 @@
 
 </div>
 
-<div class="content" id="emp_content">
+<div class="content" id="resultados_content">
 
         {% if entities %}
             <h1>Emprendimientos</h1>

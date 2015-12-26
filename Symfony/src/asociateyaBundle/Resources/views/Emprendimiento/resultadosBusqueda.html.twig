@@ -1,0 +1,17 @@
+{% if entities %}
+    <h1>Emprendimientos</h1>
+    <!-- EMPIEZA EL PORTAFOLIO -->
+    <div id="portfolio_container">
+        <ul>
+            {% for entity in entities %}
+              <li>
+                {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+              </li>
+            {% endfor %}
+
+        </ul>
+        <!--REFER TO THE js/drifolio.js-->
+    </div><!-- TERMINA EL PORTAFOLIO -->
+{% else %}
+    <h3>No se encontró ningun emprendimiento.</h3>
+{% endif %}

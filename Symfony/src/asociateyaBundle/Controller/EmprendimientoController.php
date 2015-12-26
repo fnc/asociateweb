@@ -141,11 +141,8 @@ class EmprendimientoController extends Controller
          }
 
          $entities = $query->setParameters($parameters)->getQuery()->getResult();
-
-         $categorias = $em->getRepository('asociateyaBundle:Categoria')->findAll();
-         return $this->render('asociateyaBundle:Emprendimiento:buscar.html.twig', array(
+         return $this->render('asociateyaBundle:Emprendimiento:resultadosBusqueda.html.twig', array(
              'entities' => $entities,
-             'categorias' => $categorias,
          ));
     }
 
