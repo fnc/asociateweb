@@ -3,20 +3,24 @@
 {% block title %}Mis Inversiones{% endblock %}
 {% block stylesheets %}
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
 <script>
   $(document).ready(function(){
     $("#boton_inversiones").addClass("active");
+    $(".inversion").hover(function(){
+      jQuery(".informacion_inversion", this).fadeIn(800);
+    },function(){
+      jQuery(".informacion_inversion", this).fadeOut(10);
+    });
   });
 </script>
 {% endblock %}
 
 
 {% block body -%}
-
-
-<div class="content emp_participo">
-
         <div class="texto_emp">
             <div id="portfolio_container">
               <div style="text-align: right;" class="img_emp img_container">
@@ -24,11 +28,53 @@
               </div>
             {% if inversiones %}
                 <ul>
-
                     {% for inversion in inversiones %}
-
+                    <div class="inversion">
                       {% include 'asociateyaBundle:Inversion:inversion.html.twig' with {inversion: inversion} %}
-
+                      <!-- Es importante que la div del grafico este antes que el script -->
+                      <div class="informacion_inversion" style="width:auto;  height:400px;text-align: center;"  id="ganancias{{inversion.id}}">
+                      </div>
+                      <script>
+                      var chart{{inversion.id}} = AmCharts.makeChart( $("#ganancias{{inversion.id}}")[0], {
+                        "type": "serial",
+                        "theme": "light",
+                        "dataProvider": [
+                          {% for resultado in inversion.emprendimiento.resultados %}
+                          {"fecha": "{{resultado.fecha|date('d-m-Y')}}","ganancia":{{ resultado.monto * inversion.cantidadAcciones * inversion.emprendimiento.precioAccion }} },
+                          {% endfor %}
+                         ],
+                        "valueAxes": [ {
+                          "gridColor": "#FFFFFF",
+                          "gridAlpha": 0.2,
+                          "dashLength": 0
+                        } ],
+                        "gridAboveGraphs": true,
+                        "startDuration": 1,
+                        "graphs": [ {
+                          "balloonText": "[[category]]: <b>$[[value]]</b>",
+                          "fillAlphas": 0.8,
+                          "lineAlpha": 0.2,
+                          "type": "column",
+                          "valueField": "ganancia"
+                        } ],
+                        "chartCursor": {
+                          "categoryBalloonEnabled": false,
+                          "cursorAlpha": 0,
+                          "zoomable": false
+                        },
+                        "categoryField": "fecha",
+                        "categoryAxis": {
+                          "gridPosition": "start",
+                          "gridAlpha": 0,
+                          "tickPosition": "start",
+                          "tickLength": 20
+                        },
+                        "export": {
+                          "enabled": true
+                        }
+                      });
+                      </script>
+                    </div>
                     {% endfor %}
 
                 </ul>
@@ -37,6 +83,6 @@
             {% endif %}
           </div>
         </div>
-</div>
+
 
 {% endblock %}
