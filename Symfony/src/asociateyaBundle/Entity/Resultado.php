@@ -42,6 +42,12 @@ class Resultado
      */
     private $fecha;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Emprendimiento", inversedBy="resultados")
+    * @ORM\JoinColumn(name="emprendimiento_id", referencedColumnName="emprendimiento_id", onDelete="CASCADE")
+    */
+    private $emprendimiento;
+
 
     /**
      * Get id
@@ -124,4 +130,29 @@ class Resultado
     {
         return $this->fecha;
     }
+
+    /**
+     * Set emprendimiento
+     *
+     * @param \asociateyaBundle\Entity\Emprendimiento $emprendimiento
+     *
+     * @return Inversion
+     */
+    public function setEmprendimiento(\asociateyaBundle\Entity\Emprendimiento $emprendimiento = null)
+    {
+        $this->emprendimiento = $emprendimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get emprendimiento
+     *
+     * @return \asociateyaBundle\Entity\Emprendimiento
+     */
+    public function getEmprendimiento()
+    {
+        return $this->emprendimiento;
+    }
+
 }

@@ -31,12 +31,18 @@ class Emprendimiento
     	$this->inversiones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comentarios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categorias = new  \Doctrine\Common\Collections\ArrayCollection();
+        $this->resultados = new  \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
     * @ORM\OneToMany(targetEntity="Inversion", mappedBy="emprendimiento")
     */
     private $inversiones;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Resultado", mappedBy="emprendimiento")
+    */
+    private $resultados;
 
     /**
      * @ORM\OneToMany(targetEntity="Comentario", mappedBy="emprendimiento")
@@ -108,7 +114,7 @@ class Emprendimiento
      * @ORM\Column(name="descripcionCorta", type="string", length=80)
      */
     private $descripcionCorta;
-    
+
     /**
      * @var string
      *
@@ -659,7 +665,7 @@ class Emprendimiento
     }
 
 
-    
+
     /**
      * Add inversione
      *
@@ -786,4 +792,38 @@ class Emprendimiento
         return $this->emprendedor;
     }
 
+
+    /**
+     * Add resultado
+     *
+     * @param \asociateyaBundle\Entity\Resultado $resultado
+     *
+     * @return Emprendimiento
+     */
+    public function addResultado(\asociateyaBundle\Entity\Resultado $resultado)
+    {
+        $this->resultados[] = $resultado;
+
+        return $this;
+    }
+
+    /**
+     * Remove resultado
+     *
+     * @param \asociateyaBundle\Entity\Resultado $resultado
+     */
+    public function removeResultado(\asociateyaBundle\Entity\Resultado $resultado)
+    {
+        $this->resultados->removeElement($resultado);
+    }
+
+    /**
+     * Get resultados
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResultados()
+    {
+        return $this->resultados;
+    }
 }

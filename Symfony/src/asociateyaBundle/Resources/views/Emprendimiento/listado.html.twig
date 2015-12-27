@@ -2,6 +2,9 @@
 
 {% block title %}Mis Emprendimientos{% endblock %}
 {% block stylesheets %}
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <script>
   $(document).ready(function(){
     $("#boton_emprendimientos").addClass("active");
@@ -31,9 +34,58 @@
             {% if entities %}
                 <ul>
                     {% for entity in entities %}
-                        <li class="emprendimiento">
+                        <li class="emprendimiento" id="emprendimiento{{ loop.index }}">
                           {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-                          <div class="inversion" style="display:none;">
+                          <div class="inversion" style="display:none;" id="inversiones{{ loop.index }}">
+                            <!-- TODO:Este if no funciona -->
+                            {% if entity.resultados %}
+                              <div class="elemento_mensaje">
+                                <strong>Resultados del emprendimiento</strong><br>
+                              </div>
+                              <div class="elemento_mensaje" style="width:auto;  height:400px;text-align: center;" id="chart_div{{ loop.index }}"></div>
+                              <script>
+                              var chart{{ loop.index }} = AmCharts.makeChart( $("#chart_div{{ loop.index }}")[0], {
+                                "type": "serial",
+                                "theme": "light",
+                                "dataProvider": [
+                                  {% for resultado in entity.resultados %}
+                                  {"fecha": "{{resultado.fecha|date('d-m-Y')}}","%ganancia":{{resultado.monto}} },
+                                  {% endfor %}
+                                 ],
+                                "valueAxes": [ {
+                                  "gridColor": "#FFFFFF",
+                                  "gridAlpha": 0.2,
+                                  "dashLength": 0
+                                } ],
+                                "gridAboveGraphs": true,
+                                "startDuration": 1,
+                                "graphs": [ {
+                                  "balloonText": "[[category]]: <b>[[value]]</b>",
+                                  "fillAlphas": 0.8,
+                                  "lineAlpha": 0.2,
+                                  "type": "column",
+                                  "valueField": "%ganancia"
+                                } ],
+                                "chartCursor": {
+                                  "categoryBalloonEnabled": false,
+                                  "cursorAlpha": 0,
+                                  "zoomable": false
+                                },
+                                "categoryField": "fecha",
+                                "categoryAxis": {
+                                  "gridPosition": "start",
+                                  "gridAlpha": 0,
+                                  "tickPosition": "start",
+                                  "tickLength": 20
+                                },
+                                "export": {
+                                  "enabled": true
+                                }
+                              });
+                              </script>
+                            {% else %}
+                              No hay estados de resultado para mostrar.
+                            {% endif %}
                           {% if entity.inversiones %}
                             <div class="elemento_mensaje">
                               <strong>Inversores</strong>
