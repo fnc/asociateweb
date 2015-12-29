@@ -113,10 +113,12 @@
 
 .image_holder {
 	height: 180px;
-	width: 180px;
-	margin-left: auto;
-	margin-bottom: 20px;
-	margin-right: auto;
+	width: auto;
+	padding: 20px;
+	text-align: center;
+}
+.image_holder img{
+border-radius: 8px;
 }
 
 /*COMENTARIOS*/

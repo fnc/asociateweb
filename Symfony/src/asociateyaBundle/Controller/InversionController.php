@@ -253,8 +253,8 @@ class InversionController extends Controller
 
         $searchResult = $mp->search_payment($filters);
 
-
-        return $this->render('asociateyaBundle:Emprendimiento:pagosControlador.html.twig', array(
+        
+        return $this->render('asociateyaBundle:Inversion:pagosControlador.html.twig', array(
             'pagos' => $searchResult)
         );
     }

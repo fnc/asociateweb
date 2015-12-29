@@ -1,134 +1,138 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
 {% block stylesheets %}
-  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
-  <script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/datos_emprendimiento.js')}}></script>
+<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+<link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+<script type="text/javascript" src={{ asset('bundles/asociateya/lib/js/datos_emprendimiento.js')}}></script>
 {% endblock %}
 
 {% block sidebar %}
-<div id="sidebar_container">
-    <div class="sidebar" id="sideBarPerfil">
-      <div class="sidebar_top"></div>
-      <div id="sidebar_emprendimiento" class="sidebar_item">
-        <div id="ID_imagenProyecto" class="image_holder"><img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="180" height="180">
-        </div>
-        <h2>Creado por:</h2>
-        <h1 id="ID_nombreCreador"><a href={{ path('usuario_show',{'id':entity.emprendedor.usuario.getId}) }}>{{entity.emprendedor.usuario.userName}}</a></h1>
-      </div>
-      <div class="sidebar_base"></div>
-    </div>
-    {% if entity.estado == '1'  %}
-      <div class="sidebar" id="sideBarPerfil">
-        <div class="sidebar_top"></div>
-        <div id="sidebar_emprendimiento" class="sidebar_item">
-          <h3>Total recaudado</h3>
-          <div id="ID_barraProgreso" class="progress"></div>
-          <br>
-          <h3>Precio de la acción</h3>
-          <h4 id="ID_precioAccion">${{entity.precioAccion}}</h4>
 
-        </div>
-        <div class="sidebar_base"></div>
-      </div>
-      {% if app.user.getId == entity.emprendedor.usuario.getId  %}
-      <div id="sideBarBotonAsociate">
-          <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="botonPM">Cancelar</a>
-      </div>
-      {% else %}
-      <div id="sideBarBotonAsociate">
-          <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="botonPM">¡Asociate!</a>
-      </div>
-      {% endif %}
-    {% endif %}
-    {% if entity.estado == '2' %}
-    <h3>APROBADO!</h3>
-      {% if app.user and is_granted('ROLE_SUPER_ADMIN')  %}
-        <div id="sideBarBotonGanancia">
-          <form method="post" action="{{ path('emprendimiento_pagoGanancia',{ 'id': entity.id }) }}" id="search_form">
-              <input class="search" type="text" name="ganancia" id="ganancia" value="% ganacias" />
-              <button name="search" type="submit"  class="botonPM" >Pagar Ganancia</button>
-          </form>
-        </div>
-      {% endif %}
-    {% endif %}
-    {% if entity.estado == '0' %}
-    <h3>Pendiente de aceptación</h3>
-    {% endif %}
-    {% if entity.estado == '3' %}
-    <h3>CANCELADO</h3>
-    {% endif %}
-    {% if entity.estado == '4' %}
-    <h3>CANCELADO</h3>
-    {% endif %}
-    {% if entity.estado == '6' %}
-    <h3>APROBADO(Pendiente de acreditar)</h3>
-    {% endif %}
-</div>
 {% endblock %}
 
 
 {% block body -%}
-      <div class="content" id="pag2_content">
-        <!-- insert the page content here -->
-        <h1 id="ID_nombreProyecto">{{ entity.nombre }}</h1>
-        <h2>{{ entity.descripcionCorta }}</h2>
-        <p>{{ entity.descripcionLarga }}</p>
 
-        <iframe width="440" height="330" align="middle" src="http://www.youtube.com/embed/{{ entity.rutaVideo }}?autoplay=0"><br>
-        </iframe>
-        <br>
-
-<!--         <h3>Archivos subidos</h3>
-        <div class="archivos_subidos">
-            <ul>
-                <li><a href="../lib/pdf/Autoorganizacion.pdf">  Autoorganizacion.pdf</a></li>
-                <li><a href="../lib/pdf/ciencia_tecnologia.pdf">    ciencia_tecnologia.pdf</a></li>
-            </ul>
-        </div> -->
-        <br><h3>Comentarios</h3>
-        <div class="comentariosEmprendimiento">
-        <ul>
-          {% if comentarios %}
-            {% for comentario in comentarios %}
-              {% if not comentario.comentarioPadre %}
-                <li>
-                  <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.fechaCreacion|date('d-m-Y') }}</div>
-
-                {% if comentario.comentarioHijo %}
-                  <li style="margin-left: 40px;">
-                    Respuesta:&nbsp{{comentario.comentarioHijo.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.comentarioHijo.fechaCreacion|date('d-m-Y') }}</div>
-                  </li>
-                {% else %}
-                  {% if app.user.getId == entity.emprendedor.usuario.getId  %}
-                    <form method="post" action="{{ path('emprendimiento_responder',{'id':entity.getId,'idComentario':comentario.id}) }}" style="margin-left: 40px;">
-                      <input id="asociateyabundle_comentario_texto" name="asociateyabundle_comentario[texto]" required="required" maxlength="255" class="description" type="text">
-                      <input class="boton" type="submit" value="Responder">
-                    </form>
-                  {% endif %}
-                {% endif %}
-                </li>
-              {% endif %}
-            {% endfor %}
-          {% else %}
-            No hay comentarios aun.
-          {% endif %}
-          </ul>
-          <form id="formulario_comentario" method="post" action="{{ path('emprendimiento_comentar',{'id':entity.getId}) }}" >
-            {{ form_widget(formComentario.texto,{ 'attr': {'class': 'description'} }) }}
-            <input type="submit" value="Comentar" class="boton">
-          </form>
-        </div>
-
-      </div>
-{% endblock %}
-
-{% block javascripts %}
- <script type="text/javascript">
-    {% if entity.totalAcciones>0 %}
-      {% set progresoBarra = ((entity.totalAcciones-entity.accionesRestantes) / entity.totalAcciones)*100 %}
-
-
-    document.getElementById("ID_barraProgreso").innerHTML = '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + {{progresoBarra}} + '" aria-valuemin="0" aria-valuemax="100" style="width:' + {{progresoBarra}} + '%">' + {{progresoBarra|number_format(0, '.', ',')}} + '%</div>'
+<div class="sidebar" id="sidebar_container">
+  <div class="sidebar_item">
+    <div id="ID_imagenProyecto" class="image_holder"><img src={{ asset('/uploads/emprendimientos/' ~ entity.rutaImagen) }} width="127" height="127"></div>
+    <br>
+    <h3>Categorias</h3>
+    <div id="contenedor_categorias" style="width: 100%; height: 100px;">
+      {% for categoria in entity.categorias %}
+          <div style="float: left;" class="etiqueta categoria">{{ categoria.nombre }}</div>
+      {% endfor %}
+    </div>
+    <br>
+    {% if entity.estado == '0' %}
+      <h3>Pendiente de aceptación</h3>
     {% endif %}
-</script>
+
+    {% if entity.estado == '1'  %}
+      <h3>Total recaudado</h3>
+      {% if entity.totalAcciones>0 %}
+      {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+      <div style="float: none; display: block; padding: 0px;" class="progress">
+        <div style="width:{{progresoBarra}}%; height: 30px; font-size: 20px;vertical-align: middle;padding-top: 5px;" class="progress-bar progress-bar active" role="progressbar" aria-valuenow="{{progresoBarra}}" aria-valuemin="0" aria-valuemax="100">
+          {{progresoBarra|number_format(0, '.', ',')}} %
+        </div>
+      </div>
+      {% endif %}
+      <br>
+      <h3>Precio de la acción</h3>
+      <h4 id="ID_precioAccion">${{entity.precioAccion}}</h4>
+
+      {% if app.user.getId == entity.emprendedor.usuario.getId  %}
+      <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="boton">Cancelar</a>
+      {% else %}
+      <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="boton">¡Asociate!</a>
+      {% endif %}
+    {% endif %}
+
+    {% if entity.estado == '2' %}
+      <h3>APROBADO!</h3>
+      {% if app.user and is_granted('ROLE_SUPER_ADMIN')  %}
+        <form method="post" action="{{ path('emprendimiento_pagoGanancia',{ 'id': entity.id }) }}" id="search_form">
+          <input class="search" type="text" name="ganancia" id="ganancia" value="% ganacias" />
+          <button name="search" type="submit"  class="boton">Pagar Ganancia</button>
+        </form>
+      {% endif %}
+    {% endif %}
+
+    {% if entity.estado == '3' %}
+      <h3>Cancelado</h3>
+    {% endif %}
+
+    {% if entity.estado == '4' %}
+      <h3>Cancelado</h3>
+    {% endif %}
+
+    {% if entity.estado == '6' %}
+      <h3>Aprobado(Pendiente de acreditar)</h3>
+    {% endif %}
+
+    <br>
+    <br>
+    <h3>Emprendedor:</h3>
+    <a class="etiqueta" href={{ path('usuario_show',{'id':entity.emprendedor.usuario.getId}) }}>{{entity.emprendedor.usuario.userName}}</a>
+    <br>
+    <br>
+  </div>
+</div>
+
+
+
+
+<div class="content" >
+  <!-- insert the page content here -->
+  <h1 id="ID_nombreProyecto">{{ entity.nombre }}</h1>
+  <h2>{{ entity.descripcionCorta }}</h2>
+  <p>{{ entity.descripcionLarga }}</p>
+
+  <iframe style="border-radius: 8px;" width="440" height="330" align="middle" src="http://www.youtube.com/embed/{{ entity.rutaVideo }}?autoplay=0"><br>
+  </iframe>
+  <br>
+
+  <!--         <h3>Archivos subidos</h3>
+  <div class="archivos_subidos">
+  <ul>
+  <li><a href="../lib/pdf/Autoorganizacion.pdf">  Autoorganizacion.pdf</a></li>
+  <li><a href="../lib/pdf/ciencia_tecnologia.pdf">    ciencia_tecnologia.pdf</a></li>
+</ul>
+</div> -->
+<br><h3>Comentarios</h3>
+<div class="comentariosEmprendimiento">
+  <ul>
+    {% if comentarios %}
+    {% for comentario in comentarios %}
+    {% if not comentario.comentarioPadre %}
+    <li>
+      <a href={{ path('usuario_show',{'id':comentario.usuario.getId}) }}>{{comentario.usuario.username}}</a>:&nbsp{{comentario.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.fechaCreacion|date('d-m-Y') }}</div>
+
+      {% if comentario.comentarioHijo %}
+      <li style="margin-left: 40px;">
+        Respuesta:&nbsp{{comentario.comentarioHijo.texto}}&nbsp<div class="colorGris">Fecha:&nbsp{{ comentario.comentarioHijo.fechaCreacion|date('d-m-Y') }}</div>
+      </li>
+      {% else %}
+      {% if app.user.getId == entity.emprendedor.usuario.getId  %}
+      <form method="post" action="{{ path('emprendimiento_responder',{'id':entity.getId,'idComentario':comentario.id}) }}" style="margin-left: 40px;">
+        <input id="asociateyabundle_comentario_texto" name="asociateyabundle_comentario[texto]" required="required" maxlength="255" class="description" type="text">
+        <input class="boton" type="submit" value="Responder">
+      </form>
+      {% endif %}
+      {% endif %}
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    No hay comentarios aun.
+    {% endif %}
+  </ul>
+  <form id="formulario_comentario" method="post" action="{{ path('emprendimiento_comentar',{'id':entity.getId}) }}" >
+    {{ form_widget(formComentario.texto,{ 'attr': {'class': 'description'} }) }}
+    <input type="submit" value="Comentar" class="boton">
+  </form>
+</div>
+
+</div>
 {% endblock %}

@@ -3,7 +3,7 @@ inversion:
     defaults: { _controller: "asociateyaBundle:Inversion:index" }
 
 inversion_porEmprendimiento:
-    path:     /{emprendimientoId}
+    path:     /listar/{emprendimientoId}
     defaults: { _controller: "asociateyaBundle:Inversion:porEmprendimiento" }
 
 inversion_confirmarPago:

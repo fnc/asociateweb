@@ -75,7 +75,8 @@
 
 <body>
   <div id="main">
-    <header class="header">
+    <div class="header">
+      <div style="width: 80%;text-align: center;margin-left:10%;">
         <ul>
           <li>
           <a style ="padding: 15px 20px;"href={{ path('asociateya_homepage')}}><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="182" height="30"></a>
@@ -86,7 +87,7 @@
           {% if app.user and is_granted('ROLE_SUPER_ADMIN') %}
           <li><a id="boton_buscar" href={{ path('emprendimiento_busqueda')}} >Buscar</a></li>
           <li><a id="boton_aprobacion" href={{ path('emprendedor_pendientes') }}>Aprobación</a></li>
-          <li><a href={{ path('emprendimiento_pagosControl') }}>Pagos</a></li>
+          <li><a href={{ path('inversion_pagosControl') }}>Pagos</a></li>
           {% else %}
             {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
               {% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
@@ -98,7 +99,7 @@
             <li><a id="boton_buscar">Buscar</a></li>
             {% endif %}
           {% endif %}
-          <ul style="float:right;list-style-type:none;">
+          <ul style="float:right;list-style-type:none; width: auto; padding: 0px;">
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <li><a id="boton_perfil" href={{ path('usuario_show',{'id':app.user.getId}) }} >{{ app.user.username }}</a></li>
           <li><a href={{ path('asociateya_salir')}} >Salir</a></li>
@@ -108,9 +109,9 @@
           {% endif %}
           </ul>
         </ul>
-    </header>
-    <div id="content_header"></div>
-    <div id="site_content">
+      </div>
+    </div>
+    <div class="site_content" id="site_content">
       <!-- <div id="banner"></div> -->
 
 

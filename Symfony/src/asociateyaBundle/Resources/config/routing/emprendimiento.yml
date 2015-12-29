@@ -75,10 +75,6 @@ emprendimiento_pagoAcreditado:
     path:     /{idInversion}/pagoAcreditado
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pagoAcreditado" }
 
-emprendimiento_pagosControl:
-    path:     /controlPagos
-    defaults: { _controller: "asociateyaBundle:Emprendimiento:pagosControl" }
-
 emprendimiento_pagoGanancia:
     path:     /{id}/pagoGanancia
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pagarGanancias" }

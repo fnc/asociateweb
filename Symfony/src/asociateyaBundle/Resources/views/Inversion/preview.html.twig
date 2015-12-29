@@ -1,8 +1,10 @@
         <ul class="elemento_inversion">
+          <a href={{ path('usuario_show',{'id':inversion.usuario.id}) }} >
           <li style="float: left; width: 20%;text-align: center;" class="etiqueta">
             {{ inversion.usuario.nombre }}
             {% if inversion.estado == 0 %}(Pendiente){% endif %}
           </li>
+          </a>
           <div style="margin-right: 40px;">
             <li style="float: right;width: 15%;text-align: center;" class="etiqueta">
                   {{ inversion.fechaEmision|date('d-m-Y') }}

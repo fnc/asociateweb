@@ -18,37 +18,34 @@
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 
 <div class="sidebar" id="sidebar_container">
+  <div class="sidebar_item">
+    <!-- BUSCAR EMPRENDIMIENTOS -->
+    <form method="get" action=" " id="search_form">
+      <br>
+      <h3>Nombre:</h3>
+      <input class="search" type="text" name="palabra" id="palabra" value="" />
+      <br><br>
 
-  <!-- BUSCAR EMPRENDIMIENTOS -->
-  <form method="get" action=" " id="search_form">
-    <div class="sidebar_item">
-      <label class="titulo">Nombre:</label>
-        <p>
-          <input class="search" type="text" name="palabra" id="palabra" value="" />
-        </p>
-
-    <!-- FILTRAR EMPRENDIMIENTOS -->
-        <label class="titulo">Categoria:</label><br>
-        <input type="radio" id="Todas" value="" name="categoria" ><label class="light" for="animales">Todas</label><br>
-        {% for categoria in categorias %}
-          <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
-        {% endfor %}
-        <br>
-      <label class="titulo">Precio menor a:</label>
-        <p>
-          <input class="search" type="text" name="precio" id="precio" value="" />
-          <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
-          <br><button type="reset" class="boton boton_submit">Limpiar</button>
-        </p>
-    </div>
-  </form>
-
-
-
-
+      <!-- FILTRAR EMPRENDIMIENTOS -->
+      <h3>Categoria:</h3>
+      <input type="radio" id="Todas" value="" name="categoria" ><label class="light" for="animales">Todas</label><br>
+      {% for categoria in categorias %}
+      <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
+      {% endfor %}
+      <br>
+      <h3>Precio menor a:</h3>
+      <input class="search" type="text" name="precio" id="precio" value="" />
+      <br>
+      <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
+      <br>
+      <br><button type="reset" class="boton boton_submit">Limpiar</button>
+      <br>
+      <br>
+    </form>
+  </div>
 </div>
 
-<div class="content" id="resultados_content">
+<div class="content" >
 
         {% if entities %}
             <h1>Emprendimientos</h1>
