@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"nuevoEstadoResultado" = "NuevoEstadoResultado", "nuevaInversion" = "NuevaInversion", "nuevoComentario" = "NuevoComentario"})
+ * @ORM\DiscriminatorMap({"emprendedorAceptado" = "EmprendedorAceptado","emprendimientoAceptado" = "EmprendimientoAceptado", "emprendimientoCancelado" = "EmprendimientoCancelado","emprendimientoAprobado" = "EmprendimientoAprobado","nuevoEstadoResultado" = "NuevoEstadoResultado", "nuevaInversion" = "NuevaInversion", "nuevoComentario" = "NuevoComentario"})
  */
 abstract class Notificacion
 {

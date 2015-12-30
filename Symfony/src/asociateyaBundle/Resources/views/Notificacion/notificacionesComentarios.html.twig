@@ -8,10 +8,20 @@
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $(".lista_notificaciones li").sort(sort_li) // sort elements
+    .appendTo('.lista_notificaciones'); // append again to the list
+    // sort function callback
+    function sort_li(a, b){
+      return ($(b).data('orden')) > ($(a).data('orden')) ? 1 : -1;
+    }
+  });
+  </script>
 </head>
 <body>
   <ul class="lista_notificaciones">
-    <ul class="lista_notificaciones">
       {% if notificacionesEmprendimientoAprobado %}
         {% for notificacion in notificacionesEmprendimientoAprobado %}
         <li data-orden="{{ notificacion.id }}">
@@ -56,19 +66,12 @@
     {% endif %}
     {% if notificacionesComentario %}
       {% for notificacion in notificacionesComentario %}
-      <li>
-        El usuario {{notificacion.comentario.usuario.nombre}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
+      <li data-orden="{{ notificacion.id }}">
+        {{notificacion.comentario.usuario.nombreUsuario}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
       </li>
       {% endfor %}
     {% endif %}
   </ul>
-  <script>
-      $(".lista_notificaciones li").sort(sort_li) // sort elements
-                      .appendTo('.listitems'); // append again to the list
-    // sort function callback
-    function sort_li(a, b){
-        return ($(b).data('orden')) < ($(a).data('orden')) ? 1 : -1;
-    }
-  </script>
+
 </body>
 </html>
