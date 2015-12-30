@@ -218,4 +218,3 @@ class Pago
         return $this->fechaCobro;
     }
 }
-

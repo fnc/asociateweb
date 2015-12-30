@@ -10,18 +10,65 @@
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
 </head>
 <body>
-  <ul>
+  <ul class="lista_notificaciones">
+    <ul class="lista_notificaciones">
+      {% if notificacionesEmprendimientoAprobado %}
+        {% for notificacion in notificacionesEmprendimientoAprobado %}
+        <li data-orden="{{ notificacion.id }}">
+            Su emprendimiento {{ notificacion.emprendimiento.nombre }} fue Aprobado! Se logró financiar exitosamente.
+        </li>
+        {% endfor %}
+      {% endif %}
+    {% if notificacionesEmprendimientoCancelado %}
+      {% for notificacion in notificacionesEmprendimientoCancelado %}
+      <li data-orden="{{ notificacion.id }}">
+        El emprendimiento {{ notificacion.emprendimiento.nombre }} ha sido cancelado, sus inversiones han sido devueltas.
+      </li>
+      {% endfor %}
+    {% endif %}
+    {% if notificacionesEmprendimientoAceptado %}
+      {% for notificacion in notificacionesEmprendimientoAceptado %}
+      <li data-orden="{{ notificacion.id }}">
+        Su emprendimiento {{ notificacion.emprendimiento.nombre }} ha sido aceptado, ya puede recibir inversiones.
+      </li>
+      {% endfor %}
+    {% endif %}
+    {% if notificacionesEmprendedorAceptado %}
+      {% for notificacion in notificacionesEmprendedorAceptado %}
+      <li data-orden="{{ notificacion.id }}">
+        Ha sido aceptado como emprendedor! Ya puede crear emprendimientos.
+      </li>
+      {% endfor %}
+    {% endif %}
+    {% if notificacionesNuevaInversion %}
+      {% for notificacion in notificacionesNuevaInversion %}
+      <li data-orden="{{ notificacion.id }}">
+        El usuario {{ notificacion.inversion.usuario.nombreUsuario }} ha hecho invertido en su emprendimiento {{ notificacion.inversion.emprendimiento.nombre }}.
+      </li>
+      {% endfor %}
+    {% endif %}
+    {% if notificacionesNuevoResultado %}
+      {% for notificacion in notificacionesNuevoResultado %}
+      <li data-orden="{{ notificacion.id }}">
+        Su inversion en el emprendimiento {{ notificacion.resultado.emprendimiento.nombre }} ha presentado resultados y ya se ha acreditado lo que le corresponde a su inversion.
+      </li>
+      {% endfor %}
+    {% endif %}
     {% if notificacionesComentario %}
       {% for notificacion in notificacionesComentario %}
       <li>
         El usuario {{notificacion.comentario.usuario.nombre}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
       </li>
       {% endfor %}
-    {% else %}
-      <li>
-        No hay comentarios nuevos.
-      </li>
     {% endif %}
   </ul>
+  <script>
+      $(".lista_notificaciones li").sort(sort_li) // sort elements
+                      .appendTo('.listitems'); // append again to the list
+    // sort function callback
+    function sort_li(a, b){
+        return ($(b).data('orden')) < ($(a).data('orden')) ? 1 : -1;
+    }
+  </script>
 </body>
 </html>

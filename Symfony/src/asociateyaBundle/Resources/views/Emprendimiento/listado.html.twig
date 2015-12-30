@@ -6,14 +6,14 @@
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <script>
-  $(document).ready(function(){
-    $("#boton_emprendimientos").addClass("active");
-    $(".emprendimiento").hover(function(){
-      jQuery(".inversion", this).fadeIn(800);
-    },function(){
-      jQuery(".inversion", this).fadeOut(10);
-    });
+$(document).ready(function(){
+  $("#boton_emprendimientos").addClass("active");
+  $(".emprendimiento").hover(function(){
+    jQuery(".inversion", this).fadeIn(800);
+  },function(){
+    jQuery(".inversion", this).fadeOut(10);
   });
+});
 </script>
 {% endblock %}
 
@@ -23,99 +23,101 @@
 
 {% if app.user and is_granted('ROLE_EMPRENDEDOR') %}
 
-      <div class="texto_emp">
-            <div id="portfolio_container">
-              <div style="float: left;" >
-                Estos son los emprendimientos que ha creado:
-              </div>
-              <div style="text-align: right;" class="img_emp img_container">
-                <a class="boton"  href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
-              </div>
-            {% if entities %}
-                <ul>
-                    {% for entity in entities %}
-                        <li class="emprendimiento" id="emprendimiento{{ loop.index }}">
-                          {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-                          <div class="inversion" style="display:none;" id="inversiones{{ loop.index }}">
-                            <!-- TODO:Este if no funciona -->
-                            {% if entity.resultados %}
-                              <div class="elemento_mensaje">
-                                <strong>Resultados del emprendimiento</strong><br>
-                              </div>
-                              <div class="elemento_mensaje" style="width:auto;  height:400px;text-align: center;" id="chart_div{{ loop.index }}"></div>
-                              <script>
-                              var chart{{ loop.index }} = AmCharts.makeChart( $("#chart_div{{ loop.index }}")[0], {
-                                "type": "serial",
-                                "theme": "light",
-                                "dataProvider": [
-                                  {% for resultado in entity.resultados %}
-                                  {"fecha": "{{resultado.fecha|date('d-m-Y')}}","%ganancia":{{resultado.monto}} },
-                                  {% endfor %}
-                                 ],
-                                "valueAxes": [ {
-                                  "gridColor": "#FFFFFF",
-                                  "gridAlpha": 0.2,
-                                  "dashLength": 0
-                                } ],
-                                "gridAboveGraphs": true,
-                                "startDuration": 1,
-                                "graphs": [ {
-                                  "balloonText": "[[category]]: <b>[[value]]%</b>",
-                                  "fillAlphas": 0.8,
-                                  "lineAlpha": 0.2,
-                                  "type": "column",
-                                  "valueField": "%ganancia"
-                                } ],
-                                "chartCursor": {
-                                  "categoryBalloonEnabled": false,
-                                  "cursorAlpha": 0,
-                                  "zoomable": false
-                                },
-                                "categoryField": "fecha",
-                                "categoryAxis": {
-                                  "gridPosition": "start",
-                                  "gridAlpha": 0,
-                                  "tickPosition": "start",
-                                  "tickLength": 20
-                                },
-                                "export": {
-                                  "enabled": true
-                                }
-                              });
-                              </script>
-                            {% else %}
-                              No hay estados de resultado para mostrar.
-                            {% endif %}
-                          {% if entity.inversiones %}
-                            <div class="elemento_mensaje">
-                              <strong>Inversores</strong>
-                            </div>
-                            <ul class="elemento_mensaje">
-                              <li style="float: left; width: 20%;" class="etiqueta">Usuario</li>
-                              <div style="margin-right: 40px;">
-                                <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Fecha de emision</li>
-                                <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Estado</li>
-                                <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Participacion</li>
-                                <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Acciones compradas</li>
-                              </div>
-                            </ul>
-                            {% for inversion in entity.inversiones %}
-                              {% include 'asociateyaBundle:Inversion:preview.html.twig' with {inversion: inversion} %}
-                            {% else %}
-                            <div class="elemento_mensaje">
-                              Nadie ha invertido en su emprendimiento aun.
-                            </div>
-                            {% endfor %}
-                          {% endif %}
-                          </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <h3>No ha creado ningun emprendimiento aun.</h3>
-            {% endif %}
-            </div><!-- TERMINA EL PORTAFOLIO -->
-      </div>
+<div class="texto_emp">
+  <div id="portfolio_container">
+    <div style="float: left;" >
+      Estos son los emprendimientos que ha creado:
+    </div>
+    <div style="text-align: right;" class="img_emp img_container">
+      <a class="boton"  href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
+    </div>
+    {% if entities %}
+    <ul>
+      {% for entity in entities %}
+      <li class="emprendimiento" id="emprendimiento{{ loop.index }}">
+        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+        <div class="inversion" style="display:none;" id="inversiones{{ loop.index }}">
+          {% if entity.estado  == '2' %}
+          <!-- TODO:Este if no funciona -->
+          {% if entity.resultados %}
+          <div class="elemento_mensaje">
+            <strong>Resultados del emprendimiento</strong><br>
+          </div>
+          <div class="elemento_mensaje" style="width:auto;  height:400px;text-align: center;" id="chart_div{{ loop.index }}"></div>
+          <script>
+          var chart{{ loop.index }} = AmCharts.makeChart( $("#chart_div{{ loop.index }}")[0], {
+            "type": "serial",
+            "theme": "light",
+            "dataProvider": [
+              {% for resultado in entity.resultados %}
+              {"fecha": "{{resultado.fecha|date('d-m-Y')}}","%ganancia":{{resultado.monto}} },
+              {% endfor %}
+            ],
+            "valueAxes": [ {
+              "gridColor": "#FFFFFF",
+              "gridAlpha": 0.2,
+              "dashLength": 0
+            } ],
+            "gridAboveGraphs": true,
+            "startDuration": 1,
+            "graphs": [ {
+              "balloonText": "[[category]]: <b>[[value]]%</b>",
+              "fillAlphas": 0.8,
+              "lineAlpha": 0.2,
+              "type": "column",
+              "valueField": "%ganancia"
+            } ],
+            "chartCursor": {
+              "categoryBalloonEnabled": false,
+              "cursorAlpha": 0,
+              "zoomable": false
+            },
+            "categoryField": "fecha",
+            "categoryAxis": {
+              "gridPosition": "start",
+              "gridAlpha": 0,
+              "tickPosition": "start",
+              "tickLength": 20
+            },
+            "export": {
+              "enabled": true
+            }
+          });
+          </script>
+          {% else %}
+          No hay estados de resultado para mostrar.
+          {% endif %}
+          {% endif %}
+          {% if entity.inversiones %}
+          <div class="elemento_mensaje">
+            <strong>Inversores</strong>
+          </div>
+          <ul class="elemento_mensaje">
+            <li style="float: left; width: 20%;" class="etiqueta">Usuario</li>
+            <div style="margin-right: 40px;">
+              <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Fecha de emision</li>
+              <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Estado</li>
+              <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Participacion</li>
+              <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Acciones compradas</li>
+            </div>
+          </ul>
+          {% for inversion in entity.inversiones %}
+          {% include 'asociateyaBundle:Inversion:preview.html.twig' with {inversion: inversion} %}
+          {% else %}
+          <div class="elemento_mensaje">
+            Nadie ha invertido en su emprendimiento aun.
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <h3>No ha creado ningun emprendimiento aun.</h3>
+    {% endif %}
+  </div><!-- TERMINA EL PORTAFOLIO -->
+</div>
 
 {% endif %}
 
