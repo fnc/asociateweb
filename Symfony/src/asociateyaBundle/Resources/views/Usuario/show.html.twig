@@ -2,58 +2,133 @@
 
 {% block title %}Perfil de {{ entity.nombre }} {{ entity.apellido }} {% endblock %}
 
+{% block stylesheets %}
+<script>
+$(document).ready(function(){
+  $(".lista_notificaciones li").sort(sort_li) // sort elements
+  .appendTo('.lista_notificaciones'); // append again to the list
+  // sort function callback
+  function sort_li(a, b){
+    return ($(b).data('orden')) > ($(a).data('orden')) ? 1 : -1;
+  }
+});
+</script>
+{% endblock %}
+
 
 {% block body %}
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
 <link href={{ asset('bundles/asociateya/css/usuario.css')}} rel="stylesheet" type="text/css">
-    <div class="sidebar" id="sidebar_container">
-        <div class="sidebar" id="sideBarPerfil">
-            <div class="sidebar_top"></div>
-            <div class="sidebar_item">
-                <h1 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h1>
-                </br>
-                <p>Contacto:</p>
-                <p id="ID_mailCreador">{{ entity.email }}</p>
-            </div>
-            <div class="sidebar_base"></div>
-        </div>
-        {% if app.user.getId != entity.getId  %}
-<!--         <div id="sideBarBotonPM">
-            <a href="#" class="botonPM">Envíale un<br>mensaje privado</a>
-        </div> -->
-        {% endif %}
-    </div>
 
-    <h1 class="centrado" id="ID_nombreCreador1">{{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
+
+<div class="sidebar" id="sidebar_container">
+  <div class="sidebar_item">
+    </br>
+    <h1 id="ID_nombreCreador3">{{ entity.nombreUsuario }}</h1>
+    <h3 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h3>
     <p class="centrado">Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}</p>
+    {% if entity.emprendedor %}
+    <div class = "etiqueta acciones">Emprendedor</div>
+    <div class = "etiqueta precio">{{entity.emprendedor.emprendimientos|length}} emprendimientos</div>
+    {% endif %}
+    </br>
+    </br>
+    <h3>Contacto:</h3>
+    <p id="ID_mailCreador">{{ entity.email }}</p>
+  </div>
+</div>
 
-    {% if app.user.getId == entity.getId  %}
+
+<div class="content">
+
+  {% if app.user.getId == entity.getId  %}
+  <div id="panelDeControl">
     <!-- Informacion solo para el usuario autenticado-->
+    <h3>Notificaciones</h3>
 
-    <ul id="nav_usuario" class="record_actions">
-        <li class="editar">
-            <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
-                Editar datos
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('usuario_delete', { 'id': entity.id }) }}">
-                Dar de baja
-            </a>
-        </li>
-        {%  if not entity.emprendedor%}
-            <li>
-                <a href="{{ path('emprendedor_new') }}">
-                    Aplicar para ser emprendedor
-                </a>
-            </li>
+    <ul class="lista_notificaciones">
+        {% if notificacionesEmprendimientoAprobado %}
+          {% for notificacion in notificacionesEmprendimientoAprobado %}
+          <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+              Su emprendimiento {{ notificacion.emprendimiento.nombre }} fue Aprobado! Se logró financiar exitosamente.
+          </li>
+          {% endfor %}
         {% endif %}
-
+      {% if notificacionesEmprendimientoCancelado %}
+        {% for notificacion in notificacionesEmprendimientoCancelado %}
+        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+          El emprendimiento {{ notificacion.emprendimiento.nombre }} ha sido cancelado, sus inversiones han sido devueltas.
+        </li>
+        {% endfor %}
+      {% endif %}
+      {% if notificacionesEmprendimientoAceptado %}
+        {% for notificacion in notificacionesEmprendimientoAceptado %}
+        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+          Su emprendimiento {{ notificacion.emprendimiento.nombre }} ha sido aceptado, ya puede recibir inversiones.
+        </li>
+        {% endfor %}
+      {% endif %}
+      {% if notificacionesEmprendedorAceptado %}
+        {% for notificacion in notificacionesEmprendedorAceptado %}
+        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+          Ha sido aceptado como emprendedor! Ya puede crear emprendimientos.
+        </li>
+        {% endfor %}
+      {% endif %}
+      {% if notificacionesNuevaInversion %}
+        {% for notificacion in notificacionesNuevaInversion %}
+        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+          El usuario {{ notificacion.inversion.usuario.nombreUsuario }} ha hecho invertido en su emprendimiento {{ notificacion.inversion.emprendimiento.nombre }}.
+        </li>
+        {% endfor %}
+      {% endif %}
+      {% if notificacionesNuevoResultado %}
+        {% for notificacion in notificacionesNuevoResultado %}
+        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+          Su inversion en el emprendimiento {{ notificacion.resultado.emprendimiento.nombre }} ha presentado resultados y ya se ha acreditado lo que le corresponde a su inversion.
+        </li>
+        {% endfor %}
+      {% endif %}
+      {% if notificacionesComentario %}
+        {% for notificacion in notificacionesComentario %}
+        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+          {{notificacion.comentario.usuario.nombreUsuario}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
+        </li>
+        {% endfor %}
+      {% endif %}
     </ul>
-        {% endif %}
+  </br>
+  </br>
 
-    <h1 id="ID_nombreCreador2">Emprendimientos de {{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h1>
+
+    <h3>Configuración</h3>
+    <ul>
+      <li class="boton">
+        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
+          Editar datos
+        </a>
+      </li>
+      <li class="boton">
+        <a href="{{ path('usuario_delete', { 'id': entity.id }) }}">
+          Dar de baja
+        </a>
+      </li>
+      {%  if not entity.emprendedor%}
+      <li class="boton">
+        <a href="{{ path('emprendedor_new') }}">
+          Aplicar para ser emprendedor
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</br>
+</br>
+
+  {% endif %}
+
+    <h3 id="ID_nombreCreador2">Emprendimientos de {{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h3>
     <div id="portfolio_container">
         <ul>
                 {% for emprendimiento in emprendimientos %}
@@ -63,5 +138,5 @@
                 {% endfor %}
         </ul>
     </div>
-
+</div>
 {% endblock %}

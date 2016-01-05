@@ -5,6 +5,9 @@ notificacion:
 # notificacion_show:
 #     path:     /{id}/show
 #     defaults: { _controller: "asociateyaBundle:Notificacion:show" }
+notificacion_nuevas:
+   path:     /nuevas
+   defaults: { _controller: "asociateyaBundle:Notificacion:nuevas" }
 #
 # notificacion_new:
 #     path:     /new

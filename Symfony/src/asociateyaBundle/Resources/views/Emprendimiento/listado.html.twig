@@ -38,8 +38,7 @@ $(document).ready(function(){
         {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
         <div class="inversion" style="display:none;" id="inversiones{{ loop.index }}">
           {% if entity.estado  == '2' %}
-          <!-- TODO:Este if no funciona -->
-          {% if entity.resultados %}
+          {% if entity.resultados|length > 0 %}
           <div class="elemento_mensaje">
             <strong>Resultados del emprendimiento</strong><br>
           </div>

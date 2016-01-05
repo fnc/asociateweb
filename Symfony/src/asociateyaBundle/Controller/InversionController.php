@@ -100,6 +100,7 @@ class InversionController extends Controller
 
 
         //Creo la nueva inversion
+        //TODO si ya invirtio en este emprendimiento no creo una inversion nueva!!
         $inversion = new Inversion();
         $inversion->setUsuario($this->getUser());
         $inversion->setEmprendimiento($entity);

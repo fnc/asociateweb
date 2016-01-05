@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use asociateyaBundle\Entity\Usuario;
+use asociateyaBundle\Entity\Notificacion;
 use asociateyaBundle\Entity\Emprendimiento;
 use asociateyaBundle\Form\UsuarioType;
 
@@ -107,9 +108,22 @@ class UsuarioController extends Controller
         if($entity->getEmprendedor()){
 
             $emprendimientos = $em->getRepository('asociateyaBundle:Emprendimiento')->findByEmprendedor($entity->getEmprendedor());
-        
-        } 
 
+        }
+
+        $notificacionesComentario = $em->getRepository('asociateyaBundle:NuevoComentario')->findByUsuario($this->getUser());
+        $notificacionesNuevoResultado = $em->getRepository('asociateyaBundle:NuevoEstadoResultado')->findByUsuario($this->getUser());
+        $notificacionesNuevaInversion = $em->getRepository('asociateyaBundle:NuevaInversion')->findByUsuario($this->getUser());
+        $notificacionesEmprendedorAceptado = $em->getRepository('asociateyaBundle:EmprendedorAceptado')->findByUsuario($this->getUser());
+        $notificacionesEmprendimientoAceptado = $em->getRepository('asociateyaBundle:EmprendimientoAceptado')->findByUsuario($this->getUser());
+        $notificacionesEmprendimientoCancelado = $em->getRepository('asociateyaBundle:EmprendimientoCancelado')->findByUsuario($this->getUser());
+        $notificacionesEmprendimientoAprobado = $em->getRepository('asociateyaBundle:EmprendimientoAprobado')->findByUsuario($this->getUser());
+
+        $notificaciones = $em->getRepository('asociateyaBundle:Notificacion')->findByUsuario($this->getUser());
+        foreach ($notificaciones as $notif) {
+           $notif->setFechaLectura(new \DateTime());
+         }
+         $em->flush();
 
 
         $deleteForm = $this->createDeleteForm($id);
@@ -118,6 +132,13 @@ class UsuarioController extends Controller
             'entity'      => $entity,
             'emprendimientos'      => $emprendimientos,
             'delete_form' => $deleteForm->createView(),
+            'notificacionesComentario' => $notificacionesComentario,
+            'notificacionesNuevoResultado' => $notificacionesNuevoResultado,
+            'notificacionesNuevaInversion' => $notificacionesNuevaInversion,
+            'notificacionesEmprendedorAceptado' => $notificacionesEmprendedorAceptado,
+            'notificacionesEmprendimientoAceptado' => $notificacionesEmprendimientoAceptado,
+            'notificacionesEmprendimientoCancelado' => $notificacionesEmprendimientoCancelado,
+            'notificacionesEmprendimientoAprobado' => $notificacionesEmprendimientoAprobado,
         ));
     }
 
@@ -229,11 +250,11 @@ class UsuarioController extends Controller
         }
 
         $entity->setIsActive(false);
-        
+
         $em->flush();
 
         return $this->redirect($this->generateUrl('asociateya_salir'));
-        
+
     }
 
     /**

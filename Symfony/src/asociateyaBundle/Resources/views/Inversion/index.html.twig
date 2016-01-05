@@ -32,51 +32,94 @@
                     <div class="inversion">
                       {% include 'asociateyaBundle:Inversion:inversion.html.twig' with {inversion: inversion} %}
                       <!-- Es importante que la div del grafico este antes que el script -->
-                      <div class="informacion_inversion" style="width:auto;  height:400px;text-align: center;"  id="ganancias{{inversion.id}}">
-                      </div>
-                      <script>
-                      var chart{{inversion.id}} = AmCharts.makeChart( $("#ganancias{{inversion.id}}")[0], {
-                        "type": "serial",
-                        "theme": "light",
-                        "dataProvider": [
-                          {% for resultado in inversion.emprendimiento.resultados %}
-                          {"fecha": "{{resultado.fecha|date('d-m-Y')}}","ganancia":{{ resultado.monto * inversion.cantidadAcciones * inversion.emprendimiento.precioAccion }} },
+                      <div class="informacion_inversion" style="display:none;width:auto;  height:400px;text-align: center;">
+                        {% if inversion.pagos %}
+                        <div class="elemento_mensaje">
+                          <strong>Pagos</strong><br>
+                        </div>
+                          <ul class="elemento_mensaje">
+                            <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                              Monto
+                            </li>
+                            <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                              Estado
+                            </li>
+                            <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                              Fecha de emision
+                            </li>
+                            <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                              Fecha de Acreditacion
+                            </li>
+                          </ul>
+                          {% for pago in inversion.pagos %}
+                            <ul class="elemento_inversion">
+                              <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                                <strong>${{ pago.monto }}</strong>
+                              </li>
+                              <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                                {% if pago.estado == "1" %}Pendiente{% endif %}
+                                {% if pago.estado == "2" %}Acreditado{% endif %}
+                                {% if pago.estado == "3" %}Reembolsado{% endif %}
+                              </li>
+                              <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                                {{ pago.fechaEmision|date('d-m-Y') }}
+                              </li>
+                              <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+                                {{ pago.fechaCobro|date('d-m-Y') }}
+                              </li>
+                            </ul>
                           {% endfor %}
-                         ],
-                        "valueAxes": [ {
-                          "gridColor": "#FFFFFF",
-                          "gridAlpha": 0.2,
-                          "dashLength": 0
-                        } ],
-                        "gridAboveGraphs": true,
-                        "startDuration": 1,
-                        "graphs": [ {
-                          "balloonText": "[[category]]: <b>$[[value]]</b>",
-                          "fillAlphas": 0.8,
-                          "lineAlpha": 0.2,
-                          "type": "column",
-                          "valueField": "ganancia"
-                        } ],
-                        "chartCursor": {
-                          "categoryBalloonEnabled": false,
-                          "cursorAlpha": 0,
-                          "zoomable": false
-                        },
-                        "categoryField": "fecha",
-                        "categoryAxis": {
-                          "gridPosition": "start",
-                          "gridAlpha": 0,
-                          "tickPosition": "start",
-                          "tickLength": 20
-                        },
-                        "export": {
-                          "enabled": true
-                        }
-                      });
-                      </script>
-                    </div>
+                        {% endif %}
+                      </div>
+                      {% if inversion.emprendimiento.resultados|length > 0 %}
+                        <div class="informacion_inversion elemento_mensaje" style="display:none;">
+                          <strong>Resultados de la inversion</strong><br>
+                        </div>
+                        <div class="informacion_inversion" style="display:none;width:auto;  height:400px;text-align: center;"  id="ganancias{{inversion.id}}">
+                        </div>
+                        <script>
+                        var chart{{inversion.id}} = AmCharts.makeChart( $("#ganancias{{inversion.id}}")[0], {
+                          "type": "serial",
+                          "theme": "light",
+                          "dataProvider": [
+                            {% for resultado in inversion.emprendimiento.resultados %}
+                            {"fecha": "{{resultado.fecha|date('d-m-Y')}}","ganancia":{{ resultado.monto * inversion.cantidadAcciones * inversion.emprendimiento.precioAccion }} },
+                            {% endfor %}
+                           ],
+                          "valueAxes": [ {
+                            "gridColor": "#FFFFFF",
+                            "gridAlpha": 0.2,
+                            "dashLength": 0
+                          } ],
+                          "gridAboveGraphs": true,
+                          "startDuration": 1,
+                          "graphs": [ {
+                            "balloonText": "[[category]]: <b>$[[value]]</b>",
+                            "fillAlphas": 0.8,
+                            "lineAlpha": 0.2,
+                            "type": "column",
+                            "valueField": "ganancia"
+                          } ],
+                          "chartCursor": {
+                            "categoryBalloonEnabled": false,
+                            "cursorAlpha": 0,
+                            "zoomable": false
+                          },
+                          "categoryField": "fecha",
+                          "categoryAxis": {
+                            "gridPosition": "start",
+                            "gridAlpha": 0,
+                            "tickPosition": "start",
+                            "tickLength": 20
+                          },
+                          "export": {
+                            "enabled": true
+                          }
+                        });
+                        </script>
+                      </div>
+                      {% endif %}
                     {% endfor %}
-
                 </ul>
             {% else %}
                 <h3>No ha invertido en ningun emprendimiento aun.</h3>

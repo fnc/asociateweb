@@ -4,6 +4,7 @@ namespace asociateyaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use asociateyaBundle\Entity\Usuario;
 use asociateyaBundle\Entity\Emprendimiento;
@@ -39,5 +40,21 @@ class NotificacionController extends Controller
            'notificacionesEmprendimientoCancelado' => $notificacionesEmprendimientoCancelado,
            'notificacionesEmprendimientoAprobado' => $notificacionesEmprendimientoAprobado,
       ));
+   }
+
+   /**
+   * Devuelve un JSON con el numero de notificaciones nuevas.
+   *
+   */
+   public function nuevasAction()
+   {
+      $em = $this->getDoctrine()->getManager();
+
+      $query = $em->getRepository("asociateyaBundle:Notificacion")->createQueryBuilder('e');
+      $query= $query->where('e.usuario = :usuario' );
+      $parameters['usuario']= $this->getUser()->getId();
+      $query= $query->andWhere('e.fechaLectura IS NULL');
+      $notificaciones = $query->setParameters($parameters)->getQuery()->getResult();
+      return new JsonResponse(array('notificacionesNuevas' => count($notificaciones)));
    }
 }

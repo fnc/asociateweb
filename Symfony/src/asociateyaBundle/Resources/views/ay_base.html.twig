@@ -5,13 +5,29 @@
   <title>{% block title %}{% endblock %}Asociate Ya!</title>
   <link rel="shortcut icon" type="image/x-icon" href={{ asset('bundles/asociateya/Imagenes/iconito32.png')}} />
   <link href={{ asset('bundles/asociateya/css/style.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src={{ asset('bundles/asociateya/js/jquery.headtacular.min.js')}}></script>
   <script>
     $(document).ready(function(){
+
+      (function worker() {
+        $.getJSON( "{{path('notificacion_nuevas')}}", function( data ) {
+          var notificacionesNuevas = data['notificacionesNuevas'];
+          if (notificacionesNuevas==0){
+            $("#contadorNotificaciones").hide();
+          }
+          else{
+            $("#contadorNotificaciones").show();
+          }
+          $("#contadorNotificaciones").text(notificacionesNuevas);
+          setTimeout(worker, 5000);
+        });
+      })();
+
+
         // var botones = "#boton_buscar,#boton_emprendimientos, #boton_inversiones,#boton_perfil";
         // $("#boton_buscar").click(function(event){
         //   event.preventDefault();
@@ -101,7 +117,7 @@
           {% endif %}
           <ul style="float:right;list-style-type:none; width: auto; padding: 0px;">
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <li><a id="boton_perfil" href={{ path('usuario_show',{'id':app.user.getId}) }} >{{ app.user.username }}</a></li>
+          <li><a id="boton_perfil" href={{ path('usuario_show',{'id':app.user.getId}) }} ><div class="etiqueta nuevo" style="float: left;" id="contadorNotificaciones"></div><div style="float: right;"> {{ app.user.username }}</div></a></li>
           <li><a href={{ path('asociateya_salir')}} >Salir</a></li>
           {% else %}
           <li><a href={{ path('asociateya_ingresar')}} >Ingresa</a></li>
