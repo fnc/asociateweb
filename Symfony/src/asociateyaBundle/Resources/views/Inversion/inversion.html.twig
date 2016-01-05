@@ -2,7 +2,6 @@
   <a href={{ path('emprendimiento_show',{'id':inversion.emprendimiento.id}) }} >
   <li style="float: left; width: 25%;text-align: center;" class="etiqueta">
     <strong>{{ inversion.emprendimiento.nombre }}</strong>
-    {% if inversion.estado == 0 %}(Pendiente){% endif %}
   </li>
   </a>
   <div style="margin-right: 40px;">
@@ -10,7 +9,7 @@
           Fecha:<strong> {{ inversion.fechaEmision|date('d-m-Y') }}</strong>
     </li>
     <li style="float: right;width: 20%;text-align: center;" class="etiqueta">
-          Estado:<strong> {{ inversion.detalleEstado }}</strong>
+          Estado:<strong> {{ inversion.estado }}</strong>
     </li>
     <li style="float: right; width: 20%; text-align: center;" class="etiqueta precio">
           Acci&oacute;nes compradas:<strong>{{ inversion.cantidadAcciones }}</strong>

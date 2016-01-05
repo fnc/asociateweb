@@ -336,6 +336,8 @@ ul#menu li a:hover
 
 /*BOTONES*/
 
+
+
 .boton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -373,6 +375,11 @@ ul#menu li a:hover
 }
 .boton_submit:active {
 
+}
+
+.comprar {
+  background-color: #F90;
+  color: #FFF;
 }
 
 

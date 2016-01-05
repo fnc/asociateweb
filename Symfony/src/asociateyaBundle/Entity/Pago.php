@@ -9,8 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"pagoInversion" = "PagoInversion"})
  */
-class Pago
+abstract class Pago
 {
     /**
      * @var integer
@@ -48,6 +51,13 @@ class Pago
      * @ORM\Column(name="estado", type="integer")
      */
     private $estado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detalleEstado", type="string", length=80, nullable=true)
+     */
+    private $detalleEstado;
 
     /**
      * @var \DateTime
@@ -216,5 +226,29 @@ class Pago
     public function getFechaCobro()
     {
         return $this->fechaCobro;
+    }
+
+    /**
+     * Set detalleEstado
+     *
+     * @param string $detalleEstado
+     *
+     * @return Pago
+     */
+    public function setDetalleEstado($detalleEstado)
+    {
+        $this->detalleEstado = $detalleEstado;
+
+        return $this;
+    }
+
+    /**
+     * Get detalleEstado
+     *
+     * @return string
+     */
+    public function getDetalleEstado()
+    {
+        return $this->detalleEstado;
     }
 }

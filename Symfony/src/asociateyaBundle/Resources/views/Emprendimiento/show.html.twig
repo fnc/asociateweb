@@ -68,12 +68,12 @@
       {% if app.user.getId == entity.emprendedor.usuario.getId  %}
       <a href="{{ path('emprendimiento_confirmarPagoRefund', { 'id': entity.id }) }}" class="boton">Cancelar</a>
       {% else %}
-      <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="boton">¡Asociate!</a>
+      <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="boton comprar">Comprar Acciones</a>
       {% endif %}
     {% endif %}
 
     {% if entity.estado == '2' %}
-      <h3>APROBADO!</h3>
+      <h3>Aprobado</h3>
       {% if app.user and is_granted('ROLE_SUPER_ADMIN')  %}
         <form method="post" action="{{ path('emprendimiento_pagoGanancia',{ 'id': entity.id }) }}" id="search_form">
           <input class="search" type="text" name="ganancia" id="ganancia" value="% ganacias" />

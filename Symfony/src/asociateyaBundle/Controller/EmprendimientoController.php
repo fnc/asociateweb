@@ -11,6 +11,10 @@ use asociateyaBundle\Entity\Inversion;
 use asociateyaBundle\Entity\Comentario;
 use asociateyaBundle\Entity\Notificacion;
 use asociateyaBundle\Entity\NuevoComentario;
+use asociateyaBundle\Entity\EmprendimientoAceptado;
+use asociateyaBundle\Entity\EmprendimientoAprobado;
+use asociateyaBundle\Entity\EmprendimientoCancelado;
+use asociateyaBundle\Entity\NuevoEstadoResultado;
 use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
@@ -56,7 +60,15 @@ class EmprendimientoController extends Controller
         // agregar plazo por parametro
         $entity->setFechaFinalizacion(new \DateTime('+'.$plazo.' day'));
 
-        $em->flush();
+
+
+       $notificacionEmprendimiento = new EmprendimientoAceptado();
+       $notificacionEmprendimiento->setUsuario($entity->getEmprendedor()->getUsuario());
+       $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
+       $notificacionEmprendimiento->setEmprendimiento($entity);
+       $em->persist($notificacionEmprendimiento);
+
+       $em->flush();
 
         return $this->redirect($this->generateUrl('emprendedor_pendientes'));
     }

@@ -9,6 +9,12 @@ use asociateyaBundle\Entity\Emprendimiento;
 use asociateyaBundle\Entity\Usuario;
 use asociateyaBundle\Entity\Inversion;
 use asociateyaBundle\Entity\Comentario;
+use asociateyaBundle\Entity\NuevaInversion;
+use asociateyaBundle\Entity\NuevoEstadoResultado;
+use asociateyaBundle\Entity\EmprendimientoAprobado;
+use asociateyaBundle\Entity\EmprendimientoCancelado;
+use asociateyaBundle\Entity\Pago;
+use asociateyaBundle\Entity\PagoInversion;
 use asociateyaBundle\Form\EmprendimientoType;
 use asociateyaBundle\Form\EmprendimientoEditType;
 use asociateyaBundle\Form\ComentarioType;
@@ -100,7 +106,7 @@ class InversionController extends Controller
         $inversion->setFechaEmision(new \DateTime());
         $inversion->setCantidadAcciones($cantidadAcciones);
         //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
-        $inversion->setEstado(0);
+
         $entity->setAccionesRestantes(((int)$entity->getAccionesRestantes())-$cantidadAcciones);
         $em->persist($inversion);
         $em->flush();
@@ -167,9 +173,19 @@ class InversionController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
-            $inversion->setEstado(1);//pago pendiente
-            $inversion->setIdPago($idDePago);
-            $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
+
+
+            // TODO CREAR UN PAGO Y PONER ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
+            // sumando lso montos de los pagos acreditados se puede saber cuantas acciones acreditadas hay actualmente (dividiendo por el preci ode accion)
+            //TODO cambiar esto mismo en los demas lugares
+            $pago = new PagoInversion();
+            $pago->setInversion($inversion);
+            $pago->setEstado(1);//pago pendiente
+            $pago->setIdMp($idDePago);
+            $pago->setIdMPUser($paymentInfo["response"]["collection"]["payer"]["id"]);
+            $pago->setMonto($paymentInfo["response"]["collection"]["transaction_amount"]);
+            $pago->setFechaEmision(new \DateTime());
+            $em->persist($pago);
 
             //verificacion emprendimiento aprobado
             if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
@@ -214,6 +230,12 @@ class InversionController extends Controller
             $inversion->setIdPago($idDePago);
             $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
 
+            $notificacion = new NuevaInversion();
+            $notificacion->setUsuario($inversion->getEmprendimiento()->getEmprendedor()->getUsuario());
+            $notificacion->setFechaCreacion(new \DateTime());
+            $notificacion->setInversion($inversion);
+            $em->persist($notificacion);
+
             //verificacion emprendimiento aprobado
             if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
                 if($em->getRepository('asociateyaBundle:Emprendimiento')->findOneByEstado(1)){
@@ -221,6 +243,11 @@ class InversionController extends Controller
                 }
                 else{
                     $inversion->getEmprendimiento()->setEstado(2);//aprobado con pagos acreditados
+                    $notificacionEmprendimiento = new EmprendimientoAprobado();
+                    $notificacionEmprendimiento->setUsuario($inversion->getEmprendimiento()->getEmprendedor()->getUsuario());
+                    $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
+                    $notificacionEmprendimiento->setEmprendimiento($inversion->getEmprendimiento());
+                    $em->persist($notificacionEmprendimiento);
                 }
             }
 
@@ -253,7 +280,7 @@ class InversionController extends Controller
 
         $searchResult = $mp->search_payment($filters);
 
-        
+
         return $this->render('asociateyaBundle:Inversion:pagosControlador.html.twig', array(
             'pagos' => $searchResult)
         );
@@ -442,6 +469,8 @@ class InversionController extends Controller
 
             $emprendimiento->setEstado(4);//canceladoPagoAcreditado
 
+
+
             //devolver dinero de cada inversion
             $inversiones = $emprendimiento->getInversiones();
 
@@ -457,6 +486,12 @@ class InversionController extends Controller
                 $inversion->setEstado(3);//refunded
 
                 $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
+
+                $notificacionEmprendimiento = new EmprendimientoCancelado();
+                $notificacionEmprendimiento->setUsuario($inversion.getUsuario());
+                $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
+                $notificacionEmprendimiento->setEmprendimiento($inversion.getEmprendimiento());
+                $em->persist($notificacionEmprendimiento);
 
             }
 

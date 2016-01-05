@@ -19,7 +19,7 @@ class Inversion {
 *  @ORM\GeneratedValue(strategy="AUTO")
 */
     private $id;
- 
+
 
 	/**
 	* @ORM\ManyToOne(targetEntity="Usuario", inversedBy="inversiones")
@@ -33,6 +33,11 @@ class Inversion {
 	*/
 	private $emprendimiento;
 
+   /**
+   * @ORM\OneToMany(targetEntity="PagoInversion", mappedBy="inversion")
+   */
+   private $pagos;
+
     /**
      * @var \DateTime
      *
@@ -41,48 +46,16 @@ class Inversion {
     private $fechaEmision;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fechaCobro", type="datetime",nullable=true)
-     */
-    private $fechaCobro;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="estado", type="decimal")
-     */
-    private $estado;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="detalleEstado", type="string", length=80, nullable=true)
-     */
-    private $detalleEstado; 
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="idPago", type="decimal",nullable=true)
-     */
-    private $idPago;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="idUsuarioMP", type="decimal",nullable=true)
-     */
-    private $idUsuarioMP;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="cantidadAcciones", type="integer")
      */
     private $cantidadAcciones;
- 
 
+
+    public function __construct() {
+        $this->pagos = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -94,76 +67,22 @@ class Inversion {
         return $this->id;
     }
 
-    /**
-     * Set idEmprendimiento
-     *
-     * @param integer $idEmprendimiento
-     *
-     * @return Inversion
-     */
-    public function setIdEmprendimiento($idEmprendimiento)
-    {
-        $this->idEmprendimiento = $idEmprendimiento;
-
-        return $this;
-    }
 
     /**
-     * Get idEmprendimiento
-     *
-     * @return integer
-     */
-    public function getIdEmprendimiento()
-    {
-        return $this->idEmprendimiento;
-    }
-
-    /**
-     * Set monto
-     *
-     * @param string $monto
-     *
-     * @return Inversion
-     */
-    public function setMonto($monto)
-    {
-        $this->monto = $monto;
-
-        return $this;
-    }
-
-    /**
-     * Get monto
+     * Get estado
      *
      * @return string
      */
-    public function getMonto()
+    public function getEstado()
     {
-        return $this->monto;
-    }
-
-    /**
-     * Set idUsuario
-     *
-     * @param \asociateyaBundle\Entity\Usuario $idUsuario
-     *
-     * @return Inversion
-     */
-    public function setIdUsuario(\asociateyaBundle\Entity\Usuario $idUsuario = null)
-    {
-        $this->idUsuario = $idUsuario;
-
-        return $this;
-    }
-
-    /**
-     * Get idUsuario
-     *
-     * @return \asociateyaBundle\Entity\Usuario
-     */
-    public function getIdUsuario()
-    {
-        return $this->idUsuario;
+      $pagos = $this->getPagos();
+      foreach ($pagos as $pago) {
+         if($pago->getEstado() != "2")
+         {
+            return "Pendiente";
+         }
+      }
+      return "Acreditado";
     }
 
     /**
@@ -238,125 +157,6 @@ class Inversion {
         return $this->fechaEmision;
     }
 
-    /**
-     * Set fechaCobro
-     *
-     * @param \DateTime $fechaCobro
-     *
-     * @return Inversion
-     */
-    public function setFechaCobro($fechaCobro)
-    {
-        $this->fechaCobro = $fechaCobro;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaCobro
-     *
-     * @return \DateTime
-     */
-    public function getFechaCobro()
-    {
-        return $this->fechaCobro;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     *
-     * @return Inversion
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    /**
-     * Set detalleEstado
-     *
-     * @param string $detalleEstado
-     *
-     * @return Inversion
-     */
-    public function setDetalleEstado($detalleEstado)
-    {
-        $this->detalleEstado = $detalleEstado;
-
-        return $this;
-    }
-
-    /**
-     * Get detalleEstado
-     *
-     * @return string
-     */
-    public function getDetalleEstado()
-    {
-        return $this->detalleEstado;
-    }
-
-    /**
-     * Set idPago
-     *
-     * @param string $idPago
-     *
-     * @return Inversion
-     */
-    public function setIdPago($idPago)
-    {
-        $this->idPago = $idPago;
-
-        return $this;
-    }
-
-    /**
-     * Get idPago
-     *
-     * @return string
-     */
-    public function getIdPago()
-    {
-        return $this->idPago;
-    }
-
-    /**
-     * Set idUsuarioMP
-     *
-     * @param string $idUsuarioMP
-     *
-     * @return Inversion
-     */
-    public function setIdUsuarioMP($idUsuarioMP)
-    {
-        $this->idUsuarioMP = $idUsuarioMP;
-
-        return $this;
-    }
-
-    /**
-     * Get idUsuarioMP
-     *
-     * @return string
-     */
-    public function getIdUsuarioMP()
-    {
-        return $this->idUsuarioMP;
-    }
 
     /**
      * Set cantidadAcciones
@@ -380,5 +180,39 @@ class Inversion {
     public function getCantidadAcciones()
     {
         return $this->cantidadAcciones;
+    }
+
+    /**
+     * Add pago
+     *
+     * @param \asociateyaBundle\Entity\PagoInversion $pago
+     *
+     * @return Inversion
+     */
+    public function addPago(\asociateyaBundle\Entity\PagoInversion $pago)
+    {
+        $this->pagos[] = $pago;
+
+        return $this;
+    }
+
+    /**
+     * Remove pago
+     *
+     * @param \asociateyaBundle\Entity\PagoInversion $pago
+     */
+    public function removePago(\asociateyaBundle\Entity\PagoInversion $pago)
+    {
+        $this->pagos->removeElement($pago);
+    }
+
+    /**
+     * Get pagos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPagos()
+    {
+        return $this->pagos;
     }
 }

@@ -49,11 +49,17 @@
                 </li>
                 {% if entity.totalAcciones>0 %}
                   {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+                  {% if progresoBarra == 0 %}
+                  <li style="float: none; display: block;" class="progress">
+                    No hay inversiones aun.
+                  </li>
+                  {% else %}
                   <li style="float: none; display: block; padding: 0px;" class="progress">
                     <div style="width:{{progresoBarra}}%" class="progress-bar progress-bar active" role="progressbar" aria-valuenow="{{progresoBarra}}" aria-valuemin="0" aria-valuemax="100">
                          {{progresoBarra|number_format(0, '.', ',')}} %
                     </div>
                   </li>
+                  {% endif %}
                 {% endif %}
               </ul>
               <ul style="width: 49%;float: right;">
