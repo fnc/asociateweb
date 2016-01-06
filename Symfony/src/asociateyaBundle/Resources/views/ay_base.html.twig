@@ -117,7 +117,7 @@
           {% endif %}
           <ul style="float:right;list-style-type:none; width: auto; padding: 0px;">
           {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <li><a id="boton_perfil" href={{ path('usuario_show',{'id':app.user.getId}) }} ><div class="etiqueta nuevo" style="float: left;" id="contadorNotificaciones"></div><div style="float: right;"> {{ app.user.username }}</div></a></li>
+          <li><a id="boton_perfil" href={{ path('usuario_show',{'id':app.user.getId}) }} ><div class="etiqueta nuevo" style="font-weight: bold;font-size: 10px;border-radius: 20px;float: left;display:none;" id="contadorNotificaciones"></div><div style="float: right;"> {{ app.user.username }}</div></a></li>
           <li><a href={{ path('asociateya_salir')}} >Salir</a></li>
           {% else %}
           <li><a href={{ path('asociateya_ingresar')}} >Ingresa</a></li>

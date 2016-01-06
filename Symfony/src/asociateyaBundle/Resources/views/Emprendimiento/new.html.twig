@@ -13,26 +13,17 @@
 
 
 {% block body -%}
-<h1>Crea un proyecto</h1>
-
 <form id="formulario_proyecto" class="appnitro" method="post" action="{{ path('emprendimiento_create') }}" {{ form_enctype(form) }}>
-
-	<div class="form_description">
-		<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
-	</div>	
-
-
 
 	{{ form_row(form._token) }}
 
 			<div class="sidebar" id="sidebar_container">
-				<div class="sidebar">   	
-					<div class="sidebar_top"></div>
 					<div class="sidebar_item">
-						<h3>Selecciona</h3>
+						<br>
+
 						{{ form_errors(form.categorias) }}
 						<fieldset form={{form.vars.name}}>
-							<label class="titulo">Categorias:</label><br>
+							<h3>Categorias:</h3>
 
 							{% for child in form.categorias %}
 
@@ -43,12 +34,26 @@
 							{% endfor %}
 
 						</fieldset>
+						<br>
+						<br>
 					</div>
-					<div class="sidebar_base"></div>
-				</div>
 			</div>
+
+			<div class="content" id="resultados_content">
+
+<h1>Crea un proyecto</h1>
+
+
+
+	<div class="form_description">
+		<p>Llene los siguientes campos para crear un nuevo proyecto. Todos los campos son obligatorios. Una vez registrado, el proyecto estará pendiente de aprobación por nuestro comité. La evaluación de su proyecto puede llevar de 1 a 3 días. </p>
+	</div>
+
+
+
+
 	<ul>
-	    <li id="li_1" > 
+	    <li id="li_1" >
 		    <label class="description" for="{{form.nombre.vars.id}}">Título </label>
 		    {{ form_errors(form.nombre) }}
 		    <div>
@@ -71,7 +76,7 @@
 		    	{{ form_widget(form.descripcionLarga) }}
 		    </div><p class="guidelines" id="guide_3"><small>Descripción detallada de su proyecto.</small></p>
 	    </li>
-		
+
 	    <li id="li_4" >
 		    <label class="description" for="{{form.monto.vars.id}}">Monto requerido </label>
 		    {{ form_errors(form.monto) }}
@@ -104,9 +109,9 @@
 	</ul>
 
 
+</div>
 
-
-</form>	
+</form>
 
 {% endblock %}
 {% block javascripts %}{% endblock %}

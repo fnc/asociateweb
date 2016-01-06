@@ -488,6 +488,17 @@ class EmprendimientoController extends Controller
 
         $comentarioPadre->setComentarioHijo($comentarioRespuesta);
 
+        $em->persist($comentarioRespuesta);
+        $em->flush();
+
+        $notificacion = new NuevoComentario();
+        $notificacion->setUsuario($comentarioPadre->getUsuario());
+        $notificacion->setFechaCreacion(new \DateTime());
+        $notificacion->setComentario($comentarioRespuesta);
+
+        $em->persist($notificacion);
+        $em->flush();
+
         //mandar mail de notificacion
         $message = \Swift_Message::newInstance()
         ->setSubject("Un inversor hizo un comentario en el emprendimiento ".$emprendimiento->getNombre())//.$emprendimiento->getNombre())
@@ -502,9 +513,7 @@ class EmprendimientoController extends Controller
         );
         $this->get('mailer')->send($message);
 
-         $em = $this->getDoctrine()->getManager();
-         $em->persist($comentarioRespuesta);
-         $em->flush();
+
         return $this->redirect($this->generateUrl('emprendimiento_show',array('id' => $id)));
     }
 

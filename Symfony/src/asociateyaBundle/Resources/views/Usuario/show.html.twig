@@ -18,8 +18,8 @@ $(document).ready(function(){
 
 {% block body %}
 <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
-<link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
-<link href={{ asset('bundles/asociateya/css/usuario.css')}} rel="stylesheet" type="text/css">
+<!-- <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css"> -->
+<!-- <link href={{ asset('bundles/asociateya/css/usuario.css')}} rel="stylesheet" type="text/css"> -->
 
 
 <div class="sidebar" id="sidebar_container">
@@ -85,6 +85,7 @@ $(document).ready(function(){
       {% endif %}
       {% if notificacionesNuevoResultado %}
         {% for notificacion in notificacionesNuevoResultado %}
+        <!-- TODO poner hipervinculos -->
         <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
           Su inversion en el emprendimiento {{ notificacion.resultado.emprendimiento.nombre }} ha presentado resultados y ya se ha acreditado lo que le corresponde a su inversion.
         </li>
@@ -93,7 +94,14 @@ $(document).ready(function(){
       {% if notificacionesComentario %}
         {% for notificacion in notificacionesComentario %}
         <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
-          {{notificacion.comentario.usuario.nombreUsuario}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
+          <a href="{{ path('emprendimiento_show',{'id':notificacion.comentario.emprendimiento.getId}) }}">
+            <div class="etiqueta acciones" style="width: 10%;float:left;">
+              Comentario
+            </div>
+            <div style="float:left;">
+              {{notificacion.comentario.usuario.nombreUsuario}} ha comentado en su emprendimiento {{notificacion.comentario.emprendimiento.nombre}} lo siguiente: {{notificacion.comentario.texto}}
+            </div>
+          </a>
         </li>
         {% endfor %}
       {% endif %}
@@ -126,7 +134,7 @@ $(document).ready(function(){
 </br>
 </br>
 
-  {% endif %}
+  {% else %}
 
     <h3 id="ID_nombreCreador2">Emprendimientos de {{ entity.nombre }} {{ entity.apellido }} / {{ entity.nombreUsuario }}</h3>
     <div id="portfolio_container">
@@ -138,5 +146,6 @@ $(document).ready(function(){
                 {% endfor %}
         </ul>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

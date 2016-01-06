@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use asociateyaBundle\Entity\Emprendedor;
+use asociateyaBundle\Entity\EmprendedorAceptado;
 use asociateyaBundle\Form\EmprendedorType;
 
 /**
@@ -34,6 +35,14 @@ class EmprendedorController extends Controller
         $entity->getUsuario()->setRol('ROLE_EMPRENDEDOR');
         $entity->setFechaAprobacion(new \DateTime());
 
+        $em->flush();
+
+        $notificacion = new EmprendedorAceptado();
+        $notificacion->setUsuario($entity->getUsuario());
+        $notificacion->setFechaCreacion(new \DateTime());
+        $notificacion->setEmprendedor($entity);
+
+        $em->persist($notificacion);
         $em->flush();
 
 
@@ -71,7 +80,7 @@ class EmprendedorController extends Controller
      *
      */
     public function pendientesAction()
-    {   
+    {
         //SOLAMENTE EL CONTROLADOR DE EMPRENDIMIENTOS PUEDE APROBAR PENDIENTES
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN', null, 'Unable to access this page!');
 

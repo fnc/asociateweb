@@ -99,17 +99,34 @@ class InversionController extends Controller
         }
 
 
-        //Creo la nueva inversion
         //TODO si ya invirtio en este emprendimiento no creo una inversion nueva!!
-        $inversion = new Inversion();
-        $inversion->setUsuario($this->getUser());
-        $inversion->setEmprendimiento($entity);
-        $inversion->setFechaEmision(new \DateTime());
-        $inversion->setCantidadAcciones($cantidadAcciones);
-        //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
+        $inversion = $em->getRepository('asociateyaBundle:Inversion')->findOneBy(
+            array('usuario' => $this->getUser(), 'emprendimiento' => $entity)
+         );
 
+        if($inversion){
+           //Actualizo la inversion
+           $inversion->setCantidadAcciones($inversion->getCantidadAcciones()+$cantidadAcciones);
+        }
+        else{
+           //Creo la nueva inversion
+           $inversion = new Inversion();
+           $inversion->setUsuario($this->getUser());
+           $inversion->setEmprendimiento($entity);
+           $inversion->setFechaEmision(new \DateTime());
+           $inversion->setCantidadAcciones($cantidadAcciones);
+           //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
+           $em->persist($inversion);
+        }
         $entity->setAccionesRestantes(((int)$entity->getAccionesRestantes())-$cantidadAcciones);
-        $em->persist($inversion);
+        $em->flush();
+
+
+        $notificacion = new NuevaInversion();
+        $notificacion->setUsuario($entity->getEmprendedor()->getUsuario());
+        $notificacion->setFechaCreacion(new \DateTime());
+        $notificacion->setInversion($inversion);
+        $em->persist($notificacion);
         $em->flush();
 
         require_once ('mercadopago.php');
@@ -132,8 +149,8 @@ class InversionController extends Controller
                 )
             ),
             "back_urls" => array(
-                    "success" => $baseurl.$this->generateUrl('emprendimiento_pagoAcreditado',array('idInversion'=>$inversion->getId())),
-                    "pending" => $baseurl.$this->generateUrl('emprendimiento_pagoPendiente',array('idInversion'=>$inversion->getId())),
+                    "success" => $baseurl.$this->generateUrl('inversion_pagoAcreditado',array('idInversion'=>$inversion->getId())),
+                    "pending" => $baseurl.$this->generateUrl('inversion_pagoPendiente',array('idInversion'=>$inversion->getId())),
                     "failure" => "failure",
 
                 ),
@@ -186,6 +203,7 @@ class InversionController extends Controller
             $pago->setIdMPUser($paymentInfo["response"]["collection"]["payer"]["id"]);
             $pago->setMonto($paymentInfo["response"]["collection"]["transaction_amount"]);
             $pago->setFechaEmision(new \DateTime());
+            //TODO Bug, por alguna razon tambien se setea la fecha de cobro
             $em->persist($pago);
 
             //verificacion emprendimiento aprobado
@@ -227,15 +245,21 @@ class InversionController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
-            $inversion->setEstado(2);//pago acreditado
-            $inversion->setIdPago($idDePago);
-            $inversion->setIdUsuarioMP($paymentInfo["response"]["collection"]["payer"]["id"]);
 
-            $notificacion = new NuevaInversion();
-            $notificacion->setUsuario($inversion->getEmprendimiento()->getEmprendedor()->getUsuario());
-            $notificacion->setFechaCreacion(new \DateTime());
-            $notificacion->setInversion($inversion);
-            $em->persist($notificacion);
+            // TODO CREAR UN PAGO Y PONER ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
+            // sumando lso montos de los pagos acreditados se puede saber cuantas acciones acreditadas hay actualmente (dividiendo por el preci ode accion)
+            //TODO cambiar esto mismo en los demas lugares
+            //TODO no olvidarse de las notificaciones NIPC
+            $pago = new PagoInversion();
+            $pago->setInversion($inversion);
+            $pago->setEstado(2);//pago Acreditado
+            $pago->setIdMp($idDePago);
+            $pago->setIdMPUser($paymentInfo["response"]["collection"]["payer"]["id"]);
+            $pago->setMonto($paymentInfo["response"]["collection"]["transaction_amount"]);
+            $pago->setFechaEmision(new \DateTime());
+            $pago->setFechaCobro(new \DateTime());
+            $em->persist($pago);
+
 
             //verificacion emprendimiento aprobado
             if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
@@ -406,8 +430,8 @@ class InversionController extends Controller
                 )
             ),
             "back_urls" => array(
-                    "success" => $baseurl.$this->generateUrl('emprendimiento_pagoAcreditadoRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
-                    "pending" => $baseurl.$this->generateUrl('emprendimiento_pagoPendienteRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
+                    "success" => $baseurl.$this->generateUrl('inversion_pagoAcreditadoRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
+                    "pending" => $baseurl.$this->generateUrl('inversion_pagoPendienteRefund',array('idEmprendimiento'=>$emprendimiento->getId())),
                     "failure" => "failure",
 
                 ),

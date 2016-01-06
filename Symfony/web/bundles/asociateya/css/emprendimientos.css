@@ -1,3 +1,15 @@
+.lista_notificaciones {
+	list-style-type: none;
+}
+
+.lista_notificaciones li a{
+	color: inherit;
+}
+
+
+
+
+
 #portfolio_container {
 	width: auto;
 	height: auto;

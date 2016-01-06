@@ -69,7 +69,7 @@ abstract class Pago
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechaCobro", type="datetime")
+     * @ORM\Column(name="fechaCobro", type="datetime",nullable=true)
      */
     private $fechaCobro;
 
