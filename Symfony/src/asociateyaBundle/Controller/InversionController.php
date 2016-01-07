@@ -99,7 +99,7 @@ class InversionController extends Controller
         }
 
 
-        //TODO si ya invirtio en este emprendimiento no creo una inversion nueva!!
+        //Si ya invirtio en este emprendimiento no creo una inversion nueva!!
         $inversion = $em->getRepository('asociateyaBundle:Inversion')->findOneBy(
             array('usuario' => $this->getUser(), 'emprendimiento' => $entity)
          );
@@ -246,7 +246,7 @@ class InversionController extends Controller
 
             $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
 
-            // TODO CREAR UN PAGO Y PONER ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
+            // CREAR UN PAGO Y PONER ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
             // sumando lso montos de los pagos acreditados se puede saber cuantas acciones acreditadas hay actualmente (dividiendo por el preci ode accion)
             //TODO cambiar esto mismo en los demas lugares
             //TODO no olvidarse de las notificaciones NIPC

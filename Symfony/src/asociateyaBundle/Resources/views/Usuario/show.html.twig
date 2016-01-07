@@ -85,10 +85,11 @@ $(document).ready(function(){
       {% endif %}
       {% if notificacionesNuevoResultado %}
         {% for notificacion in notificacionesNuevoResultado %}
-        <!-- TODO poner hipervinculos -->
-        <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
-          Su inversion en el emprendimiento {{ notificacion.resultado.emprendimiento.nombre }} ha presentado resultados y ya se ha acreditado lo que le corresponde a su inversion.
-        </li>
+        <a href="{{ path('emprendimiento_show',{'id':notificacion.resultado.emprendimiento.getId}) }}">
+          <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
+            Su inversion en el emprendimiento {{ notificacion.resultado.emprendimiento.nombre }} ha presentado resultados y ya se ha acreditado lo que le corresponde a su inversion.
+          </li>
+        </a>
         {% endfor %}
       {% endif %}
       {% if notificacionesComentario %}

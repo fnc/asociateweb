@@ -76,7 +76,13 @@
       <h3>Aprobado</h3>
       {% if app.user and is_granted('ROLE_SUPER_ADMIN')  %}
         <form method="post" action="{{ path('inversion_pagoGanancia',{ 'id': entity.id }) }}" id="search_form">
-          <input class="search" type="text" name="ganancia" id="ganancia" value="% ganacias" />
+          <h3>Nuevo Resultado</h3>
+          % de ganancias
+          </br>
+          </br>
+          <input class="search" type="text" name="ganancia" id="ganancia" />
+          </br>
+          </br>
           <button name="search" type="submit"  class="boton">Pagar Ganancia</button>
         </form>
       {% endif %}

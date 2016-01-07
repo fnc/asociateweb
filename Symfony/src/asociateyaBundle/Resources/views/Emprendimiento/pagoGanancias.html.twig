@@ -48,13 +48,13 @@
                             {{inversion.cantidadAcciones}}
                         </td>
                         <td>
-                            {{inversion.cantidadAcciones * emprendimiento.precioAccion * porGanancia|number_format(2, '.', ',')}}
+                            {{inversion.cantidadAcciones * emprendimiento.precioAccion * porGanancia / 100 }}
                         </td>
                         <td>
                             {{inversion.usuario.cbu}}
                         </td>
                         <td>
-                            <a href={{ path('emprendimiento_pagoGananciaNotificacion',{'id':inversion.usuario.getId}) }}>Notificar</a> 
+                            <a href={{ path('emprendimiento_pagoGananciaNotificacion',{'id':inversion.usuario.getId}) }}>Notificar</a>
                         </td>
                     </tr>
 
@@ -63,8 +63,7 @@
             </table>
 
         </div>
-        
+
       </div>
 
 {% endblock %}
-
