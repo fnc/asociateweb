@@ -18,6 +18,10 @@ inversion_pagoAcreditado:
     path:     /{idInversion}/pagoAcreditado
     defaults: { _controller: "asociateyaBundle:Inversion:pagoAcreditado" }
 
+inversion_pagoAcreditadoRetrasado:
+    path:     /pagoAceditadoRetrasado
+    defaults: { _controller: "asociateyaBundle:Inversion:pagoAcreditadoRetrasado" }
+
 inversion_pagosControl:
     path:     /controlPagos
     defaults: { _controller: "asociateyaBundle:Inversion:pagosControl" }

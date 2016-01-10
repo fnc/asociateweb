@@ -29,8 +29,10 @@ $(document).ready(function(){
     <h3 id="ID_nombreCreador3">{{ entity.nombre }} {{ entity.apellido }}</h3>
     <p class="centrado">Inscripto el dia : {{ entity.fechaCreacion|date('Y-m-d') }}</p>
     {% if entity.emprendedor %}
+    {% if entity.emprendedor.estado == 1 %}
     <div class = "etiqueta acciones">Emprendedor</div>
     <div class = "etiqueta precio">{{entity.emprendedor.emprendimientos|length}} emprendimientos</div>
+    {% endif %}
     {% endif %}
     </br>
     </br>

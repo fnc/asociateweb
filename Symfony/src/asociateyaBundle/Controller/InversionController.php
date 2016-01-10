@@ -284,6 +284,64 @@ class InversionController extends Controller
         );
     }
 
+/**
+ * maneja la notificacion de mercadopago cuando se acredita un pago
+ *http://localhost:8000/inversion/pagoAceditadoRetrasado?collection_id=1775916360
+ *
+ */
+public function pagoAcreditadoRetrasadoAction( Request $request )
+{
+        $request = $this->getRequest();
+        $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
+        $request->query->get('preference_id');
+        $request->query->get('collection_status');
+        $request->query->get('external_reference');
+        $request->query->get('payment_type');
+        $request->query->get('merchant_order_id');
+        //$request->request->get('myParam'); // get a $_POST parameter
+
+        require_once ('mercadopago.php');
+
+        $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+        $idDePago=$request->query->get('collection_id');
+        $paymentInfo = $mp->get_payment ($idDePago);
+
+
+        $em = $this->getDoctrine()->getManager();
+//TODO verificar la payment info que de verdad este acreditada
+
+        $pago = $em->getRepository('asociateyaBundle:PagoInversion')->findOneByIdMp($idDePago);
+
+        if($pago){
+          $pago->setEstado(2);//pago Acreditado
+          $pago->setFechaCobro(new \DateTime());
+          $inversion = $pago->getInversion();
+
+          //verificacion emprendimiento aprobado
+          if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
+//TODO este if esta mal tengo que ver las inversiones si esta todas acreditadas(uso getEstado en inversion)
+              if($em->getRepository('asociateyaBundle:Emprendimiento')->findOneByEstado(1)){
+                  $inversion->getEmprendimiento()->setEstado(6);//aprobado con pagos pendientes
+              }
+              else{
+                  $inversion->getEmprendimiento()->setEstado(2);//aprobado con pagos acreditados
+                  $notificacionEmprendimiento = new EmprendimientoAprobado();
+                  $notificacionEmprendimiento->setUsuario($inversion->getEmprendimiento()->getEmprendedor()->getUsuario());
+                  $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
+                  $notificacionEmprendimiento->setEmprendimiento($inversion->getEmprendimiento());
+                  $em->persist($notificacionEmprendimiento);
+              }
+          }
+
+          $em->flush();
+        }
+
+
+    return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
+        'mensaje'      => "Tu pago fue acreditado exitosamente!")
+    );
+}
+
 
 
 
