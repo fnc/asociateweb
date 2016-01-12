@@ -263,7 +263,14 @@ class InversionController extends Controller
 
             //verificacion emprendimiento aprobado
             if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
-                if($em->getRepository('asociateyaBundle:Emprendimiento')->findOneByEstado(1)){
+              //TODO este if esta mal tengo que ver las inversiones si esta todas acreditadas(uso getEstado en inversion)
+              $retval = false;
+              foreach ($inversion->getEmprendimiento()->getInversiones() as $unaInversion) {
+                if ($unaInversion->getEstado()=="Pendiente") {
+                  $retval = true;
+                }
+              }
+                if($retval){
                     $inversion->getEmprendimiento()->setEstado(6);//aprobado con pagos pendientes
                 }
                 else{
@@ -319,8 +326,14 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
 
           //verificacion emprendimiento aprobado
           if($inversion->getEmprendimiento()->getAccionesRestantes()==0){
-//TODO este if esta mal tengo que ver las inversiones si esta todas acreditadas(uso getEstado en inversion)
-              if($em->getRepository('asociateyaBundle:Emprendimiento')->findOneByEstado(1)){
+            //TODO este if esta mal tengo que ver las inversiones si esta todas acreditadas(uso getEstado en inversion)
+            $retval = false;
+            foreach ($inversion->getEmprendimiento()->getInversiones() as $unaInversion) {
+              if ($unaInversion->getEstado()=="Pendiente") {
+                $retval = true;
+              }
+            }
+              if($retval){
                   $inversion->getEmprendimiento()->setEstado(6);//aprobado con pagos pendientes
               }
               else{

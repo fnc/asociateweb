@@ -29,7 +29,7 @@
             {% if inversiones %}
                 <ul>
                     {% for inversion in inversiones %}
-                    <div class="inversion">
+                    <div class="inversion" id="emprendimiento{{ loop.index }}" >
                       {% include 'asociateyaBundle:Inversion:inversion.html.twig' with {inversion: inversion} %}
                       <!-- Es importante que la div del grafico este antes que el script -->
                       <div class="informacion_inversion" style="display:none;width:auto; text-align: center;">
