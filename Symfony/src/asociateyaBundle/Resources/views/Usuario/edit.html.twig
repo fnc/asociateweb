@@ -10,9 +10,50 @@
 {% block body -%}
     <h1>Edicion de perfil de {{ entity.username }} </h1>
 
-    {{ form(edit_form) }}
+    <form name="asociateyabundle_usuario" method="post" action="/usuario/{{ entity.id }}/actualizar">
+      <input type="hidden" name="_method" value="PUT" />
+      <div id="asociateyabundle_usuario">
+        <div>
+        <label for="asociateyabundle_usuario_nombre">Nombre</label>
+        <input type="text" id="asociateyabundle_usuario_nombre" name="asociateyabundle_usuario[nombre]" maxlength="255" value="{{ entity.nombre }}" />
+      </div>
+        <div>
+          <label for="asociateyabundle_usuario_apellido">Apellido</label>
+          <input type="text" id="asociateyabundle_usuario_apellido" name="asociateyabundle_usuario[apellido]" maxlength="255" value="{{ entity.apellido }}" />
+        </div>
+          <div>
+            <label for="asociateyabundle_usuario_email">E-mail</label>
+            <input type="text" id="asociateyabundle_usuario_email" name="asociateyabundle_usuario[email]" maxlength="255" value="{{ entity.email }}" />
+          </div>
+          <div>
+            <label for="asociateyabundle_usuario_dni">DNI</label>
+            <input type="text" id="asociateyabundle_usuario_dni" name="asociateyabundle_usuario[dni]" maxlength="255" value="{{ entity.dni }}" />
+          </div>
+          <div>
+            <label for="asociateyabundle_usuario_direccion">Direccion</label>
+            <input type="text" id="asociateyabundle_usuario_direccion" name="asociateyabundle_usuario[direccion]" maxlength="255" value="{{ entity.direccion }}" />
+          </div>
+          <div>
+            <label for="asociateyabundle_usuario_cuit">CUIT</label>
+            <input type="text" id="asociateyabundle_usuario_cuit" name="asociateyabundle_usuario[cuit]" maxlength="255" value="{{ entity.cuit }}" />
+          </div>
+          <div>
+            <label for="asociateyabundle_usuario_cbu">CBU</label>
+            <input type="text" id="asociateyabundle_usuario_cbu" name="asociateyabundle_usuario[cbu]" maxlength="40" value="{{ entity.cbu }}" />
+            El CBU será usado para que Asociate Ya haga los depositos de las ganacias que generen los emprendimientos.
+          </div>
+        </br>
+        </br>
+          <div>
+            <button type="submit" id="asociateyabundle_usuario_submit" name="asociateyabundle_usuario[submit]">Actualizar</button>
+          </div>
+          {{ form_widget(edit_form._token) }}
+          </div>
+        </form>
+
 
         <ul class="record_actions">
 
 </ul>
+
 {% endblock %}

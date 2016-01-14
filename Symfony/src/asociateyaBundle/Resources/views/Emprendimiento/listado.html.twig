@@ -84,7 +84,9 @@ $(document).ready(function(){
           });
           </script>
           {% else %}
-          No hay estados de resultado para mostrar.
+          <div class="elemento_mensaje">
+            <strong>No hay estados de resultado para mostrar.</strong>
+          </div>
           {% endif %}
           {% endif %}
           {% if entity.inversiones %}
