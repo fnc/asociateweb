@@ -184,6 +184,7 @@ class UsuarioController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Usuario entity.
      *
@@ -205,7 +206,7 @@ class UsuarioController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+            return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Sus datos han sido actualizados exitosamente."));
         }
 
         return $this->render('asociateyaBundle:Usuario:edit.html.twig', array(

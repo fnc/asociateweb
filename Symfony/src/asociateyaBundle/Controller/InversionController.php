@@ -461,15 +461,16 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
         }
 
+        //SI NADIE INVIRTIO AUN
         if ((int)$emprendimiento->getTotalAcciones()-(int)$emprendimiento->getAccionesRestantes()==0) {
             $emprendimiento->setEstado(4);//candelado
 
             $em->flush();
 
-            return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
-                'mensaje'      => "Se ha cancelado el emprendimiento.")
-        );
+            return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje'      => "Se ha cancelado el emprendimiento."));
         }
+
+        //SI HAY INVERSIONES HECHAS
 
         $montoAPagar =  ((float)$emprendimiento->getTotalAcciones()-(float)$emprendimiento->getAccionesRestantes())*(float)$emprendimiento->getPrecioAccion()*(0.0495);
         $emprendimiento->setEstado(3);//candelado pendiente de pago
@@ -576,19 +577,21 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
 
 
             foreach ($inversiones as $inversion) {
+               foreach ($inversion->getPagos() as $pago ) {
 
-                $resultado = $mp->refund_payment($inversion->getIdPago());
+                   $resultado = $mp->refund_payment($pago->getIdMp());
 
-                $inversion->setEstado(3);//refunded
+                   $pago->setEstado(3);//refunded
 
-                $comisionRefund = (float)$inversion->getCantidadAcciones()*(float)$emprendimiento->getPrecioAccion()*(0.0495);
+                   //TODO esto no se usa porque el refund aparentemente devuelve la comision
+                   $comisionRefund = (float)$pago->getMonto()*(0.0495);
 
-                $notificacionEmprendimiento = new EmprendimientoCancelado();
-                $notificacionEmprendimiento->setUsuario($inversion.getUsuario());
-                $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
-                $notificacionEmprendimiento->setEmprendimiento($inversion.getEmprendimiento());
-                $em->persist($notificacionEmprendimiento);
-
+                   $notificacionEmprendimiento = new EmprendimientoCancelado();
+                   $notificacionEmprendimiento->setUsuario($inversion->getUsuario());
+                   $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
+                   $notificacionEmprendimiento->setEmprendimiento($inversion->getEmprendimiento());
+                   $em->persist($notificacionEmprendimiento);
+               }
             }
 
             $em->flush();
