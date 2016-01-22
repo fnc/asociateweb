@@ -4,11 +4,73 @@
  {% block stylesheets %}
   <script>
     $(document).ready(function(){
+      var activeOrder;
+
       $("#boton_buscar").addClass("active");
 
       $('#boton_submit').click( function(event) {
         event.preventDefault();
         $.get( '{{path('emprendimiento_busquedaFiltrada')}}'+'?'+ $('#search_form').serialize(), function(data) {$("#resultados_content").html(data);},'html');
+      });
+      $('#boton_orden_precio').click( function(event) {
+        event.preventDefault();
+        if (activeOrder == 'precioASC') {
+          $(".lista_resultados .resultado").sort(sort_liDES) // sort elements
+          .appendTo('.lista_resultados'); // append again to the list
+          activeOrder = 'precioDES';
+        }
+        else {
+          $(".lista_resultados .resultado").sort(sort_liASC) // sort elements
+          .appendTo('.lista_resultados'); // append again to the list
+          activeOrder = 'precioASC';
+        }
+        // sort function callback
+        function sort_liASC(a, b){
+          return ($(b).data('precio')) > ($(a).data('precio')) ? 1 : -1;
+        }
+        function sort_liDES(a, b){
+          return ($(b).data('precio')) < ($(a).data('precio')) ? 1 : -1;
+        }
+      });
+      $('#boton_orden_plazo').click( function(event) {
+        event.preventDefault();
+        if (activeOrder == 'plazoASC') {
+          $(".lista_resultados .resultado").sort(sort_liDES) // sort elements
+          .appendTo('.lista_resultados'); // append again to the list
+          activeOrder = 'plazoDES';
+        }
+        else {
+          $(".lista_resultados .resultado").sort(sort_liASC) // sort elements
+          .appendTo('.lista_resultados'); // append again to the list
+          activeOrder = 'plazoASC';
+        }
+        // sort function callback
+        function sort_liASC(a, b){
+          return ($(b).data('plazo')) > ($(a).data('plazo')) ? 1 : -1;
+        }
+        function sort_liDES(a, b){
+          return ($(b).data('plazo')) < ($(a).data('plazo')) ? 1 : -1;
+        }
+      });
+      $('#boton_orden_porcent').click( function(event) {
+        event.preventDefault();
+        if (activeOrder == 'porcentASC') {
+          $(".lista_resultados .resultado").sort(sort_liDES) // sort elements
+          .appendTo('.lista_resultados'); // append again to the list
+          activeOrder = 'porcentDES';
+        }
+        else {
+          $(".lista_resultados .resultado").sort(sort_liASC) // sort elements
+          .appendTo('.lista_resultados'); // append again to the list
+          activeOrder = 'porcentASC';
+        }
+        // sort function callback
+        function sort_liASC(a, b){
+          return ($(b).data('porcent')) > ($(a).data('porcent')) ? 1 : -1;
+        }
+        function sort_liDES(a, b){
+          return ($(b).data('porcent')) < ($(a).data('porcent')) ? 1 : -1;
+        }
       });
     });
   </script>
@@ -47,12 +109,24 @@
 <div class="content" id="resultados_content">
 
         {% if entities %}
-            <h1>Emprendimientos</h1>
+            <h1>Emprendimientos
+              <a id="boton_orden_precio" class="boton" style="float: right;">Precio &uarr; &darr;</a>
+              <a id="boton_orden_plazo" class="boton" style="float: right;">Plazo &uarr; &darr;</a>
+              <a id="boton_orden_porcent" class="boton" style="float: right;">% restante &uarr; &darr;</a>
+            </h1>
             <!-- EMPIEZA EL PORTAFOLIO -->
             <div id="portfolio_container">
-                <ul>
+                <ul class="lista_resultados">
                     {% for entity in entities %}
-                      <li>
+                      {% if not entity.estado == 0 %}
+                        {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
+                        {% set leftDays = difference.days %}
+                        {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+                      {% else %}
+                        {% set leftDays = 10000 %}
+                        {% set progresoBarra = 0 %}
+                      {% endif %}
+                      <li class="resultado" data-precio="{{ entity.precioAccion }}" data-plazo="{{ leftDays }}" data-porcent="{{ progresoBarra }}">
                         {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
                       </li>
                     {% endfor %}

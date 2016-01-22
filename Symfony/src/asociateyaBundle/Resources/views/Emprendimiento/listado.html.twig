@@ -9,9 +9,70 @@
 $(document).ready(function(){
   $("#boton_emprendimientos").addClass("active");
   $(".emprendimiento").hover(function(){
-    jQuery(".inversion", this).fadeIn(800);
+    jQuery(".inversion", this).slideDown(200);
   },function(){
     jQuery(".inversion", this).fadeOut(10);
+  });
+  var activeOrder;
+  $('#boton_orden_precio').click( function(event) {
+    event.preventDefault();
+    if (activeOrder == 'precioASC') {
+      $(".lista_resultados .emprendimiento").sort(sort_liDES) // sort elements
+      .appendTo('.lista_resultados'); // append again to the list
+      activeOrder = 'precioDES';
+    }
+    else {
+      $(".lista_resultados .emprendimiento").sort(sort_liASC) // sort elements
+      .appendTo('.lista_resultados'); // append again to the list
+      activeOrder = 'precioASC';
+    }
+    // sort function callback
+    function sort_liASC(a, b){
+      return ($(b).data('precio')) > ($(a).data('precio')) ? 1 : -1;
+    }
+    function sort_liDES(a, b){
+      return ($(b).data('precio')) < ($(a).data('precio')) ? 1 : -1;
+    }
+  });
+  $('#boton_orden_plazo').click( function(event) {
+    event.preventDefault();
+    if (activeOrder == 'plazoASC') {
+      $(".lista_resultados .emprendimiento").sort(sort_liDES) // sort elements
+      .appendTo('.lista_resultados'); // append again to the list
+      activeOrder = 'plazoDES';
+    }
+    else {
+      $(".lista_resultados .emprendimiento").sort(sort_liASC) // sort elements
+      .appendTo('.lista_resultados'); // append again to the list
+      activeOrder = 'plazoASC';
+    }
+    // sort function callback
+    function sort_liASC(a, b){
+      return ($(b).data('plazo')) > ($(a).data('plazo')) ? 1 : -1;
+    }
+    function sort_liDES(a, b){
+      return ($(b).data('plazo')) < ($(a).data('plazo')) ? 1 : -1;
+    }
+  });
+  $('#boton_orden_porcent').click( function(event) {
+    event.preventDefault();
+    if (activeOrder == 'porcentASC') {
+      $(".lista_resultados .emprendimiento").sort(sort_liDES) // sort elements
+      .appendTo('.lista_resultados'); // append again to the list
+      activeOrder = 'porcentDES';
+    }
+    else {
+      $(".lista_resultados .emprendimiento").sort(sort_liASC) // sort elements
+      .appendTo('.lista_resultados'); // append again to the list
+      activeOrder = 'porcentASC';
+    }
+    // sort function callback
+    function sort_liASC(a, b){
+      return ($(b).data('porcent')) > ($(a).data('porcent')) ? 1 : -1;
+    }
+    function sort_liDES(a, b){
+      return ($(b).data('porcent')) < ($(a).data('porcent')) ? 1 : -1;
+    }
   });
 });
 </script>
@@ -25,18 +86,31 @@ $(document).ready(function(){
 
 <div class="texto_emp">
   <div id="portfolio_container">
-    <div style="float: left;" >
-      Estos son los emprendimientos que ha creado:
-    </div>
-    <div style="text-align: right;" class="img_emp img_container">
-      <a class="boton"  href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
-    </div>
+    <h1>Estos son los emprendimientos que ha creado:
+
+
+        <a class="boton" style="float: right;" href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
+        <a id="boton_orden_precio" class="boton" style="float: right;">Precio &uarr; &darr;</a>
+        <a id="boton_orden_plazo" class="boton" style="float: right;">Plazo &uarr; &darr;</a>
+        <a id="boton_orden_porcent" class="boton" style="float: right;">% restante &uarr; &darr;</a>
+
+    </h1>
+  </br>
+  </br>
     {% if entities %}
-    <ul>
+    <ul class="lista_resultados">
       {% for entity in entities %}
-      <li class="emprendimiento" id="emprendimiento{{ loop.index }}">
+        {% if not entity.estado == 0 %}
+          {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
+          {% set leftDays = difference.days %}
+          {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+        {% else %}
+          {% set leftDays = 10000 %}
+          {% set progresoBarra = 0 %}
+        {% endif %}
+      <li class="emprendimiento" data-precio="{{ entity.precioAccion }}" data-plazo="{{ leftDays }}" data-porcent="{{ progresoBarra }}" id="emprendimiento{{ loop.index }}">
         {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-        <div class="inversion" style="display:none;" id="inversiones{{ loop.index }}">
+        <div class="inversion" style="box-shadow: -10px 10px 5px #888888;border: 3px solid #222;display:none;position:absolute;margin-left:111px;width: 932px;" id="inversiones{{ loop.index }}">
           {% if entity.estado  == '2' %}
           {% if entity.resultados|length > 0 %}
           <div class="elemento_mensaje">
