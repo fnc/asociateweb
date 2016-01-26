@@ -50,13 +50,18 @@ $(document).ready(function(){
     <h3>Notificaciones</h3>
 
     <ul class="lista_notificaciones">
-        {% if notificacionesEmprendimientoAprobado %}
+      {% if not (notificacionesEmprendimientoAprobado or notificacionesEmprendimientoCancelado or notificacionesEmprendimientoAceptado or notificacionesEmprendedorAceptado or notificacionesNuevaInversion or notificacionesNuevoResultado or notificacionesComentario) %}
+        <li class="elemento_mensaje" data-orden="1">
+            No hay notificaciones.
+        </li>
+      {% endif %}
+      {% if notificacionesEmprendimientoAprobado %}
           {% for notificacion in notificacionesEmprendimientoAprobado %}
           <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">
               Su emprendimiento {{ notificacion.emprendimiento.nombre }} fue Aprobado! Se logró financiar exitosamente.
           </li>
           {% endfor %}
-        {% endif %}
+      {% endif %}
       {% if notificacionesEmprendimientoCancelado %}
         {% for notificacion in notificacionesEmprendimientoCancelado %}
         <li class="elemento_mensaje" data-orden="{{ notificacion.id }}">

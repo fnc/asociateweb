@@ -120,6 +120,33 @@
 	background-color: #ff0066;
 }
 
+.inversor{
+	color: #ffffb3;
+	border-color: #65cc00;
+	background-color: #65cc00;
+	font-weight: bold;
+}
+
+.calculadora{
+	font-size: 30px;
+	color: #65cc00;
+	border-color: #ffffb3;
+	background-color: #ffffb3;
+	font-weight: bold;
+	width: 40%;
+	margin-left: 30%;
+	height: 50px;
+}
+
+.calculadora input[type="text"]{
+	font-size: 30px;
+	color: #0d1a00;
+	background-color: #f2ffe5;
+	font-weight: bold;
+	width: 20%;
+  border: 1px dotted #000000;
+	outline:0;
+}
 
 
 .imagen_elemento {

@@ -12,7 +12,7 @@
    <script>
      $(document).ready(function(){
          $('#cantidad').on('input', function() {
-             $('#valorCalculado').val('$'+$(this).val()*{{entity.precioAccion}}) // get the current value of the input field.
+             $('#valorCalculado').html('$'+$(this).val()*{{entity.precioAccion}}) // get the current value of the input field.
          });
      });
    </script>
@@ -31,14 +31,12 @@
   <h1 id="ID_nombreProyecto">Asociate a {{entity.nombre}}</h1>
   <form name="formCompra" action="{{ path('inversion_confirmarPago', { 'id': entity.id }) }}" method="post">
     <h3>&iquest;Cu&aacute;nto desea inventir en este proyecto?</h3>
-    <label for="textbox1">Ingrese la cantidad de acciones a comprar:</label>
-    <input name="cantidad" id="cantidad" type="text" />
-    <br><br>
-    <label for="textbox2">El total invertido será de:</label>
-    <input id="valorCalculado" type="text" value="$0" readonly/>
-    <br><br><br>
-    <label>Precio de la acción:</label>
-    ${{entity.precioAccion}}
+
+    <div class="etiqueta calculadora">
+
+      <input name="cantidad" id="cantidad" type="text" /> acciones X ${{entity.precioAccion}} = <span id="valorCalculado">$0</span>
+
+    </div>
   </br>
   </br>
 
@@ -51,7 +49,7 @@
 
       Este contrato se suscribe en la Ciudad de Buenos Aires  a los ___ ( _______)  días del mes de _______ de 2015 entre:
 
-      I. {{app.user.getNombre}} {{app.user.getApellido}}, argentino, DNI {{ app.user.getDni}},  con domicilio en la calle {{app.user.getDireccion}} de la Ciudad de __________  en adelante denominados los  “ Fiduciantes”
+      I. {{app.user.getNombre}} {{app.user.getApellido}}, argentino, DNI {{ app.user.getDni}},  con domicilio en la calle {{app.user.getDireccion}} de la Ciudad de {{app.user.getCiudad}}  en adelante denominados los  “ Fiduciantes”
       Y
       II. ASOCIATE YA TRUST SOCIEDAD ANÓNIMA , con  domicilio en la calle 11 de Septiembre de 1888, 748, 7mo B, de la Ciudad de Buenos Aires , representada en este acto por la representante legal Julián García, en adelante llamado el “Fiduciario”, quienes:
 

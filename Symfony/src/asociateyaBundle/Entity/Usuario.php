@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 *@ORM\Table(name="Usuario")
 *@UniqueEntity("nombreUsuario")
 */
-class Usuario implements AdvancedUserInterface, \Serializable 
+class Usuario implements AdvancedUserInterface, \Serializable
 {
 
     /**
@@ -71,6 +71,12 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="direccion", type="string", length=255,nullable=true)
      */
     private $direccion;
+
+    /**
+     *
+     * @ORM\Column(name="ciudad", type="string", length=255,nullable=true)
+     */
+    private $ciudad;
 
     /**
      *
@@ -253,6 +259,30 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function getDireccion()
     {
         return $this->direccion;
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param string $ciudad
+     *
+     * @return Usuario
+     */
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return string
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
     }
 
     /**
@@ -536,7 +566,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
 
 
 
-   
+
     /**
      * Set nombreUsuario
      *

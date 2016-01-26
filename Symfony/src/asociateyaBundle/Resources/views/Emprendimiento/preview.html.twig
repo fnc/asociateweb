@@ -16,14 +16,20 @@
                 <!-- <div style="float: right;" class="etiqueta nuevo">
                   <strong>+121 comentarios</strong>
                 </div> -->
-                <div style="float: left;" class="etiqueta">
-                  {% if entity.estado == 0 %}Pendiente{% endif %}
-                  {% if entity.estado == 1 %}Aceptado{% endif %}
-                  {% if entity.estado == 2 %}Aprobado{% endif %}
-                  {% if entity.estado == 3 %}Cancelado{% endif %}
-                  {% if entity.estado == 4 %}Cancelado{% endif %}
-                  {% if entity.estado == 6 %}Aprobado{% endif %}
-                </div>
+
+                  {% if entity.estado == 0 %}<div style="float: left;" class="etiqueta">Pendiente</div>{% endif %}
+                  {% if entity.estado == 2 %}<div style="float: left;" class="etiqueta">Aprobado</div>{% endif %}
+                  {% if entity.estado == 3 %}<div style="float: left;" class="etiqueta">Cancelado</div>{% endif %}
+                  {% if entity.estado == 4 %}<div style="float: left;" class="etiqueta">Cancelado</div>{% endif %}
+                  {% if entity.estado == 5 %}<div style="float: left;" class="etiqueta">Revision</div>{% endif %}
+                  {% if entity.estado == 6 %}<div style="float: left;" class="etiqueta">Aprobado</div>{% endif %}
+
+
+                {% for inversion in entity.inversiones %}
+                  {% if inversion.usuario == app.user %}
+                    <div style="float: left;" class="etiqueta inversor">INVERSOR</div>
+                  {% endif %}
+                {% endfor %}
               </div>
             </li>
             <li class="contenedor_derecha">

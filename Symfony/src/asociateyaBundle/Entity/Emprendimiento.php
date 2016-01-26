@@ -183,6 +183,7 @@ class Emprendimiento
      */
     private $fechaFinalizacion;
 
+
     /**
      * Get id
      *

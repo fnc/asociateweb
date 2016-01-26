@@ -127,7 +127,7 @@
 </ul>
 </div> -->
 {% if entity.estado  == '2' %}
-<br><h3>Estados de Resultado</h3>
+<br><h3>Historial de ganancias</h3>
 <br>
 {% if entity.resultados %}
 
@@ -177,6 +177,27 @@ var chart = AmCharts.makeChart( $("#chart_div")[0], {
 No hay estados de resultado para mostrar.
 <br>
 {% endif %}
+{% endif %}
+
+{% if app.user.getId == entity.emprendedor.usuario.getId  %}
+  <h3>Inversores</h3>
+  {% if entity.inversiones|length > 0 %}
+    <ul class="elemento_mensaje">
+      <li style="float: left; width: 20%;" class="etiqueta">Usuario</li>
+      <div style="margin-right: 40px;">
+        <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Fecha de emision</li>
+        <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Estado</li>
+        <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Participacion</li>
+        <li style="float: right; width: 15%; text-align: center;" class="etiqueta">Acciones compradas</li>
+      </div>
+    </ul>
+    {% for inversion in entity.inversiones %}
+    {% include 'asociateyaBundle:Inversion:preview.html.twig' with {inversion: inversion} %}
+    {% endfor %}
+  {% else %}
+    Nadie ha invertido aun.
+  </br>
+  {% endif %}
 {% endif %}
 
 

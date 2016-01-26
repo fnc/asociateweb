@@ -91,7 +91,7 @@ $(document).ready(function(){
 
         <a class="boton" style="float: right;" href={{ path('emprendimiento_new') }}>nuevo emprendimiento</a>
         <a id="boton_orden_precio" class="boton" style="float: right;">Precio &uarr; &darr;</a>
-        <a id="boton_orden_plazo" class="boton" style="float: right;">Plazo &uarr; &darr;</a>
+        <a id="boton_orden_plazo" class="boton" style="float: right;">Tiempo restante &uarr; &darr;</a>
         <a id="boton_orden_porcent" class="boton" style="float: right;">% restante &uarr; &darr;</a>
 
     </h1>
@@ -114,7 +114,7 @@ $(document).ready(function(){
           {% if entity.estado  == '2' %}
           {% if entity.resultados|length > 0 %}
           <div class="elemento_mensaje">
-            <strong>Resultados del emprendimiento</strong><br>
+            <strong>Historial de ganancias</strong><br>
           </div>
           <div class="elemento_mensaje" style="width:auto;  height:400px;text-align: center;" id="chart_div{{ loop.index }}"></div>
           <script>
@@ -159,11 +159,11 @@ $(document).ready(function(){
           </script>
           {% else %}
           <div class="elemento_mensaje">
-            <strong>No hay estados de resultado para mostrar.</strong>
+            <strong>Este emprendimiento aun no repartió ganancias.</strong>
           </div>
           {% endif %}
           {% endif %}
-          {% if entity.inversiones %}
+          {% if entity.inversiones|length > 0 %}
           <div class="elemento_mensaje">
             <strong>Inversores</strong>
           </div>
@@ -178,11 +178,11 @@ $(document).ready(function(){
           </ul>
           {% for inversion in entity.inversiones %}
           {% include 'asociateyaBundle:Inversion:preview.html.twig' with {inversion: inversion} %}
+          {% endfor %}
           {% else %}
           <div class="elemento_mensaje">
             Nadie ha invertido en su emprendimiento aun.
           </div>
-          {% endfor %}
           {% endif %}
         </div>
       </li>
