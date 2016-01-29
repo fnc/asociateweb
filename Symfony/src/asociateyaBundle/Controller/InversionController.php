@@ -82,52 +82,22 @@ class InversionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
 
-        if (!$entity) {
+        $cantidadAcciones = (int) $request->request->get('cantidad');
+
+        $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+        if (!$emprendimiento) {
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
         }
 
 
-
-
-        $cantidadAcciones = (int) $request->request->get('cantidad');
-
-        if($cantidadAcciones>$entity->getAccionesRestantes()){
+        if($cantidadAcciones>$emprendimiento->getAccionesRestantes()){
             return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "No Hay suficientes acciones disponibles, solo quedan ".$entity->getAccionesRestantes()." acciones.")
             );
         }
 
 
-        //Si ya invirtio en este emprendimiento no creo una inversion nueva!!
-        $inversion = $em->getRepository('asociateyaBundle:Inversion')->findOneBy(
-            array('usuario' => $this->getUser(), 'emprendimiento' => $entity)
-         );
 
-        if($inversion){
-           //Actualizo la inversion
-           $inversion->setCantidadAcciones($inversion->getCantidadAcciones()+$cantidadAcciones);
-        }
-        else{
-           //Creo la nueva inversion
-           $inversion = new Inversion();
-           $inversion->setUsuario($this->getUser());
-           $inversion->setEmprendimiento($entity);
-           $inversion->setFechaEmision(new \DateTime());
-           $inversion->setCantidadAcciones($cantidadAcciones);
-           //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
-           $em->persist($inversion);
-        }
-        $entity->setAccionesRestantes(((int)$entity->getAccionesRestantes())-$cantidadAcciones);
-        $em->flush();
-
-
-        $notificacion = new NuevaInversion();
-        $notificacion->setUsuario($entity->getEmprendedor()->getUsuario());
-        $notificacion->setFechaCreacion(new \DateTime());
-        $notificacion->setInversion($inversion);
-        $em->persist($notificacion);
-        $em->flush();
 
         require_once ('mercadopago.php');
 
@@ -140,17 +110,17 @@ class InversionController extends Controller
         $preference_data = array(
             "items" => array(
                 array(
-                    "title" => "Inversion en ". $entity->getNombre(),
-                    "description" =>  $entity->getDescripcionCorta(),
-                    "picture_url" => $baseurl."/uploads/emprendimientos/".$entity->getrutaimagen(),
+                    "title" => "Inversion en ". $emprendimiento->getNombre(),
+                    "description" =>  $emprendimiento->getDescripcionCorta(),
+                    "picture_url" => $baseurl."/uploads/emprendimientos/".$emprendimiento->getrutaimagen(),
                     "currency_id" => "ARS",
                     "quantity" => $cantidadAcciones,
-                    "unit_price" => (int)$entity->getPrecioAccion(),
+                    "unit_price" => (int)$emprendimiento->getPrecioAccion(),
                 )
             ),
             "back_urls" => array(
-                    "success" => $baseurl.$this->generateUrl('inversion_pagoAcreditado',array('idInversion'=>$inversion->getId())),
-                    "pending" => $baseurl.$this->generateUrl('inversion_pagoPendiente',array('idInversion'=>$inversion->getId())),
+                    "success" => $baseurl.$this->generateUrl('inversion_pagoAcreditado',array('idEmprendimiento'=>$id)),
+                    "pending" => $baseurl.$this->generateUrl('inversion_pagoPendiente',array('idEmprendimiento'=>$id)),
                     "failure" => "failure",
 
                 ),
@@ -160,7 +130,7 @@ class InversionController extends Controller
         $preference = $mp->create_preference($preference_data);
 
         return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
-            'emprendimiento'      => $entity,
+            'emprendimiento'      => $emprendimiento,
             'initPoint' => $preference["response"]["init_point"],
         ));
     }
@@ -170,7 +140,7 @@ class InversionController extends Controller
      * Muestra pagina con mensaje de pago pendiente
      *
      */
-    public function pagoPendienteAction($idInversion)
+    public function pagoPendienteAction($idEmprendimiento)
     {
             $request = $this->getRequest();
             $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
@@ -186,16 +156,57 @@ class InversionController extends Controller
             $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
             $idDePago=$request->query->get('collection_id');
             $paymentInfo = $mp->get_payment ($idDePago);
-
+            $preference = $mp->get_preference($request->query->get('preference_id'));
+            $cantidadAcciones = $preference["response"]["items"][0]["quantity"];
 
             $em = $this->getDoctrine()->getManager();
 
-            $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
+
+            //Verificacion de pago existente
+            $pago = $em->getRepository('asociateyaBundle:PagoInversion')->findOneByIdMp($idDePago);
+            if($pago){
+               throw $this->createNotFoundException('El pago con id de mercadopago '.$idDePago.' ya fue registrado anteriormente.');
+            }
 
 
-            // TODO CREAR UN PAGO Y PONER ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
-            // sumando lso montos de los pagos acreditados se puede saber cuantas acciones acreditadas hay actualmente (dividiendo por el preci ode accion)
-            //TODO cambiar esto mismo en los demas lugares
+
+            //TODO Busco una inversion en este emprendimiento por este usuario (cambiar idInversion por idEmprendimiento)
+            //y si no encuentra, creo una. Lo mismo en el metodo de abajo.
+            $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($idEmprendimiento);
+            if (!$emprendimiento) {
+                throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
+            }
+            //Si ya invirtio en este emprendimiento no creo una inversion nueva!!
+            $inversion = $em->getRepository('asociateyaBundle:Inversion')->findOneBy(array('usuario' => $this->getUser(), 'emprendimiento' => $emprendimiento));
+
+            if($inversion){
+               //Actualizo la inversion
+               $inversion->setCantidadAcciones($inversion->getCantidadAcciones()+$cantidadAcciones);
+            }
+            else{
+               //Creo la nueva inversion
+               $inversion = new Inversion();
+               $inversion->setUsuario($this->getUser());
+               $inversion->setEmprendimiento($emprendimiento);
+               $inversion->setFechaEmision(new \DateTime());
+               //TODO obtener el quantity
+               $inversion->setCantidadAcciones($cantidadAcciones);
+               //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
+               $em->persist($inversion);
+            }
+            $emprendimiento->setAccionesRestantes(((int)$emprendimiento->getAccionesRestantes())-$cantidadAcciones);
+            $em->flush();
+
+
+            $notificacion = new NuevaInversion();
+            $notificacion->setUsuario($emprendimiento->getEmprendedor()->getUsuario());
+            $notificacion->setFechaCreacion(new \DateTime());
+            $notificacion->setInversion($inversion);
+            $em->persist($notificacion);
+            $em->flush();
+
+            //CREA UN PAGO Y PONE ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
+            // sumando lso montos de los pagos acreditados se puede saber cuantas acciones acreditadas hay actualmente (dividiendo por el precio de accion)
             $pago = new PagoInversion();
             $pago->setInversion($inversion);
             $pago->setEstado(1);//pago pendiente
@@ -203,7 +214,7 @@ class InversionController extends Controller
             $pago->setIdMPUser($paymentInfo["response"]["collection"]["payer"]["id"]);
             $pago->setMonto($paymentInfo["response"]["collection"]["transaction_amount"]);
             $pago->setFechaEmision(new \DateTime());
-            //TODO Bug, por alguna razon tambien se setea la fecha de cobro
+            //TODO Bug, por alguna razon tambien se setea la fecha de cobro. Esto es porque el script inicial esta mal armado
             $em->persist($pago);
 
             //verificacion emprendimiento aprobado
@@ -220,12 +231,12 @@ class InversionController extends Controller
         );
     }
 
-        /**
-     * Muestra pagina con mensaje de pago Acreditado
-     *
-     */
-    public function pagoAcreditadoAction($idInversion)
-    {
+   /**
+   * Muestra pagina con mensaje de pago Acreditado
+   *
+   */
+   public function pagoAcreditadoAction($idEmprendimiento)
+   {
             $request = $this->getRequest();
             $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
             $request->query->get('preference_id');
@@ -240,15 +251,55 @@ class InversionController extends Controller
             $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
             $idDePago=$request->query->get('collection_id');
             $paymentInfo = $mp->get_payment ($idDePago);
-
+            $preference = $mp->get_preference($request->query->get('preference_id'));
+            $cantidadAcciones = $preference["response"]["items"][0]["quantity"];
 
             $em = $this->getDoctrine()->getManager();
 
-            $inversion = $em->getRepository('asociateyaBundle:Inversion')->find($idInversion);
+            //Verificacion de pago existente
+            $pago = $em->getRepository('asociateyaBundle:PagoInversion')->findOneByIdMp($idDePago);
+            if($pago){
+               throw $this->createNotFoundException('El pago con id de mercadopago '.$idDePago.' ya fue registrado anteriormente.');
+            }
+
+            //TODO Busco una inversion en este emprendimiento por este usuario (cambiar idInversion por idEmprendimiento)
+            //y si no encuentra, creo una. Lo mismo en el metodo de abajo.
+            $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($idEmprendimiento);
+            if (!$emprendimiento) {
+               throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
+            }
+            //Si ya invirtio en este emprendimiento no creo una inversion nueva!!
+            $inversion = $em->getRepository('asociateyaBundle:Inversion')->findOneBy(array('usuario' => $this->getUser(), 'emprendimiento' => $emprendimiento));
+
+            if($inversion){
+               //Actualizo la inversion
+               $inversion->setCantidadAcciones($inversion->getCantidadAcciones()+$cantidadAcciones);
+            }
+            else{
+               //Creo la nueva inversion
+               $inversion = new Inversion();
+               $inversion->setUsuario($this->getUser());
+               $inversion->setEmprendimiento($emprendimiento);
+               $inversion->setFechaEmision(new \DateTime());
+               //TODO obtener el quantity
+               $inversion->setCantidadAcciones($cantidadAcciones);
+               //Estado: 0= no se realizo el pago 1= pendiente   2= acreditado 3=refunded
+               $em->persist($inversion);
+            }
+            $emprendimiento->setAccionesRestantes(((int)$emprendimiento->getAccionesRestantes())-$cantidadAcciones);
+            $em->flush();
+
+
+            $notificacion = new NuevaInversion();
+            $notificacion->setUsuario($emprendimiento->getEmprendedor()->getUsuario());
+            $notificacion->setFechaCreacion(new \DateTime());
+            $notificacion->setInversion($inversion);
+            $em->persist($notificacion);
+            $em->flush();
+
 
             // CREAR UN PAGO Y PONER ESTO DE ABAJO, EN EL PAGO VA EL MONTO PAGADO. TODOS LOS PAGOS ASOCIADOS A UNA INVERSION EN ALGUN MOMENTO VAN A TENER QUE ESTAR ACREDITADOS
             // sumando lso montos de los pagos acreditados se puede saber cuantas acciones acreditadas hay actualmente (dividiendo por el preci ode accion)
-            //TODO cambiar esto mismo en los demas lugares
             //TODO no olvidarse de las notificaciones NIPC
             $pago = new PagoInversion();
             $pago->setInversion($inversion);
@@ -448,7 +499,7 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
     {
 
         $this->denyAccessUnlessGranted('ROLE_EMPRENDEDOR', null, 'Unable to access this page!');
-
+        //TODO REVISAR LO RELACIONADO CON CANCELAR
 
         //Obtengo info para trabajar
         $session = $request->getSession();

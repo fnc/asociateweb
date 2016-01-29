@@ -11,11 +11,11 @@ inversion_confirmarPago:
     defaults: { _controller: "asociateyaBundle:Inversion:confirmarPago" }
 
 inversion_pagoPendiente:
-    path:     /{idInversion}/pagoPendiente
+    path:     /{idEmprendimiento}/pagoPendiente
     defaults: { _controller: "asociateyaBundle:Inversion:pagoPendiente" }
 
 inversion_pagoAcreditado:
-    path:     /{idInversion}/pagoAcreditado
+    path:     /{idEmprendimiento}/pagoAcreditado
     defaults: { _controller: "asociateyaBundle:Inversion:pagoAcreditado" }
 
 inversion_pagoAcreditadoRetrasado:
