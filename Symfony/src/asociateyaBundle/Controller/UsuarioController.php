@@ -244,6 +244,12 @@ class UsuarioController extends Controller
 
         $entity = $em->getRepository('asociateyaBundle:Usuario')->find($id);
 
+        if($entity->getEmprendedor()){//si es emprendedor
+           if($entity->getEmprendedor()->getEstado()==1){
+             return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "Como usted es un emprendedor debe comunicarse con AsociateYa para darse de baja."));
+          }
+        }
+
 
 
         if (!$entity) {

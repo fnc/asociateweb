@@ -123,9 +123,9 @@ insert ignore into Categoria(nombre,descripcion) values("Otros","Aqu� encontra
 
 -- EMPRENDEDORES
 insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (4,"2016/03/16","1",8);
-insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (9,"2016/05/16","0",2);
+insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (9,"2016/05/16","1",2);
 insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (11,"2016/05/16","1",9);
-insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (20,"2015/12/15","0",6);
+insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (20,"2015/12/15","1",6);
 insert ignore into Emprendedor (usuario_id,fechaAprobacion,estado,reputacion) values (24,"2016/04/16","1",9);
 
 
