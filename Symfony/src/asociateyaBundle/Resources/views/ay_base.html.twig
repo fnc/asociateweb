@@ -95,7 +95,11 @@
       <div style="width: 80%;text-align: center;margin-left:10%;">
         <ul>
           <li>
-          <a style ="padding: 15px 20px;"href={{ path('asociateya_homepage')}}><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="182" height="30"></a>
+          {% if app.user and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a style ="padding: 15px 20px;"href={{ path('asociateya_inicio')}}><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="182" height="30"></a>
+          {% else %}
+            <a style ="padding: 15px 20px;"href={{ path('asociateya_homepage')}}><img src={{ asset('bundles/asociateya/Imagenes/AsociateYa-logo.png')}} width="182" height="30"></a>
+          {% endif %}
           </li>
 
 
@@ -112,7 +116,7 @@
             <li><a id="boton_inversiones" href={{ path('inversion') }}>Mis Inversiones</a></li>
             <li><a id="boton_buscar" href={{ path('emprendimiento_busqueda')}} >Buscar</a></li>
             {% else %}
-            <li><a id="boton_buscar">Buscar</a></li>
+            <!-- <li><a id="boton_buscar"  href= >Explorar</a></li> -->
             {% endif %}
           {% endif %}
           <ul style="float:right;list-style-type:none; width: auto; padding: 0px;">

@@ -33,6 +33,9 @@ security:
 #        login:
 #            pattern:  ^/demo/secured/login$
 #            security: false
+        # buscar:
+        #     pattern:  ^/buscar$
+        #     anonymous: ~
         registrar:
             pattern:  ^/registrar$
             security: false
@@ -45,6 +48,10 @@ security:
         ingresar:
             pattern:  ^/ingresar$
             security: false
+        homepage:
+            pattern:  ^/$
+            security: false
+
 #
 #        secured_area:
 #            pattern:    ^/demo/secured/
@@ -64,6 +71,8 @@ security:
             form_login:
                 login_path: asociateya_ingresar
                 check_path: asociateya_ingresar_exito
+                always_use_default_target_path: true
+                default_target_path: asociateya_inicio
             provider: asociateya_provider
             logout:
                 path: asociateya_salir
@@ -71,4 +80,3 @@ security:
 
     access_control:
         - { path: asociateya_ingresar, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-
