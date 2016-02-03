@@ -1,11 +1,14 @@
 <a  href={{ path('emprendimiento_show',{'id':emprendimiento.getId}) }}>
-  <div style="float: left; height: 80%;width: 290; background-color: #444;margin: 10px; border-radius: 20px;">
-    <h3 style="margin: 10px;"><div class="etiqueta nuevo">Nuevo!</div>{{ emprendimiento.nombre }}</h3>
-    <img src={{ asset('/uploads/emprendimientos/' ~ emprendimiento.rutaImagen) }} width="250" height="250" style="margin-right:20px;margin-left: 20px; border-radius:20px;">
-    <div style="margin-right:20px;margin-left: 20px;">
-      <div class="etiqueta" style="width: 80%; font-size: 30px;border-radius:20px;padding: 10px;">
-        <div style="font-size: 10px;">Inversión mínima</div> ${{ emprendimiento.precioAccion }}
-      </div>
-    </div>
+  <div style="background-size: 100% 100%; background-image: url({{ asset('/uploads/emprendimientos/' ~ emprendimiento.rutaImagen) }}); background-blend-mode: multiply;float: left; height: 300px;width: 300px; background-color: #103300 ;margin: 10px; border-radius: 10px;">
+    <h3 style="margin: 10px; background-color: rgba(255, 255, 255,0.8);"><div class="etiqueta nuevo">Nuevo!</div>{{ emprendimiento.nombre }}</h3>
+
+
+      <h3 style="margin: 10px;background-color: rgba(255, 255, 255,0.8);" >
+        <div style="font-size: 15px;">Inversión mínima</div>
+        <div style="font-size: 50px;color:#ff9933;font-weight: bold;">${{ emprendimiento.precioAccion }}</div>
+      </h3>
+  <p style="margin: 10px;color: #FFF;">
+    {{ emprendimiento.descripcionLarga }}
+  </p>
   </div>
 </a>
