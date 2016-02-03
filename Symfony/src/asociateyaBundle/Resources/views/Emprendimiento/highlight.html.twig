@@ -3,8 +3,8 @@
     <h3 style="margin: 10px;"><div class="etiqueta nuevo">Nuevo!</div>{{ emprendimiento.nombre }}</h3>
     <img src={{ asset('/uploads/emprendimientos/' ~ emprendimiento.rutaImagen) }} width="250" height="250" style="margin-right:20px;margin-left: 20px; border-radius:20px;">
     <div style="margin-right:20px;margin-left: 20px;">
-      <div class="etiqueta" style="font-size: 50px;">
-        ${{ emprendimiento.precioAccion }}
+      <div class="etiqueta" style="width: 80%; font-size: 30px;border-radius:20px;padding: 10px;">
+        <div style="font-size: 10px;">Inversión mínima</div> ${{ emprendimiento.precioAccion }}
       </div>
     </div>
   </div>

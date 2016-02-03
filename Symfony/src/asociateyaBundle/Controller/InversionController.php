@@ -92,7 +92,7 @@ class InversionController extends Controller
 
 
         if($cantidadAcciones>$emprendimiento->getAccionesRestantes()){
-            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "No Hay suficientes acciones disponibles, solo quedan ".$entity->getAccionesRestantes()." acciones.")
+            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "No Hay suficientes acciones disponibles, solo quedan ".$emprendimiento->getAccionesRestantes()." acciones.")
             );
         }
 
