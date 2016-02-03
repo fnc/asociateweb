@@ -22,6 +22,10 @@ emprendedor_aprobar:
     path:     /{id}/aprobar
     defaults: { _controller: "asociateyaBundle:Emprendedor:aprobar" }
 
+emprendedor_noAprobar:
+    path:     /{id}/noAprobar
+    defaults: { _controller: "asociateyaBundle:Emprendedor:noAprobar" }
+
 
 # emprendedor_create:
 #     path:     /create

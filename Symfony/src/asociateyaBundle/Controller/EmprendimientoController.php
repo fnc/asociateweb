@@ -45,6 +45,15 @@ class EmprendimientoController extends Controller
         $valorAccion = (int) $request->request->get('valor_accion');
         $plazo = (int) $request->request->get('plazo');
 
+
+        if ($valorAccion <= 0) {
+            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "Debe ingresar un valor de accion mayor a 0"));
+        }
+
+        if ($plazo<=0) {
+            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "Debe ingresar un plazo mayor a 0."));
+        }
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Emprendedor entity.');
         }
@@ -69,6 +78,28 @@ class EmprendimientoController extends Controller
        $em->persist($notificacionEmprendimiento);
 
        $em->flush();
+
+        return $this->redirect($this->generateUrl('emprendedor_pendientes'));
+    }
+
+    /**
+     * Rechaza un emprendimiento
+     *
+     */
+    public function rechazarAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
+
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Emprendedor entity.');
+        }
+
+      $em->remove($entity);
+
+      $em->flush();
 
         return $this->redirect($this->generateUrl('emprendedor_pendientes'));
     }

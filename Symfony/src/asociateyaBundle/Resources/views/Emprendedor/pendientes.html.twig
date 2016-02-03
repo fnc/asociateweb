@@ -2,66 +2,76 @@
 
 {% block title %}Emprendedores pendientes de aprobacion{% endblock %}
 {% block stylesheets %}
-<link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
-<link href={{ asset('bundles/asociateya/css/pendientes.css')}} rel="stylesheet" type="text/css">
+
 {% endblock %}
 
 
 {% block body -%}
 <h1 class="centrado">Emprendedores pendientes de aprobación:</h1>
 
-<table class="records_list">
-    <thead>
-        <tr>
 
-        </tr>
-    </thead>
-    <tbody>
-        {% for entity in emprendedores %}
-        <tr>
-            <td class="nombrePendiente">
-                {{ entity.usuario.username }}
-            </td>           
-            <td>
-                <a class="botonPendientes botonAprobar" href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a>
-            </td>
-            <td>
-                <a class="botonPendientes botonNoAprobar" href="#">No Aprobar</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+  <ul class="elemento_mensaje">
+    <li style="float: left; width: 20%;" class="etiqueta">Usuario</li>
+    <div style="margin-right: 40px;">
+      <li style="float: right;width: 15%;text-align: center;" class="etiqueta" ></li>
+      <li style="float: right;width: 15%;text-align: center;" class="etiqueta" ></li>
+
+    </div>
+  </ul>
+  {% if emprendedores %}
+  {% for entity in emprendedores %}
+  <ul class="elemento_mensaje">
+    <a href={{ path('usuario_show',{'id':entity.usuario.id}) }} ><li style="float: left; width: 20%;" class="etiqueta">{{ entity.usuario.username }}</li></a>
+    <div style="margin-right: 40px;">
+      <li style="float: right;width: 15%;text-align: center;" ><a class="boton acciones" href="{{ path('emprendedor_noAprobar', { 'id': entity.id }) }}">No Aprobar</a></li>
+      <li style="float: right;width: 15%;text-align: center;" ><a class="boton precio" href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a></li>
+    </div>
+  </ul>
+  {% endfor %}
+  {% else %}
+  <ul class="elemento_mensaje">
+    No hay emprendedores pendientes de aprobación.
+  </ul>
+  {% endif %}
+
 
 <h1 class="centrado">Emprendimientos pendientes de aceptación:</h1>
+<ul class="lista_notificaciones">
+  <li class="elemento_mensaje">
+    <ul>
+      <li style="float: left; width: 20%;" class="etiqueta">Emprendimiento</li>
+      <div style="margin-right: 40px;">
+        <li style="float: right;width: 10%;text-align: center;" class="etiqueta" ></li>
+        <li style="float: right;width: 10%;text-align: center;" class="etiqueta" ></li>
+        <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Plazo</li>
+        <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Valor unitario de acción</li>
+      </div>
+    </ul>
+  </li>
+  {% if emprendimientos %}
+  {% for entity in emprendimientos %}
 
-<table class="records_list">
-    <thead>
-        <tr>
+  <li class="elemento_mensaje">
+    <form method="post" action="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}" id="emprendimiento_form">
+      <ul >
+        <a href={{ path('emprendimiento_show',{'id':entity.id}) }} ><li style="float: left; width: 20%;" class="etiqueta">{{ entity.nombre }}</li></a>
+        <li style="float: right;width: 10%;"><a class="boton acciones" href="{{ path('emprendimiento_rechazar', { 'id': entity.id }) }}">Rechazar</a></li>
+        <li style="float: right;width: 10%;"><input type="submit" value="Aceptar" class="boton precio"></li>
+        <li style="float: right;width: 15%;"><input style="width: 70%;" type="text" name="plazo" id="plazo" value="1" /></li>
+        <li style="float: right;width: 15%;"><input style="width: 70%;" type="text" name="valor_accion" id="valor_accion" value="1" /></li>        
+      </ul>
+    </form>
+  </li>
 
-        </tr>
-    </thead>
-    <tbody>
-        {% for entity in emprendimientos %}
-        <tr>
-            <td class="nombrePendiente">
-                {{ entity.nombre }}
-            </td>           
-            <td>
-                <form method="post" action="{{ path('emprendimiento_aprobar', { 'id': entity.id }) }}" id="emprendimiento_form">
-                    Valor Accion:
-                    <input class="descripcion" type="text" name="valor_accion" id="valor_accion" value="1" />
-                    Plazo:
-                    <input class="descripcion" type="text" name="plazo" id="plazo" value="1" />
-                    <br>
-                    <input type="submit" value="Aceptar" class="botonPendientes botonAprobar">
-                    <input type="submit" value="Rechazar" class="botonPendientes botonNoAprobar">
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+  {% endfor %}
+  {% else %}
+  <li class="elemento_mensaje">
+    <ul>
+      No hay emprendimientos pendientes de aprobación.
+    </ul>
+  </li>
+  {% endif %}
+</ul>
 
 
 {% endblock %}

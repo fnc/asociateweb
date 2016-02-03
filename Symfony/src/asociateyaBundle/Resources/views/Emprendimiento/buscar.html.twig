@@ -121,7 +121,12 @@
                       {% if not entity.estado == 0 %}
                         {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
                         {% set leftDays = difference.days %}
-                        {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+                        {% if entity.totalAcciones > 0 %}
+                          {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+                        {% else %}
+                          {% set leftDays = 10000 %}
+                          {% set progresoBarra = 0 %}
+                        {% endif %}
                       {% else %}
                         {% set leftDays = 10000 %}
                         {% set progresoBarra = 0 %}

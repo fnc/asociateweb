@@ -31,6 +31,10 @@ emprendimiento_aprobar:
     path:     /{id}/aprobar
     defaults: { _controller: "asociateyaBundle:Emprendimiento:aprobar" }
 
+emprendimiento_rechazar:
+    path:     /{id}/rechazar
+    defaults: { _controller: "asociateyaBundle:Emprendimiento:rechazar" }
+
 emprendimiento_pendientes:
     path:     /pendientes
     defaults: { _controller: "asociateyaBundle:Emprendimiento:pendientes" }

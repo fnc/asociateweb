@@ -1,6 +1,19 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
 {% block body -%}
+{% if emprendimientos %}
+<div style="height: 500px; width: 100%; background-color: #fff7e5; border-radius: 30px;">
+  <h1>Destacados</h1>
+  <span style="margin: 10%;width: 100%;">
+    {% for emprendimiento in emprendimientos %}
+
+        {% include 'asociateyaBundle:Emprendimiento:highlight.html.twig' with {emprendimiento: emprendimiento} %}
+
+    {% endfor %}
+  </span>
+</div>
+{% endif %}
+
 
   <!-- insert the page content here -->
   <h1>&iexcl;Bienvenido!</h1>
