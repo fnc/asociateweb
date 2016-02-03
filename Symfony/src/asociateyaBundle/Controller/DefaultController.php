@@ -11,7 +11,7 @@ class DefaultController extends Controller
     {
       $em = $this->getDoctrine()->getManager();
 
-      $query = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')->andwhere('e.estado = :estado')->orderBy("e.id", 'DESC')->setMaxResults(3);
+      $query = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e')->andwhere('e.estado = :estado')->orderBy("e.id", 'DESC')->setMaxResults(4);
       $parameters['estado']=1;
       $emprendimientosNuevos = $query->setParameters($parameters)->getQuery()->getResult();
 

@@ -2,15 +2,15 @@
 
 {% block body -%}
 {% if emprendimientos %}
-<div style="height: 400px; width: 100%; background-color: #fff7e5; border-radius: 30px;">
-  <h1>Destacados</h1>
-  <span style="margin: 10%;width: 100%;">
+<div style="height: 400px; width: 100%; background-color: #fff7e5; border-radius: 20px;">
+  <h1>Emprendimientos destacados</h1>
+
     {% for emprendimiento in emprendimientos %}
 
         {% include 'asociateyaBundle:Emprendimiento:highlight.html.twig' with {emprendimiento: emprendimiento} %}
 
     {% endfor %}
-  </span>
+
 </div>
 </br>
 {% endif %}
@@ -18,9 +18,13 @@
 
   <!-- insert the page content here -->
   <h1>¿Qué es "AsociateYa!"?</h1>
+<div style="width: 50%;float: left;">
    <p>Conseguir dinero es, probablemente, el principal obst&aacute;culo con que se topa la producci&oacute;n cultural en el pa&iacute;s, en especial en lo que se refiere a proyectos independientes. Pero no solo en ese &aacute;mbito. Muchas personas tambi&eacute;n tienen dificultades para conseguir un capital inicial con el que comenzar sus emprendimientos. Sin embargo, desde hace un tiempo internet ofrece una soluci&oacute;n. Libros, revistas, pel&iacute;culas, documentales, obras de teatro o incluso un peque&ntilde;o negocio de crochet o de manualidades pueden encontrar ese puntapi&eacute; material con el que ser concretados gracias al <strong>crowdfunding</strong>.</p>
    <p>El financiamiento colectivo es un fen&oacute;meno global que suma cada vez m&aacute;s adeptos y que ha servido para todo tipo de proyectos. El documental estadounidense Incident in New Baghdad (2011) que recibi&oacute; una nominaci&oacute;n a los premios Oscar, fue financiada &iacute;ntegramente a trav&eacute;s de este medio. Menos convencional, en Espa&ntilde;a se puso de moda pedir dinero para pagar los estudios universitarios. Incluso museos prestigiosos han recurrido a esta modalidad para costear la restauraci&oacute;n de cuadros, como el Ashmolean Museum de Oxford.</p>
    <p><strong>&iquest;C&oacute;mo es el mecanismo?</strong> Por lo general, se comparte un proyecto y se establece una escala de donaciones por parte de los internautas, que tienen un determinado tiempo para participar. A cambio, se ofrece una recompensa como incentivo.</p>
    <p><strong>Asociate Ya</strong> es el portal de Crowdfounding n&uacute;mero uno en la Argentina, ya que est&aacute; espec&iacute;ficamente ligada a los microemprendimientos. &iquest;Quer&eacute;s saber mas?</p>
+ </div>
+ <div style="width: 49%;float: right; height: 400px;border-radius: 10px; background-image: url({{ asset('bundles/asociateya/Imagenes/work.jpg/')}});">
+ </div>
 
 {% endblock %}
