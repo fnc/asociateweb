@@ -54,7 +54,7 @@
                             {{inversion.usuario.cbu}}
                         </td>
                         <td>
-                            <a href={{ path('emprendimiento_pagoGananciaNotificacion',{'id':inversion.usuario.getId}) }}>Notificar</a>
+                            <a href={{ path('inversion_pagoGananciaNotificacion',{'id':inversion.usuario.getId,'idResultado': resultado.id}) }}>Notificar</a>
                         </td>
                     </tr>
 

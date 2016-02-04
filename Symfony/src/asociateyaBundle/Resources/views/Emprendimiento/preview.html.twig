@@ -30,6 +30,9 @@
                     <div style="float: left;" class="etiqueta inversor">INVERSOR</div>
                   {% endif %}
                 {% endfor %}
+                {% if entity.emprendedor.usuario == app.user %}
+                  <div style="float: left;" class="etiqueta emprendedor">SU EMPRENDIMIENTO</div>
+                {% endif %}
               </div>
             </li>
             <li class="contenedor_derecha">

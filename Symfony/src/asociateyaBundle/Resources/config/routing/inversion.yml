@@ -31,7 +31,7 @@ inversion_pagoGanancia:
     defaults: { _controller: "asociateyaBundle:Inversion:pagarGanancias" }
 
 inversion_pagoGananciaNotificacion:
-    path:     /{id}/pagoGananciaNotificacion
+    path:     /{id}/{idResultado}/pagoGananciaNotificacion
     defaults: { _controller: "asociateyaBundle:Inversion:pagarGananciasNotificar" }
 
 inversion_confirmarPagoRefund:

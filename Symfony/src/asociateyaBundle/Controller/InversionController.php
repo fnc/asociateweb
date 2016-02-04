@@ -9,6 +9,7 @@ use asociateyaBundle\Entity\Emprendimiento;
 use asociateyaBundle\Entity\Usuario;
 use asociateyaBundle\Entity\Inversion;
 use asociateyaBundle\Entity\Comentario;
+use asociateyaBundle\Entity\Resultado;
 use asociateyaBundle\Entity\NuevaInversion;
 use asociateyaBundle\Entity\NuevoEstadoResultado;
 use asociateyaBundle\Entity\EmprendimientoAprobado;
@@ -442,23 +443,31 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
         $em = $this->get('doctrine')->getManager();
 
         $emprendimiento = $em->getRepository('asociateyaBundle:Emprendimiento')->find($id);
-
+        $porGanancia = (float) $request->request->get('ganancia');
 
 
         if (!$emprendimiento) {
-
+           throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
         }
+
+       $resultado = new Resultado();
+       $resultado->setMonto($porGanancia);
+       $resultado->setFecha(new \DateTime());
+       $resultado->setEmprendimiento($emprendimiento);
+       $resultado->setRutaInforme("/");
+       $em->persist($resultado);
 
         //recorrer inversiones
 
         $inversiones = $emprendimiento->getInversiones();
 
-        $porGanancia = (float) $request->request->get('ganancia');
+         $em->flush();
 
         return $this->render('asociateyaBundle:Emprendimiento:pagoGanancias.html.twig', array(
             'emprendimiento' => $emprendimiento,
             'inversiones' => $inversiones,
-            'porGanancia' => $porGanancia)
+            'porGanancia' => $porGanancia,
+            'resultado' => $resultado)
         );
     }
 
@@ -467,12 +476,18 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
      * Muestra pagina con mensaje de pago pendiente
      *
      */
-    public function pagarGananciasNotificarAction($id)
+    public function pagarGananciasNotificarAction($id,$idResultado)
     {
         $em = $this->get('doctrine')->getManager();
 
         $usuario = $em->getRepository('asociateyaBundle:Usuario')->find($id);
+        $resultado = $em->getRepository('asociateyaBundle:Resultado')->find($idResultado);
 
+       $notificacionResultado = new NuevoEstadoResultado();
+       $notificacionResultado->setUsuario($usuario);
+       $notificacionResultado->setFechaCreacion(new \DateTime());
+       $notificacionResultado->setResultado($resultado);
+       $em->persist($notificacionResultado);
 
         //mandar mail de notificacion
         $message = \Swift_Message::newInstance()
@@ -485,7 +500,7 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
             'text/html'
         );
         $this->get('mailer')->send($message);
-
+         $em->flush();
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
                 'mensaje'      => "Se notificado correctamente"));

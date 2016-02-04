@@ -10,15 +10,20 @@ Ingresar
 
 {% block body -%}
 <div id="login">
-  {% if error %}
-  <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-  {% endif %}
   <form action={{ path('asociateya_ingresar_exito') }} method="post">
     <h1>Log in</h1>
     <input type="username" id="username" placeholder="Usuario" name="_username" {%if last_username %}value={{ last_username }}{% endif %}/>
     <input type="password" id="password" placeholder="Password" name="_password" />
     <!-- <input type="submit" value="Ingresar" /> -->
+    {% if error %}
+      {% if error.messageKey|trans(error.messageData, 'security') =='Invalid credentials.' %}
+      <div class="etiqueta" style="background-color:  #ff3300; color: #FFF; font-size: 20px; border-radius: 10px; padding: 5px; width: 95%; margin: 0px;">Credenciales inválidas.</div>
+      {% else %}
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      {% endif %}
+    {% endif %}
     <button type="submit">Ingresar</button>
-  </form> 
+  </form>
+
 </div>
 {% endblock %}

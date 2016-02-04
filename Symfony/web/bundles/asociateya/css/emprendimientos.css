@@ -127,6 +127,13 @@
 	font-weight: bold;
 }
 
+.emprendedor{
+	color: #e5eeff;
+	border-color: #6699ff;
+	background-color: #6699ff;
+	font-weight: bold;
+}
+
 .calculadora{
 	font-size: 30px;
 	color: #65cc00;
