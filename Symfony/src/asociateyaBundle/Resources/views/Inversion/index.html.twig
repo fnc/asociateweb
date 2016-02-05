@@ -2,7 +2,6 @@
 
 {% block title %}Mis Inversiones{% endblock %}
 {% block stylesheets %}
-<link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
@@ -11,7 +10,7 @@
   $(document).ready(function(){
     $("#boton_inversiones").addClass("active");
     $(".inversion").hover(function(){
-      jQuery(".informacion_inversion", this).fadeIn(800);
+      jQuery(".informacion_inversion", this).slideDown(400);
     },function(){
       jQuery(".informacion_inversion", this).fadeOut(10);
     });
@@ -32,7 +31,7 @@
                     <div class="inversion" id="emprendimiento{{ loop.index }}" >
                       {% include 'asociateyaBundle:Inversion:inversion.html.twig' with {inversion: inversion} %}
                       <!-- Es importante que la div del grafico este antes que el script -->
-                      <div class="informacion_inversion" style="display:none;width:auto; text-align: center;">
+                      <div class="informacion_inversion" style="display:none;text-align: center;position:absolute;margin-left:111px;width: 1000px;box-shadow: -10px 10px 5px #888888;border: 3px solid #222;" id="pagos{{ loop.index }}" >
                         {% if inversion.pagos %}
                         <div class="elemento_mensaje">
                           <strong>Pagos</strong><br>
@@ -117,8 +116,9 @@
                           }
                         });
                         </script>
-                      </div>
+
                       {% endif %}
+                      </div>
                     {% endfor %}
                 </ul>
             {% else %}

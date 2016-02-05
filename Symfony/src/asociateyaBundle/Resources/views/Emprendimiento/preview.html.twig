@@ -27,7 +27,7 @@
 
                 {% for inversion in entity.inversiones %}
                   {% if inversion.usuario == app.user %}
-                    <div style="float: left;" class="etiqueta inversor">INVERSOR</div>
+                    <div style="float: left;" class="etiqueta inversor">SU INVERSION</div>
                   {% endif %}
                 {% endfor %}
                 {% if entity.emprendedor.usuario == app.user %}
