@@ -177,6 +177,8 @@
 	border-bottom: 1px solid #999;
 	vertical-align: middle;
 	margin-top: 2px;
+	background-color: #80cdff ;
+	background-blend-mode: screen;
 }
 
 .elemento_portfolio:hover {
@@ -185,14 +187,14 @@
 
 .elemento_inversion {
 	color: #666666;
-	background-color: #264d00;
+	background-color: #99ff66;
 	height: 32px;
 	width: auto;
 	padding: 0px;
 	border-bottom: 1px solid #999;
 	vertical-align: middle;
 	margin-top: 2px;
-	background-blend-mode: multiply;
+	background-blend-mode: screen;
 }
 
 .elemento_inversion:hover {
