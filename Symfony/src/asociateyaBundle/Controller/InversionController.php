@@ -41,10 +41,39 @@ class InversionController extends Controller
 
       $em = $this->getDoctrine()->getManager();
 
+      //TODO Calcular estos indices y hacer todas las validaciones, division por 0, fijarse si ya reporto ganancias, etc
+      $montoInvertido = 0;
+      $montoGanado = 0 ;
+      $eficianciaInversiones = 0;
+      $inversionEfectiva = 0;
+      $porcentInversionEfectiva = 0;
+
       $inversiones = $em->getRepository('asociateyaBundle:Inversion')->findByUsuario($this->getUser());
+
+      foreach ($inversiones as $inversion) {
+         $monto = $inversion->getCantidadAcciones() * $inversion->getEmprendimiento()->getPrecioAccion();
+         if($inversion->getEmprendimiento()->getEstado()==2){
+            $inversionEfectiva = $inversionEfectiva + $monto;
+            $resultados = $inversion->getEmprendimiento()->getResultados();
+            if($resultados){
+               foreach ($resultados as $resultado) {
+                  $montoGanado = $montoGanado + $monto * ($resultado->getMonto()/100);
+               }
+            }
+         }
+         $montoInvertido = $montoInvertido + $monto ;
+      }
+
+      $eficienciaInversiones = ($montoGanado/$montoInvertido) * 100 ;
+      $porcentInversionEfectiva = ($inversionEfectiva/$montoInvertido) * 100;
 
       return $this->render('asociateyaBundle:Inversion:index.html.twig', array(
            'inversiones' => $inversiones,
+           'montoInvertido' => $montoInvertido,
+           'montoGanado' => $montoGanado,
+           'eficienciaInversiones' => $eficianciaInversiones,
+           'inversionEfectiva' => $inversionEfectiva,
+           'porcentInversionEfectiva' => $porcentInversionEfectiva,
       ));
    }
 

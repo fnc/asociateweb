@@ -197,7 +197,7 @@ insert ignore into Pago(idMp,idMPUser,monto,estado,detalleEstado,fechaEmision,fe
 
 
 insert ignore into Inversion(usuario_id,emprendimiento_id,fechaEmision,cantidadAcciones) values (3,3,"2016/01/16",2);
-insert ignore into Pago(idMp,idMPUser,monto,estado,detalleEstado,fechaEmision,fechaCobro,discr,inversion_id ) values ("123","123",4,"2","","2015/12/15","2015/12/15","pagoInversion",5);
+insert ignore into Pago(idMp,idMPUser,monto,estado,detalleEstado,fechaEmision,fechaCobro,discr,inversion_id ) values ("123","123",2,"2","","2015/12/15","2015/12/15","pagoInversion",5);
 
 insert ignore into Inversion(usuario_id,emprendimiento_id,fechaEmision,cantidadAcciones) values (11,5,"2016/05/16",1);
 insert ignore into Pago(idMp,idMPUser,monto,estado,detalleEstado,fechaEmision,fechaCobro,discr,inversion_id ) values ("123","123",1,"2","","2015/12/15","2015/12/15","pagoInversion",6);
