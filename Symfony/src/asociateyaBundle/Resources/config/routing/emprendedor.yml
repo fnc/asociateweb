@@ -6,6 +6,10 @@
 #     path:     /{id}/show
 #     defaults: { _controller: "asociateyaBundle:Emprendedor:show" }
 
+emprendedor_solicitud:
+    path:     /solicitud
+    defaults: { _controller: "asociateyaBundle:Emprendedor:solicitud" }
+
 emprendedor_new:
     path:     /aplicar
     defaults: { _controller: "asociateyaBundle:Emprendedor:new" }

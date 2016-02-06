@@ -57,15 +57,18 @@ class InversionController extends Controller
             $resultados = $inversion->getEmprendimiento()->getResultados();
             if($resultados){
                foreach ($resultados as $resultado) {
-                  $montoGanado = $montoGanado + $monto * ($resultado->getMonto()/100);
+                  $montoGanado = $montoGanado + $monto * ($resultado->getMonto()/100) ;
                }
             }
          }
          $montoInvertido = $montoInvertido + $monto ;
       }
 
-      $eficienciaInversiones = ($montoGanado/$montoInvertido) * 100 ;
-      $porcentInversionEfectiva = ($inversionEfectiva/$montoInvertido) * 100;
+      if($montoInvertido > 0){
+         $eficianciaInversiones = (int)(($montoGanado/$montoInvertido) * 100) ;
+         $porcentInversionEfectiva = (int)(($inversionEfectiva/$montoInvertido) * 100);
+      }
+
 
       return $this->render('asociateyaBundle:Inversion:index.html.twig', array(
            'inversiones' => $inversiones,

@@ -16,6 +16,20 @@ use asociateyaBundle\Form\EmprendedorType;
 class EmprendedorController extends Controller
 {
 
+   /**
+    * Crea formulario de solicitud de emprendedor.
+    *
+    */
+   public function solicitudAction()
+   {
+
+      $usuario = $this->getUser();
+
+      return $this->render('asociateyaBundle:Emprendedor:new.html.twig', array('usuario' => $usuario ));
+   }
+
+
+
     /**
      * Aprueba a un emprendedor
      * estado = 1
@@ -167,15 +181,52 @@ class EmprendedorController extends Controller
      * Displays a form to create a new Emprendedor entity.
      *
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
 
         $entity = new Emprendedor();
         // $form = $this->createCreateForm($entity);
         //$form->handleRequest($request);
+        if($request->request->get('nombre')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su nombre."));
+        }
+        if($request->request->get('apellido')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su apellido."));           
+        }
+        if($request->request->get('dni')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su dni."));
+        }
+        if($request->request->get('direccion')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su direccion."));
+        }
+        if($request->request->get('ciudad')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su ciudad."));
+        }
+        if($request->request->get('provincia')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su provincia."));
+        }
+        if($request->request->get('cuit')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su CUIT/CUIL."));
+        }
+        if($request->request->get('telefono')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su telefono."));
+        }
+        if($request->request->get('email')==""){
+           return $this->render('asociateyaBundle::ay_mensaje.html.twig', array('mensaje' => "Tiene que ingresar su email."));
+        }
+
         $entity->setUsuario($this->getUser());
         $entity->setEstado(0);
         $entity->setReputacion(0);
+        $entity->setNombre($request->request->get('nombre'));
+        $entity->setApellido($request->request->get('apellido'));
+        $entity->setDni($request->request->get('dni'));
+        $entity->setDireccion($request->request->get('direccion'));
+        $entity->setCiudad($request->request->get('ciudad'));
+        $entity->setProvincia($request->request->get('provincia'));
+        $entity->setCuit($request->request->get('cuit'));
+        $entity->setEmail($request->request->get('email'));
+        $entity->setTelefono($request->request->get('telefono'));
 
         //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

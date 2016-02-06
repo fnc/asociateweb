@@ -1,15 +1,52 @@
-{% extends '::base.html.twig' %}
+{% extends 'asociateyaBundle::ay_base.html.twig' %}
 
 {% block body -%}
-    <h1>Emprendedor creation</h1>
-
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('emprendedor') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+Para aplicar como emprendedor debe proporcionarle a AsociateYa los siguientes datos personales. Estos datos solo se podran modificar comunicandose con AsociateYa por lo que le pedimos que verifique la solicitud antes de enviarla.
+<form name="asociateyabundle_usuario" method="post" action="{{ path('emprendedor_new') }}">
+    <input type="hidden" name="_method" value="PUT" />
+    <div id="asociateyabundle_usuario">
+      <div>
+      <label for="asociateyabundle_usuario_nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" maxlength="255" value="{{ usuario.nombre}}" />
+    </div>
+      <div>
+        <label for="asociateyabundle_usuario_apellido">Apellido</label>
+        <input type="text" id="apellido" name="apellido" maxlength="255" value=" {{usuario.apellido}}" />
+      </div>
+        <div>
+          <label for="asociateyabundle_usuario_email">E-mail</label>
+          <input type="text" id="email" name="email" maxlength="255" value="{{usuario.email}}" />
+        </div>
+        <div>
+          <label for="asociateyabundle_usuario_dni">DNI</label>
+          <input type="text" id="adni" name="dni" maxlength="255" value="{{usuario.dni}}" />
+        </div>
+        <div>
+          <label for="asociateyabundle_usuario_direccion">Direccion</label>
+          <input type="text" id="direccion" name="direccion" maxlength="255" value="{{usuario.direccion}}" />
+        </div>
+        <div>
+          <label for="asociateyabundle_usuario_direccion">Ciudad</label>
+          <input type="text" id="ciudad" name="ciudad" maxlength="255" value="{{usuario.ciudad}}" />
+        </div>
+        <div>
+          <label for="asociateyabundle_usuario_direccion">Provincia</label>
+          <input type="text" id="provincia" name="provincia" maxlength="255" value="" />
+        </div>
+        <div>
+          <label for="asociateyabundle_usuario_cuit">CUIT/CUIL</label>
+          <input type="text" id="cuit" name="cuit" maxlength="255" value="{{usuario.cuit}}" />
+        </div>
+        <div>
+          <label for="asociateyabundle_usuario_cuit">telefono</label>
+          <input type="text" id="telefono" name="telefono" maxlength="100" value="" />
+        </div>
+      </br>
+      </br>
+        <div>
+          <button type="submit" id="asociateyabundle_usuario_submit" name="submit">Aplicar</button>
+        </div>
+        <input type="hidden" id="asociateyabundle_usuario__token" name="asociateyabundle_usuario[_token]" value="PZPrDpqQEVJyBreADFY9qzZ9oWuW9P9wp3JZiV95WcM" />
+        </div>
+      </form>
 {% endblock %}

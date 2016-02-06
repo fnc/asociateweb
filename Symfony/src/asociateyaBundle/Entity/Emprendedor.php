@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Emprendedor
 {
-    
+
 /**
 *  @ORM\Id
 *  @ORM\Column(type="integer", name="emprendedor_id")
@@ -23,7 +23,7 @@ class Emprendedor
 
     public function __construct($name=null)
     {
-        $this->emprendimientos = new \Doctrine\Common\Collections\ArrayCollection();  
+        $this->emprendimientos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -36,7 +36,7 @@ class Emprendedor
 	* @ORM\OneToMany(targetEntity="Emprendimiento", mappedBy="emprendedor")
 	*/
 	private $emprendimientos;
-    
+
     /**
      * @ORM\Column(type="date",nullable=true)
      */
@@ -51,6 +51,60 @@ class Emprendedor
      * @ORM\Column(type="integer")
      */
     private $reputacion;
+
+    /**
+     *
+     * @ORM\Column(name="nombre", type="string", length=255)
+     */
+    private $nombre;
+
+    /**
+     *
+     * @ORM\Column(name="apellido", type="string", length=255)
+     */
+    private $apellido;
+
+    /**
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     *
+     * @ORM\Column(name="dni", type="string", length=255)
+     */
+    private $dni;
+
+    /**
+     *
+     * @ORM\Column(name="direccion", type="string", length=255)
+     */
+    private $direccion;
+
+    /**
+     *
+     * @ORM\Column(name="ciudad", type="string", length=255)
+     */
+    private $ciudad;
+
+    /**
+     *
+     * @ORM\Column(name="provincia", type="string", length=255)
+     */
+    private $provincia;
+
+    /**
+     *
+     * @ORM\Column(name="cuit", type="string", length=255)
+     */
+    private $cuit;
+
+    /**
+     *
+     * @ORM\Column(name="telefono", type="string", length=255)
+     */
+    private $telefono;
 
 
     /**
@@ -249,5 +303,221 @@ class Emprendedor
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Emprendedor
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellido
+     *
+     * @param string $apellido
+     *
+     * @return Emprendedor
+     */
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    /**
+     * Get apellido
+     *
+     * @return string
+     */
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Emprendedor
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set dni
+     *
+     * @param string $dni
+     *
+     * @return Emprendedor
+     */
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
+
+    /**
+     * Get dni
+     *
+     * @return string
+     */
+    public function getDni()
+    {
+        return $this->dni;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return Emprendedor
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param string $ciudad
+     *
+     * @return Emprendedor
+     */
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return string
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    /**
+     * Set provincia
+     *
+     * @param string $provincia
+     *
+     * @return Emprendedor
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia
+     *
+     * @return string
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set cuit
+     *
+     * @param string $cuit
+     *
+     * @return Emprendedor
+     */
+    public function setCuit($cuit)
+    {
+        $this->cuit = $cuit;
+
+        return $this;
+    }
+
+    /**
+     * Get cuit
+     *
+     * @return string
+     */
+    public function getCuit()
+    {
+        return $this->cuit;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     *
+     * @return Emprendedor
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
     }
 }

@@ -20,7 +20,7 @@
 
 
 {% block body -%}
-        <div style= "background-color: #f2f2f2; border-radius: 20px; width: 60%; height: 410px;margin-left:20%;margin-right:20%">
+        <div style= "background-color: #f2f2f2; border-radius: 20px; width: 70%; height: 410px;margin-left:15%;margin-right:15%">
           <div style="float: left; margin: 2%; font-size:20px; width: 45%;">
             <div style="padding: 10px; border-radius: 20px; background-color:#e6e6e6;border: 4px outset #fafafa;">
               <div style="padding: 5px; border-radius: 20px; background-color:#FFF;">Usted ha invertido:</div>
@@ -40,7 +40,7 @@
               <div style="padding: 5px; border-radius: 20px; background-color:#FFF;">Eficiencia de su inversión:</div>
               <div style="margin-left: 30%; font-size: 40px; background-color:#69F; padding: 5px 20px; border-radius: 30px;color: #FFF; height: 50px;">
                 <div style="float:left;">%</div>
-                <div style="float:right;">{{eficienciaInversiones}}</div>
+                <div style="float:right;">{{ eficienciaInversiones }}</div>
               </div>
             </div>
 
@@ -110,12 +110,12 @@
                             </ul>
                           {% endfor %}
                         {% endif %}
-                      </div>
+
                       {% if inversion.emprendimiento.resultados|length > 0 %}
                         <div class="informacion_inversion elemento_mensaje" style="display:none;">
                           <strong>Historial de ganancias de la inversion</strong><br>
                         </div>
-                        <div class="informacion_inversion" style="display:none;width:auto;  height:400px;text-align: center;"  id="ganancias{{inversion.id}}">
+                        <div class="informacion_inversion" style="display:none;width:auto;  height:400px;text-align: center; background-color: #fff;"  id="ganancias{{inversion.id}}">
                         </div>
                         <script>
                         var chart{{inversion.id}} = AmCharts.makeChart( $("#ganancias{{inversion.id}}")[0], {
@@ -123,7 +123,7 @@
                           "theme": "light",
                           "dataProvider": [
                             {% for resultado in inversion.emprendimiento.resultados %}
-                            {"fecha": "{{resultado.fecha|date('d-m-Y')}}","ganancia":{{ resultado.monto * inversion.cantidadAcciones * inversion.emprendimiento.precioAccion }} },
+                            {"fecha": "{{resultado.fecha|date('d-m-Y')}}","ganancia":{{ resultado.monto /100 * inversion.cantidadAcciones * inversion.emprendimiento.precioAccion }} },
                             {% endfor %}
                            ],
                           "valueAxes": [ {
@@ -160,6 +160,7 @@
 
                       {% endif %}
                       </div>
+                    </div>
                     {% endfor %}
                 </ul>
             {% else %}

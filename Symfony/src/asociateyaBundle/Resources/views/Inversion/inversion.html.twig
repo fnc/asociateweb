@@ -1,6 +1,9 @@
-<ul style="height: 80px; background-size: 100% 500%;background-image: url({{ asset('/uploads/emprendimientos/' ~ inversion.emprendimiento.rutaImagen) }});" class="elemento_inversion">
+<ul style="height: 80px;" class="elemento_inversion">
   <a href={{ path('emprendimiento_show',{'id':inversion.emprendimiento.id}) }} >
   <li style="float: left; width: 25%;text-align: center; height: 60%;font-size: 20px;" class="etiqueta">
+    {% if inversion.emprendimiento.estado == 2 %}
+      <div style="float: left;" class="etiqueta inversor">Trabajando</div>
+    {% endif %}
     <strong>{{ inversion.emprendimiento.nombre }}</strong>
   </li>
   </a>

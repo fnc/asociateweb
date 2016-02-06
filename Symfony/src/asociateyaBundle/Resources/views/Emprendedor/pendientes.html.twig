@@ -15,6 +15,7 @@
     <div style="margin-right: 40px;">
       <li style="float: right;width: 15%;text-align: center;" class="etiqueta" ></li>
       <li style="float: right;width: 15%;text-align: center;" class="etiqueta" ></li>
+      <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >Telefono</li>
 
     </div>
   </ul>
@@ -25,6 +26,7 @@
     <div style="margin-right: 40px;">
       <li style="float: right;width: 15%;text-align: center;" ><a class="boton acciones" href="{{ path('emprendedor_noAprobar', { 'id': entity.id }) }}">No Aprobar</a></li>
       <li style="float: right;width: 15%;text-align: center;" ><a class="boton precio" href="{{ path('emprendedor_aprobar', { 'id': entity.id }) }}">Aprobar</a></li>
+      <li style="float: right;width: 15%;text-align: center;" class="etiqueta" >{{ entity.telefono}}</li>
     </div>
   </ul>
   {% endfor %}
@@ -58,7 +60,7 @@
         <li style="float: right;width: 10%;"><a class="boton acciones" href="{{ path('emprendimiento_rechazar', { 'id': entity.id }) }}">Rechazar</a></li>
         <li style="float: right;width: 10%;"><input type="submit" value="Aceptar" class="boton precio"></li>
         <li style="float: right;width: 15%;"><input style="width: 70%;" type="text" name="plazo" id="plazo" value="1" /></li>
-        <li style="float: right;width: 15%;"><input style="width: 70%;" type="text" name="valor_accion" id="valor_accion" value="1" /></li>        
+        <li style="float: right;width: 15%;"><input style="width: 70%;" type="text" name="valor_accion" id="valor_accion" value="1" /></li>
       </ul>
     </form>
   </li>
