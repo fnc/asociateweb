@@ -12,6 +12,11 @@
         event.preventDefault();
         $.get( '{{path('emprendimiento_busquedaFiltrada')}}'+'?'+ $('#search_form').serialize(), function(data) {$("#resultados_content").html(data);},'html');
       });
+      $('#boton_reset').click( function(event) {
+        event.preventDefault();
+        $('#search_form')[0].reset();
+        $.get( '{{path('emprendimiento_busquedaFiltrada')}}', function(data) {$("#resultados_content").html(data);},'html');
+      });
       $('#boton_orden_precio').click( function(event) {
         event.preventDefault();
         if (activeOrder == 'precioASC') {
@@ -99,7 +104,7 @@
       <br>
       <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
       <br>
-      <br><button type="reset" class="boton boton_submit">Limpiar</button>
+      <br><button type="submit" id="boton_reset" class="boton boton_submit">Limpiar</button>
       <br>
       <br>
     </form>
