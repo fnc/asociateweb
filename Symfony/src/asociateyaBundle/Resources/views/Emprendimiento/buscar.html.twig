@@ -98,9 +98,12 @@
       <input type="checkbox" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria[]" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
       {% endfor %}
       <br>
-      <h3>Precio accion</h3>
-      <input class="search" type="text" name="precioDesde" id="precioDesde" value="0" />
-      <input class="search" type="text" name="precioHasta" id="precioHasta" value="1000" />
+      <h3>Precio acción</h3>
+      Desde: $
+      <input class="search" type="text" name="precioDesde" id="precioDesde" value="" />
+      <br>
+      Hasta: $
+      <input class="search" type="text" name="precioHasta" id="precioHasta" value="" />
       <br>
       <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
       <br>
@@ -111,42 +114,46 @@
   </div>
 </div>
 
-<div class="content" id="resultados_content">
+<div class="content">
 
-        {% if entities %}
+
             <h1>Emprendimientos
               <a id="boton_orden_precio" class="boton" style="float: right;">Precio &uarr; &darr;</a>
               <a id="boton_orden_plazo" class="boton" style="float: right;">Tiempo restante &uarr; &darr;</a>
               <a id="boton_orden_porcent" class="boton" style="float: right;">% restante &uarr; &darr;</a>
             </h1>
-            <!-- EMPIEZA EL PORTAFOLIO -->
-            <div id="portfolio_container">
-                <ul class="lista_resultados">
-                    {% for entity in entities %}
-                      {% if not entity.estado == 0 %}
-                        {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
-                        {% set leftDays = difference.days %}
-                        {% if entity.totalAcciones > 0 %}
-                          {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
-                        {% else %}
-                          {% set leftDays = 10000 %}
-                          {% set progresoBarra = 0 %}
-                        {% endif %}
-                      {% else %}
-                        {% set leftDays = 10000 %}
-                        {% set progresoBarra = 0 %}
-                      {% endif %}
-                      <li class="resultado" data-precio="{{ entity.precioAccion }}" data-plazo="{{ leftDays }}" data-porcent="{{ progresoBarra }}">
-                        {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
-                      </li>
-                    {% endfor %}
 
-                </ul>
-                <!--REFER TO THE js/drifolio.js-->
-            </div><!-- TERMINA EL PORTAFOLIO -->
-        {% else %}
-            <h3>No se encontró ningun emprendimiento.</h3>
-        {% endif %}
-      </div>
+            <div id="resultados_content">
+              {% if entities %}
+                <div id="portfolio_container">
+                    <ul class="lista_resultados">
+                        {% for entity in entities %}
+                          {% if not entity.estado == 0 %}
+                            {% set difference = date(entity.fechaFinalizacion).diff(date('now')) %}
+                            {% set leftDays = difference.days %}
+                            {% if entity.totalAcciones > 0 %}
+                              {% set progresoBarra = (( entity.totalAcciones - entity.accionesRestantes ) / entity.totalAcciones)*100 %}
+                            {% else %}
+                              {% set leftDays = 10000 %}
+                              {% set progresoBarra = 0 %}
+                            {% endif %}
+                          {% else %}
+                            {% set leftDays = 10000 %}
+                            {% set progresoBarra = 0 %}
+                          {% endif %}
+                          <li class="resultado" data-precio="{{ entity.precioAccion }}" data-plazo="{{ leftDays }}" data-porcent="{{ progresoBarra }}">
+                            {% include 'asociateyaBundle:Emprendimiento:preview.html.twig' with {entity: entity} %}
+                          </li>
+                        {% endfor %}
+
+                    </ul>
+                    <!--REFER TO THE js/drifolio.js-->
+                </div><!-- TERMINA EL PORTAFOLIO -->
+              {% else %}
+                  <h3>No se encontró ningun emprendimiento.</h3>
+              {% endif %}
+            </div>
+
+</div>
 
 {% endblock %}

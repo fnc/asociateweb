@@ -154,7 +154,8 @@ class EmprendimientoController extends Controller
     {
       $palabra = $request->query->get('palabra');
       $categorias = $request->query->get('categoria');
-      $precio = $request->query->get('precio');
+      $precioDesde = $request->query->get('precioDesde');
+      $precioHasta = $request->query->get('precioHasta');
       $em = $this->getDoctrine()->getManager();
 
       $query = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e');
@@ -172,10 +173,16 @@ class EmprendimientoController extends Controller
             }
          }
 
-         if($precio){
-            $query= $query->andWhere('e.precioAccion <= :precio');
-            $parameters['precio']= $precio;
+         if($precioHasta){
+            $query= $query->andWhere('e.precioAccion <= :precioHasta');
+            $parameters['precioHasta']= $precioHasta;
          }
+
+         if($precioDesde){
+            $query= $query->andWhere('e.precioAccion >= :precioDesde');
+            $parameters['precioDesde']= $precioDesde;
+         }
+
          if($palabra){
             $query= $query->andWhere('e.nombre LIKE :nombre');
             $parameters['nombre']='%'.$palabra . '%';
