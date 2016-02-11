@@ -88,19 +88,19 @@
     <!-- BUSCAR EMPRENDIMIENTOS -->
     <form method="get" action=" " id="search_form">
       <br>
-      <h3>Nombre:</h3>
+      <h3>Nombre</h3>
       <input class="search" type="text" name="palabra" id="palabra" value="" />
       <br><br>
 
       <!-- FILTRAR EMPRENDIMIENTOS -->
-      <h3>Categoria:</h3>
-      <input type="radio" id="Todas" value="" name="categoria" ><label class="light" for="animales">Todas</label><br>
+      <h3>Categoria</h3>
       {% for categoria in categorias %}
-      <input type="radio" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
+      <input type="checkbox" id="{{categoria.nombre}}" value="{{categoria.nombre}}" name="categoria[]" ><label class="light" for="animales">{{categoria.nombre}}</label><br>
       {% endfor %}
       <br>
-      <h3>Precio menor a:</h3>
-      <input class="search" type="text" name="precio" id="precio" value="" />
+      <h3>Precio accion</h3>
+      <input class="search" type="text" name="precioDesde" id="precioDesde" value="0" />
+      <input class="search" type="text" name="precioHasta" id="precioHasta" value="1000" />
       <br>
       <br><button type="submit" id="boton_submit" class="boton boton_submit">Buscar</button>
       <br>

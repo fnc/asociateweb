@@ -153,20 +153,23 @@ class EmprendimientoController extends Controller
     public function buscarFiltroAction(Request $request)
     {
       $palabra = $request->query->get('palabra');
-      $categoria = $request->query->get('categoria');
+      $categorias = $request->query->get('categoria');
       $precio = $request->query->get('precio');
       $em = $this->getDoctrine()->getManager();
 
       $query = $em->getRepository("asociateyaBundle:Emprendimiento")->createQueryBuilder('e');
       $parameters = null;
 
-         if($categoria){
-            $cat = $em->getRepository('asociateyaBundle:Categoria')->findByNombre($categoria);
-            if(!$cat){
-               //no se encontro la categoria
+         if($categorias){
+            foreach ($categorias as $key => $categoria) {
+
+               $cat = $em->getRepository('asociateyaBundle:Categoria')->findByNombre($categoria);
+               if(!$cat){
+                  //no se encontro la categoria
+               }
+               $query= $query->andWhere(':categoria'.$key.' MEMBER OF e.categorias' );
+               $parameters['categoria'.$key]= $cat;
             }
-            $query= $query->where(':categoria MEMBER OF e.categorias' );
-            $parameters['categoria']= $cat;
          }
 
          if($precio){
