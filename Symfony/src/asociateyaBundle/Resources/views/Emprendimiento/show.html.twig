@@ -6,6 +6,16 @@
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script>
+function confirmacionCancelar() {
+    if (confirm("¿Está seguro que quiere cancelar el emprendimiento?") == true) {
+        window.location = "{{ path('inversion_confirmarPagoRefund', { 'id': entity.id }) }}";
+    } else {
+
+    }
+}
+</script>
+
 {% endblock %}
 
 {% block sidebar %}
@@ -66,8 +76,10 @@
       <br>
 
       {% if app.user.getId == entity.emprendedor.usuario.getId  %}
-      <a href="{{ path('inversion_confirmarPagoRefund', { 'id': entity.id }) }}" class="boton">Cancelar</a>
+      <h3>Administración</h3>
+      <button onclick="confirmacionCancelar()"  class="boton">Cancelar</button>
       {% else %}
+      <h3>Administración</h3>
       <a href="{{ path('emprendimiento_asociarse', { 'id': entity.id }) }}" class="boton comprar">Comprar Acciones</a>
       {% endif %}
     {% endif %}

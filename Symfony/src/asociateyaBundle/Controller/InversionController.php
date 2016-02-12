@@ -164,6 +164,8 @@ class InversionController extends Controller
 
         return $this->render('asociateyaBundle:Emprendimiento:confirmacionPago.html.twig', array(
             'emprendimiento'      => $emprendimiento,
+            'cantidadAcciones'      => $cantidadAcciones,
+            'totalAPagar'      => (int)$emprendimiento->getPrecioAccion()*$cantidadAcciones,
             'initPoint' => $preference["response"]["init_point"],
         ));
     }
