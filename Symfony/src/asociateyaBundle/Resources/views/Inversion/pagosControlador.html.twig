@@ -11,20 +11,22 @@
 
         <h1>Pagos</h1>
         <div class="filtrosPagos">
-            <form action="../index.html" method="post">
+            <form action="{{ path('inversion_pagosControl') }}" method="get">
               <label>Buscar pagos desde el:</label>
-                <input class="cajaBusquedaFecha" name="pagoDesde" type="text" placeholder="DD/MM/AAAA"/>
+                <input class="cajaBusquedaFecha" name="fechD" type="text" placeholder="DD/MM/AAAA"/>
               <label>hasta el:</label>
-                <input class="cajaBusquedaFecha" name="pagoDesde" type="text" placeholder="DD/MM/AAAA"/>
+                <input class="cajaBusquedaFecha" name="fechH" type="text" placeholder="DD/MM/AAAA"/>
                 <br>
                 <br>
               <label>Con ID:</label>
               <input class="cajaBusquedaID" name="pagoId" type="text" />
               <label>con estado:</label>
                 <select name="pagoEstado" class="select-field">
-                    <option value="vacio"></option>
-                    <option value="pediente">Pendiente</option>
-                    <option value="acreditado">Acreditado</option>
+                    <option value=""></option>
+                    <option value="pending">Pendiente</option>
+                    <option value="approved">Acreditado</option>
+                    <option value="cancelled">Cancelado</option>
+                    <option value="refunded">Devuelto</option>                                          
                 </select>
                 <br><br>
 

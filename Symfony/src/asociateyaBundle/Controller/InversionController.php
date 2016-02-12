@@ -448,19 +448,38 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
      * Muestra pagina con mensaje de pago pendiente
      *
      */
-    public function pagosControlAction()
+    public function pagosControlAction(Request $request)
     {
+      $pagoId = $request->query->get('pagoId');
+      $pagoEstado = $request->query->get('pagoEstado');
+      $fechaDesde = $request->query->get('fechD');
+      if(!$fechaDesde){
+         $fechaDesde = "2014-10-21T00:00:00Z";
+      }
+      else{
+         $fechaDesde = date("Y-m-d", strtotime($fechaDesde))."T00:00:00Z";
+      }
+      $fechaHasta = $request->query->get('fechH');
+      if(!$fechaHasta){
+         $fechaHasta = "NOW";
+      }
+      else{
+         $fechaHasta = date("Y-m-d", strtotime($fechaHasta))."T00:00:00Z";
+      }
         require_once ('mercadopago.php');
         $mp = new \MP ("813635953433843","42DSugNu5tAKsQMj6QicKloh6Jvege3D");
         // Filtros de la consulta
         $filters = array(
             "range" => "date_created",
-            "begin_date" => "2014-10-21T00:00:00Z",
-            "end_date" => "NOW",
+            "begin_date" => $fechaDesde,
+            "end_date" => $fechaHasta,
+            "id"=>$pagoId,
+            "status" => $pagoEstado
+
             //"operation_type" => "regular_payment"
         );
 
-        $searchResult = $mp->search_payment($filters);
+        $searchResult = $mp->search_payment($filters,0,100);
 
 
         return $this->render('asociateyaBundle:Inversion:pagosControlador.html.twig', array(
