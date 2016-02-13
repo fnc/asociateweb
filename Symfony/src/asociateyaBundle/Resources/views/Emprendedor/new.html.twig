@@ -1,7 +1,16 @@
 {% extends 'asociateyaBundle::ay_base.html.twig' %}
 
+{% block stylesheets %}
+  <link href={{ asset('bundles/asociateya/css/perfil.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/emprendimientos.css')}} rel="stylesheet" type="text/css">
+  <link href={{ asset('bundles/asociateya/css/normalize.css')}} rel="stylesheet" type="text/css">
+{% endblock %}
+
+
 {% block body -%}
+<h3>
 Para aplicar como emprendedor debe proporcionarle a AsociateYa los siguientes datos personales. Estos datos solo se podran modificar comunicandose con AsociateYa por lo que le pedimos que verifique la solicitud antes de enviarla.
+</h3>
 <form name="asociateyabundle_usuario" method="post" action="{{ path('emprendedor_new') }}">
     <input type="hidden" name="_method" value="PUT" />
     <div id="asociateyabundle_usuario">
@@ -38,7 +47,7 @@ Para aplicar como emprendedor debe proporcionarle a AsociateYa los siguientes da
           <input type="text" id="cuit" name="cuit" maxlength="255" value="{{usuario.cuit}}" />
         </div>
         <div>
-          <label for="asociateyabundle_usuario_cuit">telefono</label>
+          <label for="asociateyabundle_usuario_cuit">Telefono</label>
           <input type="text" id="telefono" name="telefono" maxlength="100" value="" />
         </div>
       </br>

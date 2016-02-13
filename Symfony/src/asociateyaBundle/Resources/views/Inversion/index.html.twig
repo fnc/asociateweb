@@ -5,15 +5,22 @@
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src={{ asset('bundles/asociateya/js/jquery.hoverIntent.js')}}></script>
 
 <script>
   $(document).ready(function(){
     $("#boton_inversiones").addClass("active");
-    $(".inversion").hover(function(){
+    $(".inversion").hoverIntent(function(){
       jQuery(".informacion_inversion", this).slideDown(400);
     },function(){
       jQuery(".informacion_inversion", this).fadeOut(10);
     });
+    $(".lista_ganancias_general li").sort(sort_li) // sort elements
+    .appendTo('.lista_ganancias_general'); // append again to the list
+    // sort function callback
+    function sort_li(a, b){
+      return ($(b).data('orden')) < ($(a).data('orden')) ? 1 : -1;
+    }
   });
 </script>
 {% endblock %}
@@ -168,6 +175,51 @@
             {% endif %}
           </div>
         </div>
+</br>
+<div class="texto_emp" >
+
+    <h1>Historial de ganancias general</h1>
+    <ul class="elemento_mensaje">
+      <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+        Monto
+      </li>
+      <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+        Fecha
+      </li>
+      <li style="float: left; width: 23%;text-align: center;" class="etiqueta">
+        emprendimiento
+      </li>
+    </ul>
+
+  {% for inversion in inversiones %}
+    {% if inversion.emprendimiento.resultados|length > 0 %}
+      <ul class="lista_ganancias_general">
+      {% for resultado in inversion.emprendimiento.resultados %}
+      {% set difference = date(resultado.fecha).diff(date('now')) %}
+      <li data-orden="{{ difference.days }}" >
+        <div class="elemento_inversion">
+          <div style="float: left; width: 23%;text-align: center;" class="etiqueta">
+            ${{ resultado.monto /100 * inversion.cantidadAcciones * inversion.emprendimiento.precioAccion }}
+          </div>
+          <div style="float: left; width: 23%;text-align: center;" class="etiqueta">
+            {{resultado.fecha|date('d-m-Y')}}
+          </div>
+          <div style="float: left; width: 23%;text-align: center;" class="etiqueta">
+            {{ inversion.emprendimiento.nombre }}
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+      </ul>
+      <div class="elemento_inversion" style="border-top: medium solid #000;">
+        <div style="float: left; width: 23%;text-align: center;" class="etiqueta">
+          <strong>${{ montoGanado }}</strong>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+</div>
 
 
 {% endblock %}
