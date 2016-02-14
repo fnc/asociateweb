@@ -592,14 +592,6 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
         //SI HAY INVERSIONES HECHAS
 
         $montoAPagar =  ((float)$emprendimiento->getTotalAcciones()-(float)$emprendimiento->getAccionesRestantes())*(float)$emprendimiento->getPrecioAccion()*(0.0495);
-        $emprendimiento->setEstado(3);//candelado pendiente de pago
-        $inversionesADarDeBaja = $em->getRepository('asociateyaBundle:Inversion')
-            ->createQueryBuilder('e')
-            ->where('e.emprendimiento = :emprendimiento')
-            ->setParameter('emprendimiento',$emprendimiento)
-            ->groupBy('e.emprendimiento')
-            ->getQuery()
-            ->getResult();
 
 
 
@@ -646,6 +638,7 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
     public function pagoPendienteRefundAction($idEmprendimiento)
     {
             $request = $this->getRequest();
+
             $request->query->get('collection_id');//ES EL ID DEL PAGO // get a $_GET parameter
 
             $idDePago=$request->query->get('collection_id');
@@ -656,9 +649,40 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
 
             $emprendimiento->setIdRefund($idDePago);
 
+            $emprendimiento->setEstado(4);//canceladoPagoAcreditado
+
+
+
+            //devolver dinero de cada inversion
+            $inversiones = $emprendimiento->getInversiones();
+
+            require_once ('mercadopago.php');
+
+            $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+
+
+            foreach ($inversiones as $inversion) {
+               foreach ($inversion->getPagos() as $pago ) {
+
+                   $resultado = $mp->refund_payment($pago->getIdMp());
+
+                   $pago->setEstado(3);//refunded
+
+                   //TODO esto no se usa porque el refund aparentemente devuelve la comision
+                   $comisionRefund = (float)$pago->getMonto()*(0.0495);
+
+                   $notificacionEmprendimiento = new EmprendimientoCancelado();
+                   $notificacionEmprendimiento->setUsuario($inversion->getUsuario());
+                   $notificacionEmprendimiento->setFechaCreacion(new \DateTime());
+                   $notificacionEmprendimiento->setEmprendimiento($inversion->getEmprendimiento());
+                   $em->persist($notificacionEmprendimiento);
+               }
+            }
+
             $emprendimiento->setEstado(3);//canceladoPagoPendiente
 
             $em->flush();
+
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
             'mensaje'      => "Tu pago esta pendiente de acreditación")
