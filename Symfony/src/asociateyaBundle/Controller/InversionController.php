@@ -692,7 +692,7 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
 
             require_once ('mercadopago.php');
 
-            $mp = new MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
+            $mp = new \MP ("813635953433843", "42DSugNu5tAKsQMj6QicKloh6Jvege3D");
 
 
             foreach ($inversiones as $inversion) {
