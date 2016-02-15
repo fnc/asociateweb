@@ -123,7 +123,10 @@ class InversionController extends Controller
             throw $this->createNotFoundException('Unable to find Emprendimiento entity.');
         }
 
-
+        if(!$cantidadAcciones){
+            return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "Debe ingresar cuantas acciones quiere comprar.")
+            );
+        }
         if($cantidadAcciones>$emprendimiento->getAccionesRestantes()){
             return $this->render('asociateyaBundle::ay_mensaje_malo.html.twig', array('mensaje' => "No Hay suficientes acciones disponibles, solo quedan ".$emprendimiento->getAccionesRestantes()." acciones.")
             );
@@ -556,7 +559,7 @@ public function pagoAcreditadoRetrasadoAction( Request $request )
          $em->flush();
 
         return $this->render('asociateyaBundle::ay_mensaje.html.twig', array(
-                'mensaje'      => "Se notificado correctamente"));
+                'mensaje'      => "Se ha notificado correctamente"));
     }
 
     /**

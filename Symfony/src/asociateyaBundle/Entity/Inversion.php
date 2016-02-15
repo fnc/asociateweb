@@ -77,10 +77,15 @@ class Inversion {
     {
       $pagos = $this->getPagos();
       foreach ($pagos as $pago) {
-         if($pago->getEstado() != "2")
+        if($pago->getEstado() == "3")
          {
-            return "Pendiente";
+            return "Reembolsado";
          }
+        if($pago->getEstado() != "2")
+        {
+           return "Pendiente";
+        }
+
       }
       return "Acreditado";
     }
