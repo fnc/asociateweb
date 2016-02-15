@@ -58,6 +58,15 @@ class CancelacionPlazoCommand extends ContainerAwareCommand
             $output->writeln("Emprendimiento: ".$emprendimiento->getNombre());
             $emprendimiento->setEstado(4);//Cancelado pago acreditado (en realidad se refiere a una cancelacion definitiva)
             $inversiones = $emprendimiento->getInversiones();
+            if(($emprendimiento->getAccionesRestantes()/$emprendimiento->getTotalAcciones()*100)<20){
+                //pregunto si lo apruebo de todas formas
+                if(true){
+                    $emprendimiento->setTotalAcciones($emprendimiento->getTotalAcciones()-$emprendimiento->getAccionesRestantes());
+                    //TODO, fijarme que todos los pagos esten acreditados
+                    $emprendimiento->setEstado(2);
+                    continue;
+                }
+            }
             if(count($inversiones)>0){
                 $output->writeln("<comment>Se emitiran las devoluciones de las ".count($inversiones)." inversiones del emprendimiento ".$emprendimiento->getNombre()."</comment>");
                 
